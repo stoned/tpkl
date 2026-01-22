@@ -18,6 +18,25 @@ jobs:
     - uses: actions/setup-go@v6
       with:
         go-version-file: go.mod
+
+    - name: Setup Pkl
+      id: setup_pkl
+      env:
+        PKL_VERSION: 0.30.2
+      shell: bash
+      run: |-
+        set -u
+        DIR="$(mktemp -d /tmp/pkl-${PKL_VERSION}-XXXXXX)"
+        PKL="${DIR}/pkl"
+        PKL_DOWNLOAD_URL="https://github.com/apple/pkl/releases/download/${PKL_VERSION}/pkl-linux-amd64"
+        curl -sfL -o "${PKL}" "${PKL_DOWNLOAD_URL}"
+        chmod +x "${PKL}"
+        echo "${DIR}" >> "${GITHUB_PATH}"
+        echo "PKL=${PKL}" >> "${GITHUB_OUTPUT}"
+
+    - name: Generate
+      run: go generate ./...
+
     - name: golangci-lint
       uses: golangci/golangci-lint-action@v9
       with:
