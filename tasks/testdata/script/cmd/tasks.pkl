@@ -1,12 +1,10 @@
 import "tpkl:tpkl"
 tasks: tpkl.Tasks = new {
-  tasks {
-    ["c1"] {
-      cmds {
-        new {
-          cmd { "echo"; "$0-cmd1" }
-          embeddedShell = false
-        }
+  ["c1"] {
+    cmds {
+      new {
+        cmd { "echo"; "$0-cmd1" }
+        embeddedShell = false
       }
     }
   }

@@ -1,21 +1,19 @@
 import "tpkl:tpkl"
 tasks: tpkl.Tasks = new {
-  tasks {
-    ["test"] {
-      cmds {
-        new {
-          cmd { "echo this is task test" }
-          embeddedShell = true
-        }
+  ["test"] {
+    cmds {
+      new {
+        cmd { "echo this is task test" }
+        embeddedShell = true
       }
     }
+  }
 
-    ["true"] {
-      cmds {
-        new {
-          cmd { "true" }
-          embeddedShell = true
-        }
+  ["true"] {
+    cmds {
+      new {
+        cmd { "true" }
+        embeddedShell = true
       }
     }
   }

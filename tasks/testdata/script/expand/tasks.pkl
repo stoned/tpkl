@@ -1,23 +1,21 @@
 import "tpkl:tpkl"
 tasks: tpkl.Tasks = new {
-  tasks {
-    ["c1"] {
-      cmds {
-        new {
-          cmd { "echo"; "TPKL_EXPAND_TEST_VAR=$(TPKL_EXPAND_TEST_VAR)" }
-          embeddedShell = false
-        }
-      }
-      env {
-        ["TPKL_EXPAND_TEST_VAR"] = "TPKL_eXpAnD_TestVarValue"
+  ["c1"] {
+    cmds {
+      new {
+        cmd { "echo"; "TPKL_EXPAND_TEST_VAR=$(TPKL_EXPAND_TEST_VAR)" }
+        embeddedShell = false
       }
     }
-    ["c2"] {
-      cmds {
-        new {
-          cmd { "echo"; "TPKL_EXPAND_TEST_VAR=$(TPKL_EXPAND_TEST_VAR)" }
-          embeddedShell = false
-        }
+    env {
+      ["TPKL_EXPAND_TEST_VAR"] = "TPKL_eXpAnD_TestVarValue"
+    }
+  }
+  ["c2"] {
+    cmds {
+      new {
+        cmd { "echo"; "TPKL_EXPAND_TEST_VAR=$(TPKL_EXPAND_TEST_VAR)" }
+        embeddedShell = false
       }
     }
   }

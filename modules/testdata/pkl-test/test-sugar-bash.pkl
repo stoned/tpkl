@@ -9,11 +9,9 @@ examples {
 
   ["bash-anonymous-function-with-string"] {
     new tpkl.Tasks {
-      tasks {
-        ["bash-anonymous-function-with-string"] {
-          cmds {
-            "echo start" |> tpkl.bash
-          }
+      ["bash-anonymous-function-with-string"] {
+        cmds {
+          "echo start" |> tpkl.bash
         }
       }
     }
@@ -21,11 +19,9 @@ examples {
 
   ["bash-anonymous-function-with-list"] {
     new tpkl.Tasks {
-      tasks {
-        ["bash-anonymous-function-with-list"] {
-          cmds {
-            List("echo start", "echo end") |> tpkl.bash
-          }
+      ["bash-anonymous-function-with-list"] {
+        cmds {
+          List("echo start", "echo end") |> tpkl.bash
         }
       }
     }
@@ -33,11 +29,9 @@ examples {
 
   ["bash-anonymous-function-with-listing"] {
     new tpkl.Tasks {
-      tasks {
-        ["bash-anonymous-function-with-listing"] {
-          cmds {
-            new Listing { "echo start"; "echo end" } |> tpkl.bash
-          }
+      ["bash-anonymous-function-with-listing"] {
+        cmds {
+          new Listing { "echo start"; "echo end" } |> tpkl.bash
         }
       }
     }
@@ -45,11 +39,9 @@ examples {
 
   ["bash-anonymous-function-with-dynamic"] {
     new tpkl.Tasks {
-      tasks {
-        ["bash-anonymous-function-with-dynamic"] {
-          cmds {
-            new Dynamic { "echo start"; "echo end" } |> tpkl.bash
-          }
+      ["bash-anonymous-function-with-dynamic"] {
+        cmds {
+          new Dynamic { "echo start"; "echo end" } |> tpkl.bash
         }
       }
     }
@@ -57,11 +49,9 @@ examples {
 
   ["bash-function-with-string"] {
     new tpkl.Tasks {
-      tasks {
-        ["bash-function-with-string"] {
-          cmds {
-            tpkl.bash("echo start")
-          }
+      ["bash-function-with-string"] {
+        cmds {
+          tpkl.bash("echo start")
         }
       }
     }
@@ -69,11 +59,9 @@ examples {
 
   ["bash-function-with-list"] {
     new tpkl.Tasks {
-      tasks {
-        ["bash-function-with-list"] {
-          cmds {
-            tpkl.bash(List("echo start", "echo end"))
-          }
+      ["bash-function-with-list"] {
+        cmds {
+          tpkl.bash(List("echo start", "echo end"))
         }
       }
     }
@@ -81,11 +69,9 @@ examples {
 
   ["bash-function-with-listing"] {
     new tpkl.Tasks {
-      tasks {
-        ["bash-function-with-listing"] {
-          cmds {
-            tpkl.bash(new Listing { "echo start"; "echo end" })
-          }
+      ["bash-function-with-listing"] {
+        cmds {
+          tpkl.bash(new Listing { "echo start"; "echo end" })
         }
       }
     }
@@ -93,11 +79,9 @@ examples {
 
   ["bash-function-with-dynamic"] {
     new tpkl.Tasks {
-      tasks {
-        ["bash-function-with-dynamic"] {
-          cmds {
-            tpkl.bash(new Dynamic { "echo start"; "echo end" })
-          }
+      ["bash-function-with-dynamic"] {
+        cmds {
+          tpkl.bash(new Dynamic { "echo start"; "echo end" })
         }
       }
     }
@@ -105,12 +89,10 @@ examples {
 
   ["bash-amending"] {
     new tpkl.Tasks {
-      tasks {
-        ["bash-amending"] {
-          cmds {
-            (tpkl.Bash) {
-              cmd { "echo start" }
-            }
+      ["bash-amending"] {
+        cmds {
+          (tpkl.Bash) {
+            cmd { "echo start" }
           }
         }
       }

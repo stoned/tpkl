@@ -5,12 +5,10 @@ import "tpkl:tpkl"
 examples {
   ["default"] {
     new tpkl.Tasks {
-      tasks {
-        ["default"] {
-          cmds {
-            new {
-              cmd { "echo default" }
-            }
+      ["default"] {
+        cmds {
+          new {
+            cmd { "echo default" }
           }
         }
       }
@@ -19,13 +17,11 @@ examples {
 
   ["cmd"] {
     new tpkl.Tasks {
-      tasks {
-        ["cmd"] {
-          cmds {
-            new {
-              embeddedShell = false
-              cmd { "echo"; "cmd" }
-            }
+      ["cmd"] {
+        cmds {
+          new {
+            embeddedShell = false
+            cmd { "echo"; "cmd" }
           }
         }
       }

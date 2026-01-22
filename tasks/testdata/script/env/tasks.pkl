@@ -1,64 +1,62 @@
 import "tpkl:tpkl"
 tasks: tpkl.Tasks = new {
-  tasks {
-    ["t1"] {
-      cmds { new { cmd { #"echo t1 VAR1="${VAR1}""# } } }
-      inheritEnv = false
-      env {
-        ["VAR1"] = "val1-t1"
-      }
+  ["t1"] {
+    cmds { new { cmd { #"echo t1 VAR1="${VAR1}""# } } }
+    inheritEnv = false
+    env {
+      ["VAR1"] = "val1-t1"
     }
+  }
 
-    ["t2"] {
-      cmds { new { cmd { #"echo t2 VAR1="${VAR1}" VAR2="${VAR2}""# } } }
-      inheritEnv = false
-      env {
-        ["VAR2"] = "val2-t2"
-      }
+  ["t2"] {
+    cmds { new { cmd { #"echo t2 VAR1="${VAR1}" VAR2="${VAR2}""# } } }
+    inheritEnv = false
+    env {
+      ["VAR2"] = "val2-t2"
     }
+  }
 
-    ["t3"] {
-      cmds {
-        new { cmd { #"echo t3 VAR1="${VAR1}""# } }
-        new { task = "t1" }
-        new { task = "t2" }
-      }
-      inheritEnv = false
-      env {
-        ["VAR1"] = "val1-t3"
-      }
+  ["t3"] {
+    cmds {
+      new { cmd { #"echo t3 VAR1="${VAR1}""# } }
+      new { task = "t1" }
+      new { task = "t2" }
     }
-
-    ["t4"] {
-      cmds {
-        new { cmd { #"echo t4 VAR="${VAR}""# } }
-        new { task = "t5" }
-      }
-      inheritEnv = false
-      env {
-        ["VAR"] = "val-t4"
-      }
+    inheritEnv = false
+    env {
+      ["VAR1"] = "val1-t3"
     }
+  }
 
-    ["t5"] {
-      cmds {
-        new { cmd { #"echo t5 VAR="${VAR}""# } }
-        new { task = "t6" }
-      }
-      inheritEnv = false
-      env {
-        ["VAR"] = "val-t5"
-      }
+  ["t4"] {
+    cmds {
+      new { cmd { #"echo t4 VAR="${VAR}""# } }
+      new { task = "t5" }
     }
+    inheritEnv = false
+    env {
+      ["VAR"] = "val-t4"
+    }
+  }
 
-    ["t6"] {
-      cmds {
-        new { cmd { #"echo t6 VAR="${VAR}""# } }
-      }
-      inheritEnv = false
-      env {
-        ["VAR"] = "val-t6"
-      }
+  ["t5"] {
+    cmds {
+      new { cmd { #"echo t5 VAR="${VAR}""# } }
+      new { task = "t6" }
+    }
+    inheritEnv = false
+    env {
+      ["VAR"] = "val-t5"
+    }
+  }
+
+  ["t6"] {
+    cmds {
+      new { cmd { #"echo t6 VAR="${VAR}""# } }
+    }
+    inheritEnv = false
+    env {
+      ["VAR"] = "val-t6"
     }
   }
 }

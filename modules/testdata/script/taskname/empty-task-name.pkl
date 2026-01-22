@@ -1,6 +1,4 @@
 import "tpkl:tpkl"
 tasks: tpkl.Tasks = new {
-  tasks {
-    [""] { cmds { new { cmd { "echo empty task name" } } } }
-  }
+  [""] { cmds { new { cmd { "echo empty task name" } } } }
 }

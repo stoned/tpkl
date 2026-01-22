@@ -1,40 +1,38 @@
 import "tpkl:tpkl"
 tasks: tpkl.Tasks = new {
-  tasks {
-    // *cycle* but missing task Z
-    //
-    //    +-- > A --> B
-    //    |     |
-    //    \     v
-    //    +---- C -..-> (Z)
-    //           
-    //          D
-    ["A"] {
-      cmds {
-        new { task = "B" }
-        new { cmd { "echo A" } }
-        new { task = "C" }
-      }
+  // *cycle* but missing task Z
+  //
+  //    +-- > A --> B
+  //    |     |
+  //    \     v
+  //    +---- C -..-> (Z)
+  //           
+  //          D
+  ["A"] {
+    cmds {
+      new { task = "B" }
+      new { cmd { "echo A" } }
+      new { task = "C" }
     }
+  }
 
-    ["B"] {
-      cmds {
-        new { cmd { "echo B" } }
-      }
+  ["B"] {
+    cmds {
+      new { cmd { "echo B" } }
     }
+  }
 
-    ["C"] {
-      cmds {
-        new { task = "Z" }
-        new { cmd { "echo C" } }
-        new { task = "A" }
-      }
+  ["C"] {
+    cmds {
+      new { task = "Z" }
+      new { cmd { "echo C" } }
+      new { task = "A" }
     }
+  }
 
-    ["D"] {
-      cmds {
-        new { cmd { "echo D" } }
-      }
+  ["D"] {
+    cmds {
+      new { cmd { "echo D" } }
     }
   }
 }

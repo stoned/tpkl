@@ -11,6 +11,8 @@ import (
 // Generate testscript test scripts
 //go:generate go tool txtar -o testdata/script/cmdortask.txtar -c testdata/script/cmdortask/script -p 3 testdata/script/cmdortask/*.pkl
 //go:generate go tool txtar -o testdata/script/taskname.txtar -c testdata/script/taskname/script -p 3 testdata/script/taskname/*.pkl
+//go:generate go tool txtar -o testdata/script/tpkl-module.txtar -c testdata/script/tpkl-module/script -p 3 testdata/script/tpkl-module/*.pkl testdata/script/tpkl-module/*.pcf
+//go:generate go tool txtar -o testdata/pkl-test/test.txtar -c testdata/pkl-test/script -p 2 testdata/pkl-test/PklProject testdata/pkl-test/*.pkl testdata/pkl-test/*.pcf
 //go:generate go tool txtar -o testdata/pkl-test/test.txtar -c testdata/pkl-test/script -p 2 testdata/pkl-test/PklProject testdata/pkl-test/*.pkl testdata/pkl-test/*.pcf
 
 func TestMain(m *testing.M) {

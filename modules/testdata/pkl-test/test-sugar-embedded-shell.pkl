@@ -9,11 +9,9 @@ examples {
 
   ["embedded-shell-anonymous-function-with-string"] {
     new tpkl.Tasks {
-      tasks {
-        ["embedded-shell-anonymous-function-with-string"] {
-          cmds {
-            "echo start" |> tpkl.sh
-          }
+      ["embedded-shell-anonymous-function-with-string"] {
+        cmds {
+          "echo start" |> tpkl.sh
         }
       }
     }
@@ -21,11 +19,9 @@ examples {
 
   ["embedded-shell-anonymous-function-with-list"] {
     new tpkl.Tasks {
-      tasks {
-        ["embedded-shell-anonymous-function-with-list"] {
-          cmds {
-            List("echo start", "-x") |> tpkl.sh
-          }
+      ["embedded-shell-anonymous-function-with-list"] {
+        cmds {
+          List("echo start", "-x") |> tpkl.sh
         }
       }
     }
@@ -33,11 +29,9 @@ examples {
 
   ["embedded-shell-anonymous-function-with-listing"] {
     new tpkl.Tasks {
-      tasks {
-        ["embedded-shell-anonymous-function-with-listing"] {
-          cmds {
-            new Listing { "echo start"; "-x" } |> tpkl.sh
-          }
+      ["embedded-shell-anonymous-function-with-listing"] {
+        cmds {
+          new Listing { "echo start"; "-x" } |> tpkl.sh
         }
       }
     }
@@ -45,11 +39,9 @@ examples {
 
   ["embedded-shell-anonymous-function-with-dynamic"] {
     new tpkl.Tasks {
-      tasks {
-        ["embedded-shell-anonymous-function-with-dynamic"] {
-          cmds {
-            new Dynamic { "echo start"; "-x" } |> tpkl.sh
-          }
+      ["embedded-shell-anonymous-function-with-dynamic"] {
+        cmds {
+          new Dynamic { "echo start"; "-x" } |> tpkl.sh
         }
       }
     }
@@ -57,11 +49,9 @@ examples {
 
   ["embedded-shell-function-with-string"] {
     new tpkl.Tasks {
-      tasks {
-        ["embedded-shell-function-with-string"] {
-          cmds {
-            tpkl.sh("echo start")
-          }
+      ["embedded-shell-function-with-string"] {
+        cmds {
+          tpkl.sh("echo start")
         }
       }
     }
@@ -69,11 +59,9 @@ examples {
 
   ["embedded-shell-function-with-list"] {
     new tpkl.Tasks {
-      tasks {
-        ["embedded-shell-function-with-list"] {
-          cmds {
-            tpkl.sh(List("echo start", "-x"))
-          }
+      ["embedded-shell-function-with-list"] {
+        cmds {
+          tpkl.sh(List("echo start", "-x"))
         }
       }
     }
@@ -81,11 +69,9 @@ examples {
 
   ["embedded-shell-function-with-listing"] {
     new tpkl.Tasks {
-      tasks {
-        ["embedded-shell-function-with-listing"] {
-          cmds {
-            tpkl.sh(new Listing { "echo start"; "-x" })
-          }
+      ["embedded-shell-function-with-listing"] {
+        cmds {
+          tpkl.sh(new Listing { "echo start"; "-x" })
         }
       }
     }
@@ -93,11 +79,9 @@ examples {
 
   ["embedded-shell-function-with-dynamic"] {
     new tpkl.Tasks {
-      tasks {
-        ["embedded-shell-function-with-dynamic"] {
-          cmds {
-            tpkl.sh(new Dynamic { "echo start"; "-x" })
-          }
+      ["embedded-shell-function-with-dynamic"] {
+        cmds {
+          tpkl.sh(new Dynamic { "echo start"; "-x" })
         }
       }
     }
@@ -105,12 +89,10 @@ examples {
 
   ["embedded-shell-amending"] {
     new tpkl.Tasks {
-      tasks {
-        ["embedded-shell-amending"] {
-          cmds {
-            (tpkl.Sh) {
-              cmd { "echo start"; "-x" }
-            }
+      ["embedded-shell-amending"] {
+        cmds {
+          (tpkl.Sh) {
+            cmd { "echo start"; "-x" }
           }
         }
       }

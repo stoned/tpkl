@@ -43,6 +43,7 @@ func TestTPKLModuleExtReader(t *testing.T) {
 	}
 
 	want := `result {
+  tasks {}
   argc = 0
   argv {}
 }

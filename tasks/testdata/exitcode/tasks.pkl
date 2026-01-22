@@ -1,21 +1,19 @@
 import "tpkl:tpkl"
 code = read?("prop:code") ?? "0"
 tasks: tpkl.Tasks = new {
-  tasks {
-    ["sh"] {
-      cmds {
-        new {
-          cmd { "echo sh=\(code); exit \(code)" }
-        }
+  ["sh"] {
+    cmds {
+      new {
+        cmd { "echo sh=\(code); exit \(code)" }
       }
     }
+  }
 
-    ["cmd"] {
-      cmds {
-        new {
-          embeddedShell = false
-          cmd { "awk"; "BEGIN { exit \(code) }" }
-        }
+  ["cmd"] {
+    cmds {
+      new {
+        embeddedShell = false
+        cmd { "awk"; "BEGIN { exit \(code) }" }
       }
     }
   }

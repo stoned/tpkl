@@ -1,0 +1,8 @@
+exec tpkl eval importing.pkl
+cmp stdout expected-importing.pcf
+
+exec tpkl eval amending.pkl
+cmp stdout expected-amending.pcf
+
+exec tpkl eval extending.pkl
+cmp stdout expected-extending.pcf

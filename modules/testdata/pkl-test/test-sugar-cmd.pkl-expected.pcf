@@ -1,217 +1,199 @@
 examples {
   ["cmd-anonymous-function-with-string"] {
     new {
-      tasks {
-        ["cmd-anonymous-function"] {
-          desc = null
-          cmds {
-            new {
-              cmd {
-                "echo"
-                "start"
-              }
-              task = null
-              embeddedShell = false
-              mustSucceed = true
+      ["cmd-anonymous-function"] {
+        desc = null
+        cmds {
+          new {
+            cmd {
+              "echo"
+              "start"
             }
+            task = null
+            embeddedShell = false
+            mustSucceed = true
           }
-          env {}
-          files {}
-          inheritEnv = true
-          workingDir = "."
         }
+        env {}
+        files {}
+        inheritEnv = true
+        workingDir = "."
       }
     }
   }
   ["cmd-anonymous-function-with-list"] {
     new {
-      tasks {
-        ["cmd-anonymous-function-with-list"] {
-          desc = null
-          cmds {
-            new {
-              cmd {
-                "echo"
-                "start"
-              }
-              task = null
-              embeddedShell = false
-              mustSucceed = true
+      ["cmd-anonymous-function-with-list"] {
+        desc = null
+        cmds {
+          new {
+            cmd {
+              "echo"
+              "start"
             }
+            task = null
+            embeddedShell = false
+            mustSucceed = true
           }
-          env {}
-          files {}
-          inheritEnv = true
-          workingDir = "."
         }
+        env {}
+        files {}
+        inheritEnv = true
+        workingDir = "."
       }
     }
   }
   ["cmd-anonymous-function-with-listing"] {
     new {
-      tasks {
-        ["cmd-anonymous-function-with-listing"] {
-          desc = null
-          cmds {
-            new {
-              cmd {
-                "echo"
-                "start"
-              }
-              task = null
-              embeddedShell = false
-              mustSucceed = true
+      ["cmd-anonymous-function-with-listing"] {
+        desc = null
+        cmds {
+          new {
+            cmd {
+              "echo"
+              "start"
             }
+            task = null
+            embeddedShell = false
+            mustSucceed = true
           }
-          env {}
-          files {}
-          inheritEnv = true
-          workingDir = "."
         }
+        env {}
+        files {}
+        inheritEnv = true
+        workingDir = "."
       }
     }
   }
   ["cmd-anonymous-function-with-dynamic"] {
     new {
-      tasks {
-        ["cmd-anonymous-function-with-dynamic"] {
-          desc = null
-          cmds {
-            new {
-              cmd {
-                "echo"
-                "start"
-              }
-              task = null
-              embeddedShell = false
-              mustSucceed = true
+      ["cmd-anonymous-function-with-dynamic"] {
+        desc = null
+        cmds {
+          new {
+            cmd {
+              "echo"
+              "start"
             }
+            task = null
+            embeddedShell = false
+            mustSucceed = true
           }
-          env {}
-          files {}
-          inheritEnv = true
-          workingDir = "."
         }
+        env {}
+        files {}
+        inheritEnv = true
+        workingDir = "."
       }
     }
   }
   ["cmd-function-with-string"] {
     new {
-      tasks {
-        ["cmd-function"] {
-          desc = null
-          cmds {
-            new {
-              cmd {
-                "echo"
-                "start"
-              }
-              task = null
-              embeddedShell = false
-              mustSucceed = true
+      ["cmd-function"] {
+        desc = null
+        cmds {
+          new {
+            cmd {
+              "echo"
+              "start"
             }
+            task = null
+            embeddedShell = false
+            mustSucceed = true
           }
-          env {}
-          files {}
-          inheritEnv = true
-          workingDir = "."
         }
+        env {}
+        files {}
+        inheritEnv = true
+        workingDir = "."
       }
     }
   }
   ["cmd-function-with-list"] {
     new {
-      tasks {
-        ["cmd-function-with-list"] {
-          desc = null
-          cmds {
-            new {
-              cmd {
-                "echo"
-                "start"
-              }
-              task = null
-              embeddedShell = false
-              mustSucceed = true
+      ["cmd-function-with-list"] {
+        desc = null
+        cmds {
+          new {
+            cmd {
+              "echo"
+              "start"
             }
+            task = null
+            embeddedShell = false
+            mustSucceed = true
           }
-          env {}
-          files {}
-          inheritEnv = true
-          workingDir = "."
         }
+        env {}
+        files {}
+        inheritEnv = true
+        workingDir = "."
       }
     }
   }
   ["cmd-function-with-listing"] {
     new {
-      tasks {
-        ["cmd-function-with-listing"] {
-          desc = null
-          cmds {
-            new {
-              cmd {
-                "echo"
-                "start"
-              }
-              task = null
-              embeddedShell = false
-              mustSucceed = true
+      ["cmd-function-with-listing"] {
+        desc = null
+        cmds {
+          new {
+            cmd {
+              "echo"
+              "start"
             }
+            task = null
+            embeddedShell = false
+            mustSucceed = true
           }
-          env {}
-          files {}
-          inheritEnv = true
-          workingDir = "."
         }
+        env {}
+        files {}
+        inheritEnv = true
+        workingDir = "."
       }
     }
   }
   ["cmd-function-with-dynamic"] {
     new {
-      tasks {
-        ["cmd-function-with-dynamic"] {
-          desc = null
-          cmds {
-            new {
-              cmd {
-                "echo"
-                "start"
-              }
-              task = null
-              embeddedShell = false
-              mustSucceed = true
+      ["cmd-function-with-dynamic"] {
+        desc = null
+        cmds {
+          new {
+            cmd {
+              "echo"
+              "start"
             }
+            task = null
+            embeddedShell = false
+            mustSucceed = true
           }
-          env {}
-          files {}
-          inheritEnv = true
-          workingDir = "."
         }
+        env {}
+        files {}
+        inheritEnv = true
+        workingDir = "."
       }
     }
   }
   ["cmd-amending"] {
     new {
-      tasks {
-        ["cmd-amending"] {
-          desc = null
-          cmds {
-            new {
-              cmd {
-                "echo"
-                "start"
-              }
-              task = null
-              embeddedShell = false
-              mustSucceed = true
+      ["cmd-amending"] {
+        desc = null
+        cmds {
+          new {
+            cmd {
+              "echo"
+              "start"
             }
+            task = null
+            embeddedShell = false
+            mustSucceed = true
           }
-          env {}
-          files {}
-          inheritEnv = true
-          workingDir = "."
         }
+        env {}
+        files {}
+        inheritEnv = true
+        workingDir = "."
       }
     }
   }

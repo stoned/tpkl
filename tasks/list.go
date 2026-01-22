@@ -5,10 +5,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"sort"
+	"maps"
+	"slices"
 
 	"github.com/stoned/tpkl/internal/enumarg"
-	"github.com/stoned/tpkl/modules/tpkl"
 )
 
 // FormatEnumArg returns github.com/spf13/pflag to record
@@ -83,7 +83,7 @@ func List(ctx context.Context, writer io.Writer, format string, options ...ListO
 	return nil
 }
 
-func listJSON(tasks *tpkl.Tasks, writer io.Writer) error {
+func listJSON(tasks Tasks, writer io.Writer) error {
 	b, err := json.MarshalIndent(tasks, "", "  ")
 	if err != nil {
 		return fmt.Errorf("%w: %w", ErrJSONMarshal, err)
@@ -97,13 +97,8 @@ func listJSON(tasks *tpkl.Tasks, writer io.Writer) error {
 	return nil
 }
 
-func listName(tasks *tpkl.Tasks, writer io.Writer) error {
-	names := make([]string, 0, len(tasks.Tasks))
-	for key := range tasks.Tasks {
-		names = append(names, key)
-	}
-
-	sort.Strings(names)
+func listName(tasks Tasks, writer io.Writer) error {
+	names := slices.Sorted(maps.Keys(tasks))
 
 	for _, t := range names {
 		_, err := fmt.Fprintln(writer, t)

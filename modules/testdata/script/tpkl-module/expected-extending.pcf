@@ -1,0 +1,39 @@
+tasks {
+  ["hello"] {
+    desc = null
+    cmds {
+      new {
+        cmd {
+          "echo 'Hello world'"
+        }
+        task = null
+        embeddedShell = true
+        mustSucceed = true
+      }
+    }
+    env {}
+    files {}
+    inheritEnv = true
+    workingDir = "."
+  }
+  ["bye"] {
+    desc = null
+    cmds {
+      new {
+        cmd {
+          "echo 'Bye world'"
+        }
+        task = null
+        embeddedShell = true
+        mustSucceed = true
+      }
+    }
+    env {}
+    files {}
+    inheritEnv = true
+    workingDir = "."
+  }
+}
+argc = 0
+argv {}
+subject = "world"

@@ -14,27 +14,25 @@ commands: Listing<tpkl.Command> = new {
 }
 
 tasks: tpkl.Tasks = new {
-  tasks {
-    ["no-inherit-env"] {
-      inheritEnv = false
-      cmds = commands
-    }
+  ["no-inherit-env"] {
+    inheritEnv = false
+    cmds = commands
+  }
 
-    ["inherit-env"] {
-      inheritEnv = true
-      cmds = commands
-    }
+  ["inherit-env"] {
+    inheritEnv = true
+    cmds = commands
+  }
 
-    ["call-no-inherit-env"] {
-      cmds {
-        "no-inherit-env" |> tpkl.task
-      }
+  ["call-no-inherit-env"] {
+    cmds {
+      "no-inherit-env" |> tpkl.task
     }
+  }
 
-    ["call-inherit-env"] {
-      cmds {
-        "no-inherit-env" |> tpkl.task
-      }
+  ["call-inherit-env"] {
+    cmds {
+      "no-inherit-env" |> tpkl.task
     }
   }
 }

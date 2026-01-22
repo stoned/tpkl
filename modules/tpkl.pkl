@@ -1,8 +1,8 @@
-module tpkl.tpkl
+open module tpkl.tpkl
 
-class Tasks {
-  tasks: Mapping<taskName, Task>
-}
+tasks: Tasks
+
+typealias Tasks = Mapping<taskName, Task>
 
 typealias taskName = String(!isEmpty && !isBlank)
 

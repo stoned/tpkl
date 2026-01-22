@@ -1,30 +1,28 @@
 import "tpkl:tpkl"
 VAR1 = read("env:VAR1")
 tasks: tpkl.Tasks = new {
-  tasks {
-    ["t" + VAR1] {
-      cmds {
-        new { cmd { "true" } }
-      }
+  ["t" + VAR1] {
+    cmds {
+      new { cmd { "true" } }
     }
-    ["test"] {
-      cmds {
-        new { cmd { "echo $(VAR1)" } }
-      }
+  }
+  ["test"] {
+    cmds {
+      new { cmd { "echo $(VAR1)" } }
     }
-    ["test2"] {
-      cmds {
-        new { cmd { "echo $(VAR1) $(VAR2)" } }
-      }
+  }
+  ["test2"] {
+    cmds {
+      new { cmd { "echo $(VAR1) $(VAR2)" } }
     }
-    ["test3"] {
-      cmds { new { task = "test2" } }
-      env {
-        ["VAR2"] = "VAR2_OVERRIDE"
-      }
+  }
+  ["test3"] {
+    cmds { new { task = "test2" } }
+    env {
+      ["VAR2"] = "VAR2_OVERRIDE"
     }
-    ["test4"] {
-      cmds { new { task = "test3" } }
-    }
+  }
+  ["test4"] {
+    cmds { new { task = "test3" } }
   }
 }

@@ -1,35 +1,33 @@
 import "tpkl:tpkl"
 tasks: tpkl.Tasks = new {
-  tasks {
-    ["t1"] {
-      cmds {
-        new {
-          cmd { "false" }
-        }
-        new {
-          cmd { "echo two" }
-        }
+  ["t1"] {
+    cmds {
+      new {
+        cmd { "false" }
+      }
+      new {
+        cmd { "echo two" }
       }
     }
+  }
 
-    ["t2"] {
-      cmds {
-        new {
-          mustSucceed = false
-          cmd { "false" }
-        }
-        new {
-          cmd { "echo two" }
-        }
+  ["t2"] {
+    cmds {
+      new {
+        mustSucceed = false
+        cmd { "false" }
+      }
+      new {
+        cmd { "echo two" }
       }
     }
+  }
 
-    ["t3"] {
-      cmds {
-        new {
-          mustSucceed = false
-          cmd { "false" }
-        }
+  ["t3"] {
+    cmds {
+      new {
+        mustSucceed = false
+        cmd { "false" }
       }
     }
   }
