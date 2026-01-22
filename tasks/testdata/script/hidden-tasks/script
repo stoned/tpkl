@@ -1,0 +1,7 @@
+# Check hidden `tasks` is actionable
+exec tpkl run task1
+cmp stdout task1.txt
+# ... and is really hidden, id est the evaluation of the tasks.pkl
+# module should produce *NO* output (empty stdout)
+exec tpkl eval tasks.pkl
+empty stdout

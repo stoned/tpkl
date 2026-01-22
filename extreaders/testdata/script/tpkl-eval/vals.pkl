@@ -1,0 +1,14 @@
+refFoo1 = read("vals:ref+echo://foo/bar").text
+refBar1 = read("vals:ref+echo://foo/bar#/foo").text
+secretrefFoo1 = read("vals:secretref+echo://foo/bar").text
+secretrefBar1 = read("vals:secretref+echo://foo/bar#/foo").text
+
+refFoo2 = read("vals:ref+echo://foo/bar").text
+refBar2 = read("vals:ref+echo://foo/bar#/foo").text
+secretrefFoo2 = read("vals:secretref+echo://foo/bar").text
+secretrefBar2 = read("vals:secretref+echo://foo/bar#/foo").text
+
+refHOME1 = read("vals:ref+envsubst://$HOME").text
+refHOME2 = read("vals:ref+envsubst://$HOME").text
+secretrefHOME1 = read("vals:secretref+envsubst://$HOME").text
+secretrefHOME2 = read("vals:secretref+envsubst://$HOME").text

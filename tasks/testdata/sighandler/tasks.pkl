@@ -1,0 +1,46 @@
+import "tpkl:tpkl"
+tasks: tpkl.Tasks = new {
+  tasks {
+    ["top"] {
+      cmds {
+        tpkl.task("one")
+      }
+    }
+
+    ["one"] {
+      cmds {
+        """
+        set -eu
+        echo "TASKFILE ${TPKL_FILE_one}"
+        """ |> tpkl.sh
+
+        tpkl.task("two")
+      }
+      files {
+        ["one"] {
+          content = "ONE\n"
+        }
+      }
+    }
+
+    ["two"] {
+      cmds {
+        """
+        set -eu
+        echo "TASKFILE ${TPKL_FILE_two}"
+        echo "TASKFILE ${TPKL_FILE_three}"
+        touch "${TEST_SIGHANDLER_WITNESS_FILE}"
+        sleep "${TEST_SIGHANDLER_TIMEOUT:-3600}"
+        """ |> tpkl.sh
+      }
+      files {
+        ["two"] {
+          content = "TWO\n"
+        }
+        ["three"] {
+          content = "THREE\n"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+#
+! exec tpkl run test
+stdout '–– Pkl Error ––'
+#
+! exec tpkl list
+stdout '–– Pkl Error ––'
+#
+exec tpkl list -p MyProperty -p MyOtherProperty
+stdout '^ttrue$'
+#
+exec tpkl run -p MyProperty -p MyOtherProperty test
+stdout '^true$'
+#
+exec tpkl run -p MyProperty=Hello test
+stdout '^Hello$'
+#
+exec tpkl run -p MyProperty=Hello -p MyOtherProperty=World test
+stdout '^Hello$'
+#
+exec tpkl run -p MyProperty=Hello -p MyOtherProperty=World test2
+stdout '^Hello World$'

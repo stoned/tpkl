@@ -1,0 +1,3 @@
+# Simple command without a shell
+exec tpkl run c1
+cmp stdout c1.txt

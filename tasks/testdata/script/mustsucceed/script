@@ -1,0 +1,13 @@
+# mustSucceed = true is the default
+! exec tpkl run t1
+! stdout '^two$'
+#
+exec tpkl run t2
+stdout '^two$'
+#
+exec tpkl run t3
+empty stdout
+empty stderr
+#
+exec tpkl run -v t3
+stdout 'error="exit status 1"'

@@ -1,0 +1,33 @@
+amends "pkl:test"
+
+import "tpkl:tpkl"
+
+examples {
+  //
+  // sugar for calling a task
+  //
+
+  ["task-anonymous-function"] {
+    new tpkl.Tasks {
+      tasks {
+        ["task-anonymous-function"] {
+          cmds {
+            "called-task" |> tpkl.task
+          }
+        }
+      }
+    }
+  }
+
+  ["task-function"] {
+    new tpkl.Tasks {
+      tasks {
+        ["task-function"] {
+          cmds {
+            tpkl.task("called-task")
+          }
+        }
+      }
+    }
+  }
+}

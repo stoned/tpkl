@@ -1,0 +1,12 @@
+#
+exec tpkl run no-inherit-env
+cmpenv stdout no-inherit-env-expected-output.txt
+#
+exec tpkl run inherit-env
+cmpenv stdout inherit-env-expected-output.txt
+#
+exec tpkl run call-inherit-env
+cmpenv stdout call-inherit-env-expected-output.txt
+#
+exec tpkl run call-no-inherit-env
+cmpenv stdout call-no-inherit-env-expected-output.txt

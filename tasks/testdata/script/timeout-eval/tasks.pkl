@@ -1,0 +1,24 @@
+import "tpkl:tpkl"
+bar: Number = Comp(0)
+function Comp(n: Number): Number =
+  let (r = IntSeq(0, 10000))
+  let (
+    bar = new Mapping {
+      for (i in r) {
+        [i] = i
+      }
+    }
+  )
+    Comp(n + 1)
+tasks: tpkl.Tasks = new {
+  tasks {
+    ["test"] {
+      cmds {
+        new {
+          cmd { "echo test task; echo \(bar)" }
+          embeddedShell = true
+        }
+      }
+    }
+  }
+}

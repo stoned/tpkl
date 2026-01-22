@@ -1,0 +1,2 @@
+e2 VAR_INHERITED=valOverride
+e1 VAR_INHERITED=valOverride

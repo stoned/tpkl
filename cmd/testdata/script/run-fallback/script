@@ -1,0 +1,30 @@
+! exec tpkl no-such-task
+stdout 'unknown task: `no-such-task`'
+
+exec tpkl true
+empty stdout
+
+exec tpkl true -v
+stdout task=true
+
+exec tpkl true -p MyProp
+exec tpkl true --property MyProp --property MyProp2 -p MyProp3
+
+exec tpkl true -e MyVar
+exec tpkl true --env-var MyVar --env-var MyVar2 -e MyVar3
+
+# run task from default module found in parent directory
+mkdir dir1/dir2/dir3
+cd dir1/dir2/dir3
+
+exec tpkl true -v
+stdout task=true
+
+exec tpkl true
+empty stdout
+
+# run command fallback without a task module
+cd $WORK
+rm tasks.pkl
+! exec tpkl true
+stdout 'run task: no module'

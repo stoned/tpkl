@@ -1,0 +1,29 @@
+import "tpkl:tpkl"
+duration: Number = read?("env:TASK_SLEEP_DURATION")?.toInt() ?? 30
+tasks: tpkl.Tasks = new {
+  tasks {
+    ["cmd-sleep"] {
+      cmds {
+        new {
+          cmd { "sleep"; duration.toString() }
+          embeddedShell = false
+        }
+      }
+    }
+
+    ["sh-sleep"] {
+      cmds {
+        new {
+          cmd { "sleep \(duration)" }
+          embeddedShell = true
+        }
+      }
+    }
+
+    ["bash-sleep"] {
+      cmds {
+        "sleep \(duration)" |> tpkl.bash
+      }
+    }
+  }
+}

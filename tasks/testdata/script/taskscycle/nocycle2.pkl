@@ -1,0 +1,52 @@
+import "tpkl:tpkl"
+tasks: tpkl.Tasks = new {
+  tasks {
+    // no cycle
+    //
+    //   A --> B     C
+    //   |     |     ^
+    //   v     v     |
+    //   D --> E --> F
+    ["A"] {
+      cmds {
+        new { cmd { "echo A" } }
+        new { task = "B" }
+        new { task = "D" }
+      }
+    }
+
+    ["B"] {
+      cmds {
+        new { cmd { "echo B" } }
+        new { task = "E" }
+      }
+    }
+
+    ["C"] {
+      cmds {
+        new { cmd { "echo C" } }
+      }
+    }
+
+    ["D"] {
+      cmds {
+        new { cmd { "echo D" } }
+        new { task = "E" }
+      }
+    }
+
+    ["E"] {
+      cmds {
+        new { cmd { "echo E" } }
+        new { task = "F" }
+      }
+    }
+
+    ["F"] {
+      cmds {
+        new { cmd { "echo F" } }
+        new { task = "C" }
+      }
+    }
+  }
+}

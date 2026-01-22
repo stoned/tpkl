@@ -1,0 +1,2 @@
+env TEST_TPKL_EXTREADERS_VAR=FooBar
+exec pkl-wrapper test

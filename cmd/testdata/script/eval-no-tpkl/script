@@ -1,0 +1,8 @@
+env TPKL=
+! exec tpkl eval module.pkl
+stderr 'Cannot run program "readers"'
+
+env TPKL=XXXno-such-executable
+! exec tpkl eval module.pkl
+stderr '–– Pkl Error ––'
+stderr 'external read failure: .*Cannot run program "XXXno-such-executable"'

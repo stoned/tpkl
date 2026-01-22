@@ -1,0 +1,5 @@
+exec tpkl echo -v=0 -m vals.pkl
+cmp stdout expected-stdout-echo.txt
+#
+exec tpkl env -v=0 -m vals.pkl
+cmp stdout expected-stdout-env.txt

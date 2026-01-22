@@ -1,0 +1,3 @@
+t3 VAR1=val1-t3
+t1 VAR1=val1-t1
+t2 VAR1=val1-t3 VAR2=val2-t2

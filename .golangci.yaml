@@ -1,0 +1,103 @@
+version: '2'
+run:
+  build-tags:
+  - 'generate'
+linters:
+  default: 'all'
+  disable:
+  - 'depguard'
+  - 'exhaustruct'
+  - 'gochecknoinits'
+  - 'wsl'  # superseded by 'wsl_v5'
+  exclusions:
+    rules:
+    - path: '_test\.go$'
+      linters:
+      - 'godoclint'
+    - path: 'cmd/eval.go'
+      text: 'G204: Subprocess launched with a potential tainted input or cmd arguments'
+      linters:
+      - 'gosec'
+    - path: 'cmd/pklwrapper/pklwrapper.go'
+      text: 'G204: Subprocess launched with a potential tainted input or cmd arguments'
+      linters:
+      - 'gosec'
+    - path: 'tasks/list.go'
+      text: 'the given struct should be annotated with the `json` tag'
+      linters:
+      - 'musttag'
+    - path: 'tasks/list.go'
+      text: 'list.* - result 0 \(error\) is always nil'
+      linters:
+      - 'unparam'
+    - path: 'tasks/run.go'
+      text: 'G204: Subprocess launched with a potential tainted input or cmd arguments'
+      linters:
+      - 'gosec'
+    - path: 'tasks/frame.go'
+      text: '_[^ ]+ is a global variable'
+      linters:
+      - 'gochecknoglobals'
+    - path: 'tasks/frame_env_test.go'
+      text: 'Function [^ ]+ missing the call to method parallel'
+      linters:
+      - 'paralleltest'
+    - path: 'tasks/frame_env_test.go'
+      text: "Function 'setupFrames' is too long"
+      linters:
+      - 'funlen'
+    - path: 'tasks/bin_test.go'
+      text: 'G204: Subprocess launched with variable'
+      linters:
+      - 'gosec'
+    - path: 'tasks/bin_test.go'
+      text: 'cognitive complexity \d+ of func `TestSigHandler` is high'
+      linters:
+      - 'gocognit'
+    - path: 'tasks/bin_test.go'
+      text: 'calculated cyclomatic complexity for function TestSigHandler is \d+'
+      linters:
+      - 'cyclop'
+    - path: 'tasks/tasks.go'
+      text: "Function 'ModuleTasks' is too long"
+      linters:
+      - 'funlen'
+    - path: 'tasks/tasks.go'
+      text: 'exported func With.* returns unexported type \*tasks\..*Option'
+      linters:
+      - 'revive'
+    - path: 'log/log.go'
+      text: 'root is a global variable'
+      linters:
+      - 'gochecknoglobals'
+    - source: '^func Test'
+      linters:
+      - 'funlen'
+    paths:
+    - 'internal/expansion/.*\.go$'
+  settings:
+    forbidigo:
+      forbid:
+      - pattern: '^spew\.(ConfigState\.)?Dump$'
+    gosec:
+      config:
+        G306: '0644'
+    mnd:
+      ignored-functions:
+      - '^os\.WriteFile'
+      - '^os\.Exit'
+    musttag:
+      functions:
+      - name: '(*encoding/json.Decoder).Decode'
+        tag: 'pkl'
+        arg-pos: 0
+    wsl_v5:
+      allow-first-in-block: true
+      allow-whole-block: false
+      branch-max-lines: 2
+formatters:
+  enable:
+  - 'gofumpt'
+  exclusions:
+    paths:
+    - 'internal/expansion/.*\.go$'

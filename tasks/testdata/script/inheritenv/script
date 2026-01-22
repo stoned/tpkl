@@ -1,0 +1,11 @@
+#
+exec tpkl run inheritEnvDefaultValue
+cmp stdout inheritEnvDefaultValue.txt
+#
+env VAR_INHERITED=valEnv
+exec tpkl run e1
+cmp stdout e1.txt
+#
+env VAR_INHERITED=valEnv
+exec tpkl run e2
+cmp stdout e2.txt

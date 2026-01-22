@@ -1,0 +1,8 @@
+#
+exec tpkl run workingDirDefaultValue
+cmpenv output1.txt expected1.txt
+
+#
+mkdir subdir
+exec tpkl run subdir
+cmpenv subdir/output2.txt expected2.txt

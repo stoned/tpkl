@@ -1,0 +1,3 @@
+t4 VAR=val-t4
+t5 VAR=val-t5
+t6 VAR=val-t6

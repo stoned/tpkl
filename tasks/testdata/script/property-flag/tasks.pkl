@@ -1,0 +1,28 @@
+import "tpkl:tpkl"
+p = read("prop:MyProperty")
+p2 = read?("prop:MyOtherProperty")
+tasks: tpkl.Tasks = new {
+  tasks {
+    ["t" + p] {
+      cmds {
+        new {
+          cmd { "true" }
+        }
+      }
+    }
+    ["test"] {
+      cmds {
+        new {
+          cmd { "echo \(p)" }
+        }
+      }
+    }
+    ["test2"] {
+      cmds {
+        new {
+          cmd { "echo \(p) \(p2)" }
+        }
+      }
+    }
+  }
+}

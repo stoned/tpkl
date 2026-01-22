@@ -1,0 +1,9 @@
+3
+tpkl
+run
+call-inherit-env
+call-inherit-env
+$WORK/tasks.pkl
+$WORK
+call-inherit-env
+no-inherit-env

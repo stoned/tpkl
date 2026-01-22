@@ -1,0 +1,13 @@
+import "tpkl:tpkl"
+tasks: tpkl.Tasks = new {
+  tasks {
+    ["test"] {
+      cmds {
+        new {
+          cmd { "echo this is task test from a specific module" }
+          embeddedShell = true
+        }
+      }
+    }
+  }
+}

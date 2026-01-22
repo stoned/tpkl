@@ -1,0 +1,2 @@
+exec tpkl help
+stdout 'Run tasks defined in a Pkl module'

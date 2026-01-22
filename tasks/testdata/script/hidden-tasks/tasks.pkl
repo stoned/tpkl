@@ -1,0 +1,13 @@
+import "tpkl:tpkl"
+hidden tasks: tpkl.Tasks = new {
+  tasks {
+    ["task1"] {
+      cmds {
+        new {
+          cmd { "echo hidden" }
+          embeddedShell = true
+        }
+      }
+    }
+  }
+}

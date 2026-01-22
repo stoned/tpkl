@@ -1,0 +1,117 @@
+module tpkl.tpkl
+
+class Tasks {
+  tasks: Mapping<taskName, Task>
+}
+
+typealias taskName = String(!isEmpty && !isBlank)
+
+open class Task {
+  desc: String?
+  cmds: Listing<Command>
+  env: Mapping<varName, String>
+  files: taskFiles
+  inheritEnv: Boolean = true
+  workingDir: String = "."
+}
+
+typealias varName = String(matches(Regex(#"[\p{Alnum}_]+"#)))
+typealias taskFiles = Mapping<varName, File>
+
+class File {
+  content: String
+  filename: String?((filename) -> filename == null || !filename.isEmpty)
+  varname: varName?
+}
+
+class Command {
+  cmd: Listing<String>(cmdOrTask)
+  task: String?
+  embeddedShell: Boolean = true
+  mustSucceed: Boolean = true
+  local cmdOrTask = (it) ->
+    if (it.length > 0)
+      task == null
+    else
+      task != null
+}
+
+// Command.task helpers
+hidden task = (t: String) -> new Command { embeddedShell = false; cmd = new {}; task = t }
+function task(t: String): Command = task.apply(t)
+
+// Command.cmd helpers
+hidden cmd = (c: String | List | Listing | Dynamic) ->
+  let (cmdList = if (c is String) c.split(Regex(#"\p{IsWhite_Space}+"#)) else c)
+    new Command {
+      embeddedShell = false
+      task = null
+      cmd = new { ...cmdList }
+    }
+hidden Cmd: Command = new { embeddedShell = false; task = null }
+function cmd(c: String | List | Listing | Dynamic): Command = cmd.apply(c)
+
+// Command.cmd helpers for shell script using embedded shell
+hidden sh = (args: String | List | Listing | Dynamic) ->
+  let (argv = if (args is String) List(args) else args)
+    new Command {
+      embeddedShell = true
+      task = null
+      cmd = new { ...argv }
+    }
+hidden Sh: Command = new { embeddedShell = true; task = null }
+function sh(args: String | List | Listing | Dynamic): Command = sh.apply(args)
+
+// Helper to generate a tpkl.Command for a shell script run
+// by a specific interpreter.
+function shellScript(shellCmd: String, s: String | List | Listing | Dynamic): Command =
+  let (
+    script =
+      if (s is String)
+        s
+      else if (s is Dynamic)
+        s.toList().join("\n")
+      else
+        s.join("\n")
+  )
+    new Command {
+      embeddedShell = false
+      task = null
+      cmd = new { shellCmd; "-c"; script }
+    }
+
+// Command.cmd helpers for shell script using /bin/sh shell
+hidden binsh = (s: String | List | Listing | Dynamic) -> shellScript("/bin/sh", s)
+hidden Binsh: Command = new { embeddedShell = false; task = null; cmd = new { "/bin/sh"; "-c" } }
+function binsh(s: String | List | Listing | Dynamic): Command = binsh.apply(s)
+
+// Command.cmd helpers for shell script using /bin/sh shell
+hidden bash = (s: String | List | Listing | Dynamic) -> shellScript("/bin/bash", s)
+hidden Bash: Command = new { embeddedShell = false; task = null; cmd = new { "/bin/bash"; "-c" } }
+function bash(s: String | List | Listing | Dynamic): Command = bash.apply(s)
+
+//
+// Task arguments from environment
+//
+
+local function identifier(s: String): String = "TPKL_" + s
+
+local listCmdRunning: Boolean = read?("prop:" + identifier("LIST_COMMAND_RUNNING")) != null
+
+fixed argc: Int =
+  if (listCmdRunning)
+    0
+  else
+    read?("env:" + identifier("TASK_ARGC"))?.toInt() ?? 0
+
+fixed argv: Listing<String> =
+  if (listCmdRunning)
+    new Listing {}
+  else
+    IntSeq(0, argc - 1).map((n) -> read("env:" + identifier("TASK_ARG_\(n)"))).toListing()
+
+function arg(idx: Int): String =
+  if (listCmdRunning || idx >= argc)
+    ""
+  else
+    argv[idx]

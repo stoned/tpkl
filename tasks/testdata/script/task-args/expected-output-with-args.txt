@@ -1,0 +1,5 @@
+argc=3:
+arg0=a a:
+arg1=-b:
+arg2=:
+argL=:

@@ -1,0 +1,34 @@
+amends "pkl:test"
+
+import "tpkl:tpkl"
+
+examples {
+  ["default"] {
+    new tpkl.Tasks {
+      tasks {
+        ["default"] {
+          cmds {
+            new {
+              cmd { "echo default" }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  ["cmd"] {
+    new tpkl.Tasks {
+      tasks {
+        ["cmd"] {
+          cmds {
+            new {
+              embeddedShell = false
+              cmd { "echo"; "cmd" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

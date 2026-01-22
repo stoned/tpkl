@@ -1,0 +1,20 @@
+import "tpkl:tpkl"
+tasks: tpkl.Tasks = new {
+  tasks {
+    ["test"] {
+      cmds {
+        """
+        set -euo pipefail
+        basename "${TPKL_FILE_afile}"
+        cat "${TPKL_FILE_afile}"
+        """ |> tpkl.sh
+      }
+      files {
+        ["afile"] {
+          filename = "afile.txt"
+          content = "Hello world!\n"
+        }
+      }
+    }
+  }
+}

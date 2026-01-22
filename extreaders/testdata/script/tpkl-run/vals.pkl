@@ -1,0 +1,45 @@
+import "tpkl:tpkl"
+
+refFoo1 = read("vals:ref+echo://foo/bar").text
+refBar1 = read("vals:ref+echo://foo/bar#/foo").text
+secretFoo1 = read("vals:secretref+echo://foo/bar").text
+secretrefBar1 = read("vals:secretref+echo://foo/bar#/foo").text
+
+refFoo2 = read("vals:ref+echo://foo/bar").text
+refBar2 = read("vals:ref+echo://foo/bar#/foo").text
+secretFoo2 = read("vals:secretref+echo://foo/bar").text
+secretrefBar2 = read("vals:secretref+echo://foo/bar#/foo").text
+
+refHOME1 = read("vals:ref+envsubst://$HOME").text
+refHOME2 = read("vals:ref+envsubst://$HOME").text
+secretrefHOME1 = read("vals:secretref+envsubst://$HOME").text
+secretrefHOME2 = read("vals:secretref+envsubst://$HOME").text
+
+tasks: tpkl.Tasks = new {
+  tasks {
+    ["echo"] {
+      cmds {
+        """
+        echo "\(refFoo1)"
+        echo "\(refBar1)"
+        echo "\(secretFoo1)"
+        echo "\(secretrefBar1)"
+        echo "\(refFoo2)"
+        echo "\(refBar2)"
+        echo "\(secretFoo2)"
+        echo "\(secretrefBar2)"
+        """ |> tpkl.sh
+      }
+    }
+    ["env"] {
+      cmds {
+        """
+        echo "\(refHOME1)"
+        echo "\(refHOME2)"
+        echo "\(secretrefHOME1)"
+        echo "\(secretrefHOME2)"
+        """ |> tpkl.sh
+      }
+    }
+  }
+}

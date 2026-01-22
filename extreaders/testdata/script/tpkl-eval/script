@@ -1,0 +1,2 @@
+exec tpkl eval vals.pkl
+cmp stdout expected-stdout.txt

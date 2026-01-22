@@ -1,0 +1,3 @@
+afile
+Hello world!
+1

@@ -1,0 +1,14 @@
+! exec tpkl run -m module.pkl no-such-task
+stdout 'unknown task: `no-such-task`'
+
+exec tpkl run -m module.pkl true
+empty stdout
+
+exec tpkl run --module module.pkl true
+empty stdout
+
+exec tpkl run --module module.pkl true -p MyProp
+exec tpkl run --module module.pkl true --property MyProp --property MyProp2 -p MyProp3
+
+exec tpkl run --module module.pkl true -e MyVar
+exec tpkl run --module module.pkl true --env-var MyVar --env-var MyVar2 -e MyVar3

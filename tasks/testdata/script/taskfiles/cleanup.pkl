@@ -1,0 +1,58 @@
+import "tpkl:tpkl"
+tasks: tpkl.Tasks = new {
+  tasks {
+    ["top"] {
+      cmds {
+        tpkl.task("one")
+
+        """
+        set -euo pipefail
+        test -s "${WORK}/one-dir.txt"
+        ! test -d "$(cat "${WORK}/one-dir.txt")"
+        test -s "${WORK}/two-dir.txt"
+        ! test -d "$(cat "${WORK}/two-dir.txt")"
+        """ |> tpkl.sh
+      }
+    }
+
+    ["one"] {
+      cmds {
+        """
+        set -euo pipefail
+        cat "${TPKL_FILE_one}"
+        echo "${TPKL_FILES_DIR}" > "${WORK}/one-dir.txt"
+        """ |> tpkl.sh
+
+        tpkl.task("two")
+
+        """
+        set -euo pipefail
+        test -s "${WORK}/one-dir.txt"
+        test -d "$(cat "${WORK}/one-dir.txt")"
+        test -s "${WORK}/two-dir.txt"
+        ! test -d "$(cat "${WORK}/two-dir.txt")"
+        """ |> tpkl.sh
+      }
+      files {
+        ["one"] {
+          content = "ONE\n"
+        }
+      }
+    }
+
+    ["two"] {
+      cmds {
+        """
+        set -euo pipefail
+        cat "${TPKL_FILE_two}"
+        echo "${TPKL_FILES_DIR}" > "${WORK}/two-dir.txt"
+        """ |> tpkl.sh
+      }
+      files {
+        ["two"] {
+          content = "TWO\n"
+        }
+      }
+    }
+  }
+}

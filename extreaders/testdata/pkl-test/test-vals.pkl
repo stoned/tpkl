@@ -1,0 +1,23 @@
+amends "pkl:test"
+
+facts {
+  ["read vals:ref+echo"] {
+    read("vals:ref+echo://foo/bar").text == "foo/bar"
+    read("vals:ref+echo://foo/bar#/foo").text == "bar"
+  }
+
+  ["read vals:secretref+echo"] {
+    read("vals:secretref+echo://foo/bar").text == "foo/bar"
+    read("vals:secretref+echo://foo/bar#/foo").text == "bar"
+  }
+
+  ["read vals:ref+envsubst"] {
+    read("vals:ref+envsubst://$$").text == "$"
+    read("vals:ref+envsubst://$TEST_TPKL_EXTREADERS_VAR").text == "FooBar"
+  }
+
+  ["read vals:secretref+envsubst"] {
+    read("vals:secretref+envsubst://$$").text == "$"
+    read("vals:secretref+envsubst://$TEST_TPKL_EXTREADERS_VAR").text == "FooBar"
+  }
+}

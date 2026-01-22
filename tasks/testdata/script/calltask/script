@@ -1,0 +1,6 @@
+#
+exec tpkl run t1
+cmp stdout t1.txt
+#
+exec tpkl run t2
+cmp stdout t2.txt

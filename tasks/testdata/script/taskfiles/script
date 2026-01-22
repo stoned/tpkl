@@ -1,0 +1,23 @@
+#
+exec tpkl run -m simple.pkl test
+cmp stdout simple-expected-stdout.txt
+#
+exec tpkl run -m call.pkl top
+cmp stdout call-top-expected-stdout.txt
+exists ls1.out ls2.out
+cmp ls1.out ls2.out
+exists top-top-files-dir.out top-sub-files-dir.out
+! cmp top-top-files-dir.out top-sub-files-dir.out
+#
+exec tpkl run -m call.pkl sub
+exists sub-sub-files-dir.out
+cmp stdout call-sub-expected-stdout.txt
+#
+exec tpkl run -m cleanup.pkl top
+cmp stdout cleanup-expected-stdout.txt
+#
+exec tpkl run -m filename.pkl test
+cmp stdout filename-expected-stdout.txt
+#
+exec tpkl run -m varname.pkl test
+cmp stdout varname-expected-stdout.txt

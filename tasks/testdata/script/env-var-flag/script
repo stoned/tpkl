@@ -1,0 +1,32 @@
+#
+! exec tpkl run test
+stdout '–– Pkl Error ––'
+stdout 'Cannot find resource `env:VAR1`'
+#
+! exec tpkl list
+stdout '–– Pkl Error ––'
+stdout 'Cannot find resource `env:VAR1`'
+#
+exec tpkl list -e VAR1 -e VAR2
+stdout '^t$'
+#
+exec tpkl list -e VAR1=value1 -e VAR2
+stdout '^tvalue1$'
+#
+exec tpkl run -e VAR1 -e VAR2 test
+cmp stdout blankline.txt
+#
+exec tpkl run -e VAR1=Hello test
+stdout '^Hello$'
+#
+exec tpkl run -e VAR1=Hello -e VAR2=World test
+stdout '^Hello$'
+#
+exec tpkl run -e VAR1=Hello -e VAR2=World test2
+stdout '^Hello World$'
+#
+exec tpkl run -e VAR1=Hello -e VAR2=World test3
+stdout '^Hello VAR2_OVERRIDE$'
+#
+exec tpkl run -e VAR1=HelloThere -e VAR2=World test4
+stdout '^HelloThere VAR2_OVERRIDE$'

@@ -1,0 +1,8 @@
+! exec tpkl eval
+stderr 'Usage: pkl eval '
+
+exec tpkl eval module.pkl
+cmp stdout output.txt
+
+exec tpkl eval module.pkl -x bar
+cmp stdout bar.txt

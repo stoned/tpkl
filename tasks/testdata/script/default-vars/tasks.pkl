@@ -1,0 +1,40 @@
+import "tpkl:tpkl"
+
+commands: Listing<tpkl.Command> = new {
+  #"echo "${TPKL_ARGC}""# |> tpkl.sh
+  #"echo "${TPKL_ARG_0}""# |> tpkl.sh
+  #"echo "${TPKL_ARG_1}""# |> tpkl.sh
+  #"echo "${TPKL_ARG_2}""# |> tpkl.sh
+  // echo last argument to tpkl command
+  #"eval echo "\${TPKL_ARG_$((TPKL_ARGC - 1))}""# |> tpkl.sh
+  #"echo "${TPKL_MODULE}""# |> tpkl.sh
+  #"echo "${TPKL_MODULEDIR}""# |> tpkl.sh
+  #"echo "${TPKL_TASK}""# |> tpkl.sh
+  #"echo "${TPKL_CURRENT_TASK}""# |> tpkl.sh
+}
+
+tasks: tpkl.Tasks = new {
+  tasks {
+    ["no-inherit-env"] {
+      inheritEnv = false
+      cmds = commands
+    }
+
+    ["inherit-env"] {
+      inheritEnv = true
+      cmds = commands
+    }
+
+    ["call-no-inherit-env"] {
+      cmds {
+        "no-inherit-env" |> tpkl.task
+      }
+    }
+
+    ["call-inherit-env"] {
+      cmds {
+        "no-inherit-env" |> tpkl.task
+      }
+    }
+  }
+}

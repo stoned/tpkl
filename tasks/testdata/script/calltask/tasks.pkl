@@ -1,0 +1,15 @@
+import "tpkl:tpkl"
+tasks: tpkl.Tasks = new {
+  tasks {
+    ["t1"] {
+      cmds { new { cmd { "echo t1" } } }
+    }
+
+    ["t2"] {
+      cmds {
+        new { cmd { "echo t2" } }
+        new { task = "t1" }
+      }
+    }
+  }
+}

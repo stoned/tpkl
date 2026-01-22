@@ -1,0 +1,19 @@
+amends "pkl:Project"
+
+evaluatorSettings {
+  allowedModules {
+    "file"
+    "package"
+    "tpkl"
+  }
+  externalModuleReaders {
+    ["tpkl"] {
+      executable = "tpkl"
+      arguments { "readers" }
+    }
+  }
+}
+
+tests {
+  ...import*("test*.pkl").keys
+}

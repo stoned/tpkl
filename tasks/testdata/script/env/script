@@ -1,0 +1,18 @@
+#
+exec tpkl run t1
+cmp stdout t1.txt
+#
+exec tpkl run t2
+cmp stdout t2.txt
+#
+exec tpkl run t3
+cmp stdout t3.txt
+#
+exec tpkl run t4
+cmp stdout t4.txt
+#
+exec tpkl run t5
+cmp stdout t5.txt
+#
+exec tpkl run t6
+cmp stdout t6.txt

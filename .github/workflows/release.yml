@@ -1,0 +1,49 @@
+name: goreleaser
+
+on:
+  push:
+    branches-ignore:
+    - '*'
+    tags:
+    - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  goreleaser:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        fetch-depth: 0
+
+    - name: Setup Pkl
+      id: setup_pkl
+      env:
+        PKL_VERSION: 0.30.2
+      shell: bash
+      run: |-
+        set -u
+        DIR="$(mktemp -d /tmp/pkl-${PKL_VERSION}-XXXXXX)"
+        PKL="${DIR}/pkl"
+        PKL_DOWNLOAD_URL="https://github.com/apple/pkl/releases/download/${PKL_VERSION}/pkl-linux-amd64"
+        curl -sfL -o "${PKL}" "${PKL_DOWNLOAD_URL}"
+        chmod +x "${PKL}"
+        echo "${DIR}" >> "${GITHUB_PATH}"
+        echo "PKL=${PKL}" >> "${GITHUB_OUTPUT}"
+
+    - name: Set up Go
+      uses: actions/setup-go@v6
+      with:
+        go-version-file: go.mod
+        cache: true
+  
+    - name: GoReleaser
+      uses: goreleaser/goreleaser-action@v6
+      with:
+        version: 2.13.3
+        args: release --clean
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PKL: ${{ steps.setup_pkl.outputs.PKL }}

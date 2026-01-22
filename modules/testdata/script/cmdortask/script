@@ -1,0 +1,2 @@
+! exec tpkl eval module.pkl
+stderr '–– Pkl Error ––\nType constraint `cmdOrTask` violated.'

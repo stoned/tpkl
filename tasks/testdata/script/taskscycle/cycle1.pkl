@@ -1,0 +1,13 @@
+import "tpkl:tpkl"
+tasks: tpkl.Tasks = new {
+  tasks {
+    // *cycle*
+    //
+    //    A --> B
+    //    ^     |
+    //    |     |
+    //    + ----+
+    ["A"] { cmds { new { task = "B" } } }
+    ["B"] { cmds { new { task = "A" } } }
+  }
+}

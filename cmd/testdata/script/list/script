@@ -1,0 +1,32 @@
+# list task from default module is current directory
+exec tpkl list
+cmp stdout list-default.txt
+
+# list from a specific module file
+exec tpkl list --module moretasks.pkl
+cmp stdout list-more.txt
+
+exec tpkl list -m moretasks.pkl
+cmp stdout list-more.txt
+
+# list task from default module found in parent directory
+mkdir dir1/dir2/dir3
+cd dir1/dir2/dir3
+exec tpkl list
+cmp stdout ../../../list-default.txt
+cd $WORK
+
+# check list unsupported format
+! exec tpkl list -o NoSuchOutputFormat
+stderr 'invalid argument "NoSuchOutputFormat".* is not included in '
+
+# check various list formats
+exec tpkl list -o name
+cmp stdout list-default.txt
+
+exec tpkl list --output json
+stdin stdout
+env GOCACHE=$WORK/.cache
+exec go run readjson.go
+empty stderr
+empty stdout

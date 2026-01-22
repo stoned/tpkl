@@ -1,0 +1,6 @@
+amends "pkl:Project"
+evaluatorSettings {
+  externalProperties {
+    ["foo"] = "prop-value"
+  }
+}

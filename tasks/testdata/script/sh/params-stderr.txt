@@ -1,0 +1,5 @@
++ echo '0:params[3]'
++ echo 1:PARAM-1
++ echo 2:PARAM-2
++ echo 3:PARAM-3
++ echo '#:3'

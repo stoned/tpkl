@@ -1,0 +1,119 @@
+amends "pkl:test"
+
+import "tpkl:tpkl"
+
+examples {
+  //
+  // sugar for running a command
+  //
+
+  ["cmd-anonymous-function-with-string"] {
+    new tpkl.Tasks {
+      tasks {
+        ["cmd-anonymous-function"] {
+          cmds {
+            "echo start" |> tpkl.cmd
+          }
+        }
+      }
+    }
+  }
+
+  ["cmd-anonymous-function-with-list"] {
+    new tpkl.Tasks {
+      tasks {
+        ["cmd-anonymous-function-with-list"] {
+          cmds {
+            List("echo", "start") |> tpkl.cmd
+          }
+        }
+      }
+    }
+  }
+
+  ["cmd-anonymous-function-with-listing"] {
+    new tpkl.Tasks {
+      tasks {
+        ["cmd-anonymous-function-with-listing"] {
+          cmds {
+            new Listing { "echo"; "start" } |> tpkl.cmd
+          }
+        }
+      }
+    }
+  }
+
+  ["cmd-anonymous-function-with-dynamic"] {
+    new tpkl.Tasks {
+      tasks {
+        ["cmd-anonymous-function-with-dynamic"] {
+          cmds {
+            new Dynamic { "echo"; "start" } |> tpkl.cmd
+          }
+        }
+      }
+    }
+  }
+
+  ["cmd-function-with-string"] {
+    new tpkl.Tasks {
+      tasks {
+        ["cmd-function"] {
+          cmds {
+            tpkl.cmd("echo start")
+          }
+        }
+      }
+    }
+  }
+
+  ["cmd-function-with-list"] {
+    new tpkl.Tasks {
+      tasks {
+        ["cmd-function-with-list"] {
+          cmds {
+            tpkl.cmd(List("echo", "start"))
+          }
+        }
+      }
+    }
+  }
+
+  ["cmd-function-with-listing"] {
+    new tpkl.Tasks {
+      tasks {
+        ["cmd-function-with-listing"] {
+          cmds {
+            tpkl.cmd(new Listing { "echo"; "start" })
+          }
+        }
+      }
+    }
+  }
+
+  ["cmd-function-with-dynamic"] {
+    new tpkl.Tasks {
+      tasks {
+        ["cmd-function-with-dynamic"] {
+          cmds {
+            tpkl.cmd(new Dynamic { "echo"; "start" })
+          }
+        }
+      }
+    }
+  }
+
+  ["cmd-amending"] {
+    new tpkl.Tasks {
+      tasks {
+        ["cmd-amending"] {
+          cmds {
+            (tpkl.Cmd) {
+              cmd { "echo"; "start" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

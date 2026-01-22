@@ -1,0 +1,16 @@
+#
+exec tpkl run empty-script
+empty stdout
+empty stderr
+# 
+exec tpkl run simple
+cmp stdout simple.txt
+empty stderr
+# Embedded shell script is the default
+exec tpkl run default
+cmp stdout default.txt
+empty stderr
+# parameters to embedded shell
+exec tpkl run params
+cmp stdout params-stdout.txt
+cmp stderr params-stderr.txt

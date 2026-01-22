@@ -1,0 +1,18 @@
+exec true
+empty stdout
+empty stderr
+
+exec echo
+! empty stdout
+empty stderr
+
+! exec rm dOeSnOtExIsT
+empty stdout
+! empty stderr
+
+exec touch foo.txt
+empty foo.txt
+
+exec echo foo
+cp stdout bar.txt
+! empty bar.txt

@@ -1,0 +1,119 @@
+amends "pkl:test"
+
+import "tpkl:tpkl"
+
+examples {
+  //
+  // sugar for running a script with /bin/sh
+  //
+
+  ["binsh-anonymous-function-with-string"] {
+    new tpkl.Tasks {
+      tasks {
+        ["binsh-anonymous-function-with-string"] {
+          cmds {
+            "echo start" |> tpkl.binsh
+          }
+        }
+      }
+    }
+  }
+
+  ["binsh-anonymous-function-with-list"] {
+    new tpkl.Tasks {
+      tasks {
+        ["binsh-anonymous-function-with-list"] {
+          cmds {
+            List("echo start", "echo end") |> tpkl.binsh
+          }
+        }
+      }
+    }
+  }
+
+  ["binsh-anonymous-function-with-listing"] {
+    new tpkl.Tasks {
+      tasks {
+        ["binsh-anonymous-function-with-listing"] {
+          cmds {
+            new Listing { "echo start"; "echo end" } |> tpkl.binsh
+          }
+        }
+      }
+    }
+  }
+
+  ["binsh-anonymous-function-with-dynamic"] {
+    new tpkl.Tasks {
+      tasks {
+        ["binsh-anonymous-function-with-dynamic"] {
+          cmds {
+            new Dynamic { "echo start"; "echo end" } |> tpkl.binsh
+          }
+        }
+      }
+    }
+  }
+
+  ["binsh-function-with-string"] {
+    new tpkl.Tasks {
+      tasks {
+        ["binsh-function-with-string"] {
+          cmds {
+            tpkl.binsh("echo start")
+          }
+        }
+      }
+    }
+  }
+
+  ["binsh-function-with-list"] {
+    new tpkl.Tasks {
+      tasks {
+        ["binsh-function-with-list"] {
+          cmds {
+            tpkl.binsh(List("echo start", "echo end"))
+          }
+        }
+      }
+    }
+  }
+
+  ["binsh-function-with-listing"] {
+    new tpkl.Tasks {
+      tasks {
+        ["binsh-function-with-listing"] {
+          cmds {
+            tpkl.binsh(new Listing { "echo start"; "echo end" })
+          }
+        }
+      }
+    }
+  }
+
+  ["binsh-function-with-dynamic"] {
+    new tpkl.Tasks {
+      tasks {
+        ["binsh-function-with-dynamic"] {
+          cmds {
+            tpkl.binsh(new Dynamic { "echo start"; "echo end" })
+          }
+        }
+      }
+    }
+  }
+
+  ["binsh-amending"] {
+    new tpkl.Tasks {
+      tasks {
+        ["binsh-amending"] {
+          cmds {
+            (tpkl.Binsh) {
+              cmd { "echo start" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

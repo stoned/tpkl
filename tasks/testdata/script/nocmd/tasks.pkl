@@ -1,0 +1,21 @@
+import "tpkl:tpkl"
+tasks: tpkl.Tasks = new {
+  tasks {
+    ["nocmd"] {
+      cmds {
+        new {
+          cmd { "" }
+          embeddedShell = false
+        }
+      }
+    }
+    ["nosuchcmd"] {
+      cmds {
+        new {
+          cmd { "no-such-cmd-test" }
+          embeddedShell = false
+        }
+      }
+    }
+  }
+}

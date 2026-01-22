@@ -1,0 +1,14 @@
+#
+! exec tpkl run -m top.pkl top
+stdout 'Cannot find resource `prop:foo`'
+#
+cp PklProject-foo.pkl PklProject
+exec tpkl run -m top.pkl top
+stdout '^prop-value$'
+#
+mkdir sub/dir
+cd sub/dir
+exec tpkl run -m $WORK/top.pkl top
+stdout '^prop-value$'
+
+# XXX add tests when --project-dir= and -w/--working-dir= support will be added

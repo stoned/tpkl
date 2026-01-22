@@ -1,0 +1,25 @@
+import "tpkl:tpkl"
+tasks: tpkl.Tasks = new {
+  tasks {
+    ["inheritEnvDefaultValue"] {
+      cmds { new { cmd { #"echo inheritEnvDefault="${INHERIT_ENV}""# } } }
+      env {
+        ["INHERIT_ENV"] = "\(outer.inheritEnv)"
+      }
+    }
+
+    ["e1"] {
+      cmds { new { cmd { #"echo e1 VAR_INHERITED="${VAR_INHERITED}""# } } }
+    }
+
+    ["e2"] {
+      cmds {
+        new { cmd { #"echo e2 VAR_INHERITED="${VAR_INHERITED}""# } }
+        new { task = "e1" }
+      }
+      env {
+        ["VAR_INHERITED"] = "valOverride"
+      }
+    }
+  }
+}

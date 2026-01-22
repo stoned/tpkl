@@ -1,0 +1,7 @@
+env PKL=
+! exec tpkl eval module.pkl
+stderr 'exec: no command'
+
+env PKL=XXXno-such-executable
+! exec tpkl eval module.pkl
+stderr 'executable file not found in \$PATH'

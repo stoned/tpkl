@@ -1,0 +1,84 @@
+# ensure list runs without any task argument defined
+exec tpkl list
+cmp stdout expected-output-list.txt
+
+## Without task argument
+#
+exec tpkl run sh-env-args-no-inherit
+cmp stdout expected-output-without-arg.txt
+#
+exec tpkl run sh-env-args-inherit
+cmp stdout expected-output-without-arg.txt
+#
+exec tpkl run call-inherit
+cmp stdout expected-output-without-arg.txt
+#
+exec tpkl run call-no-inherit
+cmp stdout expected-output-without-arg.txt
+
+## With task arguments
+exec tpkl run sh-env-args-no-inherit -- 'a a' -b ''
+cmp stdout expected-output-with-args.txt
+#
+exec tpkl run sh-env-args-inherit -- 'a a' -b ''
+cmp stdout expected-output-with-args.txt
+#
+exec tpkl run call-inherit -- 'a a' -b ''
+cmp stdout expected-output-with-args.txt
+#
+exec tpkl run call-no-inherit -- 'a a' -b ''
+cmp stdout expected-output-with-args.txt
+#
+exec tpkl run args-properties
+stdout ^argc=0:$
+stdout ^arg0=:$
+stdout ^arg1=:$
+stdout ^arg2=:$
+stdout ^arg3=:$
+#
+exec tpkl run args-properties -- a b c
+stdout ^argc=3:$
+stdout ^arg0=a:$
+stdout ^arg1=b:$
+stdout ^arg2=c:$
+stdout ^arg3=:$
+#
+exec tpkl run sh-argv
+stdout ^argc=0:$
+stdout ^arg0=sh-argv\[0\]:$
+stdout ^arg1=:$
+stdout ^arg2=:$
+stdout ^arg3=:$
+#
+exec tpkl run sh-argv -- a b
+stdout ^argc=2:$
+stdout ^arg0=sh-argv\[0\]:$
+stdout ^arg1=a:$
+stdout ^arg2=b:$
+stdout ^arg3=:$
+#
+exec tpkl run sh-argv-partial
+stdout ^argc=1:$
+stdout ^arg0=sh-argv-partial\[0\]:$
+stdout ^arg1=arg:$
+stdout ^arg2=:$
+stdout ^arg3=:$
+#
+exec tpkl run sh-argv-partial -- a b
+stdout ^argc=3:$
+stdout ^arg0=sh-argv-partial\[0\]:$
+stdout ^arg1=arg:$
+stdout ^arg2=a:$
+stdout ^arg3=b:$
+#
+exec tpkl run cmd-argv
+cmp stdout oneline.txt
+#
+exec tpkl run cmd-argv -- a b
+stdout '^a b$'
+#
+exec tpkl run cmd-argv-partial
+stdout ^arg$
+#
+exec tpkl run cmd-argv-partial -- a b
+stdout '^arg a b$'

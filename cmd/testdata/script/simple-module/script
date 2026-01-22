@@ -1,0 +1,16 @@
+# with default module in currect directory
+cd $WORK/default
+
+# test tpkl eval
+exec tpkl eval tasks.pkl
+
+# test tpkl run
+exec tpkl run test
+stdout '^this is task test$'
+
+# with specific module in current directory
+cd $WORK/specific
+
+# test tpkl run
+exec tpkl run -m module.pkl test
+stdout '^this is task test from a specific module$'
