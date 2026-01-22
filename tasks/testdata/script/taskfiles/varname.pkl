@@ -1,21 +1,19 @@
 import "tpkl:tpkl"
 tasks: tpkl.Tasks = new {
-  tasks {
-    ["test"] {
-      cmds {
-        """
-        set -euo pipefail
-        basename "${TPKL_FILE_afile}"
-        cat "${AFILE}"
-        echo "${TPKL_FILES_COUNT}"
-        test "${TPKL_FILE_afile}" = "${AFILE}"
-        """ |> tpkl.sh
-      }
-      files {
-        ["afile"] {
-          content = "Hello world!\n"
-          varname = "AFILE"
-        }
+  ["test"] {
+    cmds {
+      """
+      set -euo pipefail
+      basename "${TPKL_FILE_afile}"
+      cat "${AFILE}"
+      echo "${TPKL_FILES_COUNT}"
+      test "${TPKL_FILE_afile}" = "${AFILE}"
+      """ |> tpkl.sh
+    }
+    files {
+      ["afile"] {
+        content = "Hello world!\n"
+        varname = "AFILE"
       }
     }
   }

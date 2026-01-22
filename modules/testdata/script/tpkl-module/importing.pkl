@@ -1,0 +1,10 @@
+import "tpkl:tpkl"
+subject = tpkl.argv.getOrNull(0) ?? "world"
+tasks: tpkl.Tasks = new {
+  ["hello"] {
+    cmds { new { cmd { "echo 'Hello \(subject)'" } } }
+  }
+  ["bye"] {
+    cmds { "echo 'Bye \(subject)'" |> tpkl.sh }
+  }
+}

@@ -11,13 +11,11 @@ function Comp(n: Number): Number =
   )
     Comp(n + 1)
 tasks: tpkl.Tasks = new {
-  tasks {
-    ["test"] {
-      cmds {
-        new {
-          cmd { "echo test task; echo \(bar)" }
-          embeddedShell = true
-        }
+  ["test"] {
+    cmds {
+      new {
+        cmd { "echo test task; echo \(bar)" }
+        embeddedShell = true
       }
     }
   }

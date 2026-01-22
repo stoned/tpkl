@@ -191,11 +191,11 @@ type planNode struct {
 
 // planTask returns an error if it determines the task can't be run.
 // XXX use this function to also detect/warn about task file shadowing ?
-func planTask(_ context.Context, start string, tasks *tpkl.Tasks) error {
+func planTask(_ context.Context, start string, tasks Tasks) error {
 	var plan func(string, string) (*planNode, error)
 
 	taskExists := func(n string) bool {
-		_, ok := tasks.Tasks[n]
+		_, ok := tasks[n]
 
 		return ok
 	}
@@ -207,7 +207,7 @@ func planTask(_ context.Context, start string, tasks *tpkl.Tasks) error {
 	planGraph := gograph.New[string](gograph.Acyclic())
 
 	plan = func(parent, name string) (*planNode, error) {
-		task := tasks.Tasks[name]
+		task := tasks[name]
 		node := &planNode{task: task}
 
 		for _, cmd := range task.GetCmds() {
@@ -253,7 +253,7 @@ func planTask(_ context.Context, start string, tasks *tpkl.Tasks) error {
 }
 
 func runTask(ctx context.Context, taskName string,
-	tasks *tpkl.Tasks, enclosingFrame *Frame,
+	tasks Tasks, enclosingFrame *Frame,
 	termChannel chan any, termWaitGroup *sync.WaitGroup,
 ) error {
 	var cmdErr error
@@ -263,11 +263,11 @@ func runTask(ctx context.Context, taskName string,
 
 	logger.Info().Msg("task")
 
-	if _, ok := tasks.Tasks[taskName]; !ok {
+	if _, ok := tasks[taskName]; !ok {
 		return fmt.Errorf("%w: `%s`", ErrUnknownTask, taskName)
 	}
 
-	task := tasks.Tasks[taskName]
+	task := tasks[taskName]
 	frame := newTaskFrame(taskName, task, enclosingFrame)
 
 	taskFiles, err := newTaskFiles(task, frame, termChannel, termWaitGroup)

@@ -60,6 +60,9 @@ var (
 	ErrUnknownOption = errors.New("unknown option")
 )
 
+// Tasks is a mapping from string to tpkl.Task.
+type Tasks map[string]tpkl.Task
+
 // CmdError wraps an error encountered running a command.
 type CmdError struct {
 	ExitCode int
@@ -183,12 +186,15 @@ type verbosityOption struct {
 }
 
 // ModuleTasks returns tpkl Tasks defined in module.
-func ModuleTasks(ctx context.Context, module string, options ...func(*pkl.EvaluatorOptions)) (*tpkl.Tasks, error) {
+func ModuleTasks(ctx context.Context, module string,
+	options ...func(*pkl.EvaluatorOptions),
+) (Tasks, error) {
 	var (
-		out       *tpkl.Tasks
 		err       error
 		evaluator pkl.Evaluator
 	)
+
+	out := make(Tasks)
 
 	manager := pkl.NewEvaluatorManager()
 

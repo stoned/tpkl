@@ -7,11 +7,9 @@ $ cat tasks.pkl
 import "tpkl:tpkl"
 subject = tpkl.argv.getOrNull(0) ?? "world"
 tasks: tpkl.Tasks = new {
-  tasks {
-    ["hello"] {
-      cmds {
-        "echo Hello, \(subject)!" |> tpkl.sh
-      }
+  ["hello"] {
+    cmds {
+      "echo Hello, \(subject)!" |> tpkl.sh
     }
   }
 }

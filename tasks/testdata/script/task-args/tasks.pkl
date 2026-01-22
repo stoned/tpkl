@@ -24,102 +24,100 @@ shArgs: tpkl.Command =
   """ |> tpkl.sh
 
 tasks: tpkl.Tasks = new {
-  tasks {
-    // Task arguments from environment variables without environment
-    // inheritance
-    ["sh-env-args-no-inherit"] {
-      inheritEnv = false
-      cmds {
-        shArgsFromEnv
-      }
+  // Task arguments from environment variables without environment
+  // inheritance
+  ["sh-env-args-no-inherit"] {
+    inheritEnv = false
+    cmds {
+      shArgsFromEnv
     }
+  }
 
-    // Task arguments from environment variables with environment
-    // inheritance
-    ["sh-env-args-inherit"] {
-      inheritEnv = true
-      cmds {
-        shArgsFromEnv
-      }
+  // Task arguments from environment variables with environment
+  // inheritance
+  ["sh-env-args-inherit"] {
+    inheritEnv = true
+    cmds {
+      shArgsFromEnv
     }
+  }
 
-    // Call task getting arguments from environment variables without
-    // environment inheritance
-    ["call-no-inherit"] {
-      cmds {
-        "sh-env-args-no-inherit" |> tpkl.task
-      }
+  // Call task getting arguments from environment variables without
+  // environment inheritance
+  ["call-no-inherit"] {
+    cmds {
+      "sh-env-args-no-inherit" |> tpkl.task
     }
+  }
 
-    // Call task getting arguments from environment variables with
-    // environment inheritance
-    ["call-inherit"] {
-      cmds {
-        "sh-env-args-inherit" |> tpkl.task
-      }
+  // Call task getting arguments from environment variables with
+  // environment inheritance
+  ["call-inherit"] {
+    cmds {
+      "sh-env-args-inherit" |> tpkl.task
     }
+  }
 
-    // Task arguments from property and helper method
-    ["args-properties"] {
-      cmds {
-        """
-        echo 'argc=\(tpkl.argc):'
-        echo 'arg0=\(tpkl.arg(0)):'
-        echo 'arg1=\(tpkl.arg(1)):'
-        echo 'arg2=\(tpkl.arg(2)):'
-        echo 'arg3=\(tpkl.arg(3)):'
-        """ |> tpkl.sh
-      }
+  // Task arguments from property and helper method
+  ["args-properties"] {
+    cmds {
+      """
+      echo 'argc=\(tpkl.argc):'
+      echo 'arg0=\(tpkl.arg(0)):'
+      echo 'arg1=\(tpkl.arg(1)):'
+      echo 'arg2=\(tpkl.arg(2)):'
+      echo 'arg3=\(tpkl.arg(3)):'
+      """ |> tpkl.sh
     }
+  }
 
-    // Task arguments to embedded shell command from listing property
-    ["sh-argv"] {
-      cmds {
-        (shArgs) {
-          cmd {
-            ...tpkl.argv
-          }
+  // Task arguments to embedded shell command from listing property
+  ["sh-argv"] {
+    cmds {
+      (shArgs) {
+        cmd {
+          ...tpkl.argv
         }
       }
     }
+  }
 
-    // Task arguments to embedded shell command from listing property
-    // with prepended argument
-    ["sh-argv-partial"] {
-      cmds {
-        (shArgs) {
-          cmd {
-            "arg"
-            ...tpkl.argv
-          }
+  // Task arguments to embedded shell command from listing property
+  // with prepended argument
+  ["sh-argv-partial"] {
+    cmds {
+      (shArgs) {
+        cmd {
+          "arg"
+          ...tpkl.argv
         }
       }
     }
+  }
 
-    // Task arguments to command from listing property
-    ["cmd-argv"] {
-      cmds {
-        new {
-          embeddedShell = false
-          cmd {
-            "echo"
-            ...tpkl.argv
-          }
+  // Task arguments to command from listing property
+  ["cmd-argv"] {
+    cmds {
+      new {
+        embeddedShell = false
+        cmd {
+          "echo"
+          ...tpkl.argv
         }
       }
     }
+  }
 
-    // Task arguments to command from listing property with // prepended
-    // argument
-    ["cmd-argv-partial"] {
-      cmds {
-        new {
-          embeddedShell = false
-          cmd {
-            "echo"
-            "arg"
-            ...tpkl.argv
-          }
+  // Task arguments to command from listing property with // prepended
+  // argument
+  ["cmd-argv-partial"] {
+    cmds {
+      new {
+        embeddedShell = false
+        cmd {
+          "echo"
+          "arg"
+          ...tpkl.argv
         }
       }
     }

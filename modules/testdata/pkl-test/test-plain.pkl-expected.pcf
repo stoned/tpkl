@@ -1,48 +1,44 @@
 examples {
   ["default"] {
     new {
-      tasks {
-        ["default"] {
-          desc = null
-          cmds {
-            new {
-              cmd {
-                "echo default"
-              }
-              task = null
-              embeddedShell = true
-              mustSucceed = true
+      ["default"] {
+        desc = null
+        cmds {
+          new {
+            cmd {
+              "echo default"
             }
+            task = null
+            embeddedShell = true
+            mustSucceed = true
           }
-          env {}
-          files {}
-          inheritEnv = true
-          workingDir = "."
         }
+        env {}
+        files {}
+        inheritEnv = true
+        workingDir = "."
       }
     }
   }
   ["cmd"] {
     new {
-      tasks {
-        ["cmd"] {
-          desc = null
-          cmds {
-            new {
-              cmd {
-                "echo"
-                "cmd"
-              }
-              task = null
-              embeddedShell = false
-              mustSucceed = true
+      ["cmd"] {
+        desc = null
+        cmds {
+          new {
+            cmd {
+              "echo"
+              "cmd"
             }
+            task = null
+            embeddedShell = false
+            mustSucceed = true
           }
-          env {}
-          files {}
-          inheritEnv = true
-          workingDir = "."
         }
+        env {}
+        files {}
+        inheritEnv = true
+        workingDir = "."
       }
     }
   }

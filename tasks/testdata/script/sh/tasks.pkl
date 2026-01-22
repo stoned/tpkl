@@ -1,99 +1,97 @@
 import "tpkl:tpkl"
 tasks: tpkl.Tasks = new {
-  tasks {
-    ["empty-script"] {
-      cmds {
-        new {
-          cmd { "" }
-          embeddedShell = true
-        }
+  ["empty-script"] {
+    cmds {
+      new {
+        cmd { "" }
+        embeddedShell = true
       }
     }
+  }
 
-    ["simple"] {
-      cmds {
-        new {
-          cmd { #"T=s1; echo "$0-${T}""# }
-          embeddedShell = true
-        }
+  ["simple"] {
+    cmds {
+      new {
+        cmd { #"T=s1; echo "$0-${T}""# }
+        embeddedShell = true
       }
     }
+  }
 
-    ["default"] {
-      cmds {
-        new {
-          cmd { #"T=s2; echo "$0-${T}""# }
-        }
-        new {
-          cmd { #"T=s2; echo "$0-${T}""# }
-        }
+  ["default"] {
+    cmds {
+      new {
+        cmd { #"T=s2; echo "$0-${T}""# }
+      }
+      new {
+        cmd { #"T=s2; echo "$0-${T}""# }
       }
     }
+  }
 
-    ["params"] {
-      local script: String =
-        """
-        echo "0:$0"
-        echo "1:$1"
-        echo "2:$2"
-        echo "3:$3"
-        echo "#:$#"
-        """
-      cmds {
-        new {
-          cmd {
-            script
-            "--"
-            "PARAM-1"
-            "PARAM-2"
-          }
+  ["params"] {
+    local script: String =
+      """
+      echo "0:$0"
+      echo "1:$1"
+      echo "2:$2"
+      echo "3:$3"
+      echo "#:$#"
+      """
+    cmds {
+      new {
+        cmd {
+          script
+          "--"
+          "PARAM-1"
+          "PARAM-2"
         }
+      }
 
-        new {
-          cmd {
-            script
-            "PARAM-1"
-            "PARAM-2"
-          }
+      new {
+        cmd {
+          script
+          "PARAM-1"
+          "PARAM-2"
         }
+      }
 
-        new {
-          cmd {
-            script
-            "PARAM-1"
-            "PARAM-2"
-            "PARAM-3"
-          }
+      new {
+        cmd {
+          script
+          "PARAM-1"
+          "PARAM-2"
+          "PARAM-3"
         }
+      }
 
-        new {
-          cmd {
-            script
-            "-x"
-            "PARAM-1"
-            "PARAM-2"
-            "PARAM-3"
-          }
+      new {
+        cmd {
+          script
+          "-x"
+          "PARAM-1"
+          "PARAM-2"
+          "PARAM-3"
         }
+      }
 
-        new {
-          cmd {
-            script
-            "--"
-            "-x"
-            "PARAM-1"
-            "PARAM-2"
-            "PARAM-3"
-          }
+      new {
+        cmd {
+          script
+          "--"
+          "-x"
+          "PARAM-1"
+          "PARAM-2"
+          "PARAM-3"
         }
+      }
 
-        new {
-          cmd {
-            #"echo "0:$0"; echo "$@""#
-            "PARAM-1"
-            "PARAM-2"
-            "PARAM-3"
-          }
+      new {
+        cmd {
+          #"echo "0:$0"; echo "$@""#
+          "PARAM-1"
+          "PARAM-2"
+          "PARAM-3"
         }
       }
     }

@@ -1,11 +1,9 @@
 import "tpkl:tpkl"
 foo = read("prop:foo")
 tasks = new tpkl.Tasks {
-  tasks {
-    ["top"] {
-      cmds {
-        "echo \(foo)" |> tpkl.sh
-      }
+  ["top"] {
+    cmds {
+      "echo \(foo)" |> tpkl.sh
     }
   }
 }

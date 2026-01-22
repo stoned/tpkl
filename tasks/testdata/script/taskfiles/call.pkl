@@ -1,75 +1,73 @@
 import "tpkl:tpkl"
 tasks: tpkl.Tasks = new {
-  tasks {
-    ["top"] {
-      cmds {
-        """
-        set -euo pipefail
+  ["top"] {
+    cmds {
+      """
+      set -euo pipefail
 
-        cat "${TPKL_FILE_one}"
+      cat "${TPKL_FILE_one}"
 
-        echo "${TPKL_FILES_DIR}" > "${WORK}/${TPKL_TASK}-${TPKL_CURRENT_TASK}-files-dir.out"
+      echo "${TPKL_FILES_DIR}" > "${WORK}/${TPKL_TASK}-${TPKL_CURRENT_TASK}-files-dir.out"
 
-        test "$(basename "${TPKL_FILE_one}")" = one
+      test "$(basename "${TPKL_FILE_one}")" = one
 
-        test "${TPKL_FILES_COUNT}" -eq 1
+      test "${TPKL_FILES_COUNT}" -eq 1
 
-        test "$(ls "${TPKL_FILES_DIR}" | wc -l)" -eq 1
+      test "$(ls "${TPKL_FILES_DIR}" | wc -l)" -eq 1
 
-        ls "${TPKL_FILES_DIR}" > "${WORK}/ls1.out"
-        """ |> tpkl.sh
+      ls "${TPKL_FILES_DIR}" > "${WORK}/ls1.out"
+      """ |> tpkl.sh
 
-        tpkl.task("sub")
+      tpkl.task("sub")
 
-        """
-        set -euo pipefail
+      """
+      set -euo pipefail
 
-        cat "${TPKL_FILE_one}"
+      cat "${TPKL_FILE_one}"
 
-        test "${TPKL_FILES_COUNT}" -eq 1
+      test "${TPKL_FILES_COUNT}" -eq 1
 
-        test "$(ls "${TPKL_FILES_DIR}" | wc -l)" -eq 1
+      test "$(ls "${TPKL_FILES_DIR}" | wc -l)" -eq 1
 
-        ls "${TPKL_FILES_DIR}" > "${WORK}/ls2.out"
-        """ |> tpkl.sh
-      }
-      files {
-        ["one"] {
-          content = "TOP\n"
-        }
+      ls "${TPKL_FILES_DIR}" > "${WORK}/ls2.out"
+      """ |> tpkl.sh
+    }
+    files {
+      ["one"] {
+        content = "TOP\n"
       }
     }
+  }
 
-    ["sub"] {
-      cmds {
-        """
-        set -euo pipefail
+  ["sub"] {
+    cmds {
+      """
+      set -euo pipefail
 
-        cat "${TPKL_FILE_one}"
-        cat "${TPKL_FILE_two}"
+      cat "${TPKL_FILE_one}"
+      cat "${TPKL_FILE_two}"
 
-        echo "${TPKL_FILES_DIR}" > "${WORK}/${TPKL_TASK}-${TPKL_CURRENT_TASK}-files-dir.out"
+      echo "${TPKL_FILES_DIR}" > "${WORK}/${TPKL_TASK}-${TPKL_CURRENT_TASK}-files-dir.out"
 
-        test "$(basename "${TPKL_FILE_one}")" = one
-        test "$(basename "${TPKL_FILE_two}")" = two
+      test "$(basename "${TPKL_FILE_one}")" = one
+      test "$(basename "${TPKL_FILE_two}")" = two
 
-        case "${TPKL_TASK}" in
-          top) EXPECTED_FILES_COUNT=3 ;;
-          *) EXPECTED_FILES_COUNT=2 ;;
-        esac
+      case "${TPKL_TASK}" in
+        top) EXPECTED_FILES_COUNT=3 ;;
+        *) EXPECTED_FILES_COUNT=2 ;;
+      esac
 
-        test "${TPKL_FILES_COUNT}" -eq "${EXPECTED_FILES_COUNT}"
+      test "${TPKL_FILES_COUNT}" -eq "${EXPECTED_FILES_COUNT}"
 
-        test "$(ls "${TPKL_FILES_DIR}" | wc -l)" -eq 2
-        """ |> tpkl.sh
+      test "$(ls "${TPKL_FILES_DIR}" | wc -l)" -eq 2
+      """ |> tpkl.sh
+    }
+    files {
+      ["one"] {
+        content = "ONE\n"
       }
-      files {
-        ["one"] {
-          content = "ONE\n"
-        }
-        ["two"] {
-          content = "TWO\n"
-        }
+      ["two"] {
+        content = "TWO\n"
       }
     }
   }

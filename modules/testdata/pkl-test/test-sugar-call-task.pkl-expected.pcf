@@ -1,43 +1,39 @@
 examples {
   ["task-anonymous-function"] {
     new {
-      tasks {
-        ["task-anonymous-function"] {
-          desc = null
-          cmds {
-            new {
-              cmd {}
-              task = "called-task"
-              embeddedShell = false
-              mustSucceed = true
-            }
+      ["task-anonymous-function"] {
+        desc = null
+        cmds {
+          new {
+            cmd {}
+            task = "called-task"
+            embeddedShell = false
+            mustSucceed = true
           }
-          env {}
-          files {}
-          inheritEnv = true
-          workingDir = "."
         }
+        env {}
+        files {}
+        inheritEnv = true
+        workingDir = "."
       }
     }
   }
   ["task-function"] {
     new {
-      tasks {
-        ["task-function"] {
-          desc = null
-          cmds {
-            new {
-              cmd {}
-              task = "called-task"
-              embeddedShell = false
-              mustSucceed = true
-            }
+      ["task-function"] {
+        desc = null
+        cmds {
+          new {
+            cmd {}
+            task = "called-task"
+            embeddedShell = false
+            mustSucceed = true
           }
-          env {}
-          files {}
-          inheritEnv = true
-          workingDir = "."
         }
+        env {}
+        files {}
+        inheritEnv = true
+        workingDir = "."
       }
     }
   }

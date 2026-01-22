@@ -1,22 +1,20 @@
 import "tpkl:tpkl"
 tasks: tpkl.Tasks = new {
-  tasks {
-    ["workingDirDefaultValue"] {
-      cmds {
-        new {
-          cmd { "pwd > output1.txt" }
-          embeddedShell = true
-        }
+  ["workingDirDefaultValue"] {
+    cmds {
+      new {
+        cmd { "pwd > output1.txt" }
+        embeddedShell = true
       }
     }
-    ["subdir"] {
-      cmds {
-        new {
-          cmd { "pwd > output2.txt" }
-          embeddedShell = true
-        }
+  }
+  ["subdir"] {
+    cmds {
+      new {
+        cmd { "pwd > output2.txt" }
+        embeddedShell = true
       }
-      workingDir = "subdir"
     }
+    workingDir = "subdir"
   }
 }

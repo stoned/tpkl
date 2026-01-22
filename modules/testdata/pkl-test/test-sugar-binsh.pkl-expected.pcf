@@ -1,244 +1,226 @@
 examples {
   ["binsh-anonymous-function-with-string"] {
     new {
-      tasks {
-        ["binsh-anonymous-function-with-string"] {
-          desc = null
-          cmds {
-            new {
-              cmd {
-                "/bin/sh"
-                "-c"
-                "echo start"
-              }
-              task = null
-              embeddedShell = false
-              mustSucceed = true
+      ["binsh-anonymous-function-with-string"] {
+        desc = null
+        cmds {
+          new {
+            cmd {
+              "/bin/sh"
+              "-c"
+              "echo start"
             }
+            task = null
+            embeddedShell = false
+            mustSucceed = true
           }
-          env {}
-          files {}
-          inheritEnv = true
-          workingDir = "."
         }
+        env {}
+        files {}
+        inheritEnv = true
+        workingDir = "."
       }
     }
   }
   ["binsh-anonymous-function-with-list"] {
     new {
-      tasks {
-        ["binsh-anonymous-function-with-list"] {
-          desc = null
-          cmds {
-            new {
-              cmd {
-                "/bin/sh"
-                "-c"
-                """
-                echo start
-                echo end
-                """
-              }
-              task = null
-              embeddedShell = false
-              mustSucceed = true
+      ["binsh-anonymous-function-with-list"] {
+        desc = null
+        cmds {
+          new {
+            cmd {
+              "/bin/sh"
+              "-c"
+              """
+              echo start
+              echo end
+              """
             }
+            task = null
+            embeddedShell = false
+            mustSucceed = true
           }
-          env {}
-          files {}
-          inheritEnv = true
-          workingDir = "."
         }
+        env {}
+        files {}
+        inheritEnv = true
+        workingDir = "."
       }
     }
   }
   ["binsh-anonymous-function-with-listing"] {
     new {
-      tasks {
-        ["binsh-anonymous-function-with-listing"] {
-          desc = null
-          cmds {
-            new {
-              cmd {
-                "/bin/sh"
-                "-c"
-                """
-                echo start
-                echo end
-                """
-              }
-              task = null
-              embeddedShell = false
-              mustSucceed = true
+      ["binsh-anonymous-function-with-listing"] {
+        desc = null
+        cmds {
+          new {
+            cmd {
+              "/bin/sh"
+              "-c"
+              """
+              echo start
+              echo end
+              """
             }
+            task = null
+            embeddedShell = false
+            mustSucceed = true
           }
-          env {}
-          files {}
-          inheritEnv = true
-          workingDir = "."
         }
+        env {}
+        files {}
+        inheritEnv = true
+        workingDir = "."
       }
     }
   }
   ["binsh-anonymous-function-with-dynamic"] {
     new {
-      tasks {
-        ["binsh-anonymous-function-with-dynamic"] {
-          desc = null
-          cmds {
-            new {
-              cmd {
-                "/bin/sh"
-                "-c"
-                """
-                echo start
-                echo end
-                """
-              }
-              task = null
-              embeddedShell = false
-              mustSucceed = true
+      ["binsh-anonymous-function-with-dynamic"] {
+        desc = null
+        cmds {
+          new {
+            cmd {
+              "/bin/sh"
+              "-c"
+              """
+              echo start
+              echo end
+              """
             }
+            task = null
+            embeddedShell = false
+            mustSucceed = true
           }
-          env {}
-          files {}
-          inheritEnv = true
-          workingDir = "."
         }
+        env {}
+        files {}
+        inheritEnv = true
+        workingDir = "."
       }
     }
   }
   ["binsh-function-with-string"] {
     new {
-      tasks {
-        ["binsh-function-with-string"] {
-          desc = null
-          cmds {
-            new {
-              cmd {
-                "/bin/sh"
-                "-c"
-                "echo start"
-              }
-              task = null
-              embeddedShell = false
-              mustSucceed = true
+      ["binsh-function-with-string"] {
+        desc = null
+        cmds {
+          new {
+            cmd {
+              "/bin/sh"
+              "-c"
+              "echo start"
             }
+            task = null
+            embeddedShell = false
+            mustSucceed = true
           }
-          env {}
-          files {}
-          inheritEnv = true
-          workingDir = "."
         }
+        env {}
+        files {}
+        inheritEnv = true
+        workingDir = "."
       }
     }
   }
   ["binsh-function-with-list"] {
     new {
-      tasks {
-        ["binsh-function-with-list"] {
-          desc = null
-          cmds {
-            new {
-              cmd {
-                "/bin/sh"
-                "-c"
-                """
-                echo start
-                echo end
-                """
-              }
-              task = null
-              embeddedShell = false
-              mustSucceed = true
+      ["binsh-function-with-list"] {
+        desc = null
+        cmds {
+          new {
+            cmd {
+              "/bin/sh"
+              "-c"
+              """
+              echo start
+              echo end
+              """
             }
+            task = null
+            embeddedShell = false
+            mustSucceed = true
           }
-          env {}
-          files {}
-          inheritEnv = true
-          workingDir = "."
         }
+        env {}
+        files {}
+        inheritEnv = true
+        workingDir = "."
       }
     }
   }
   ["binsh-function-with-listing"] {
     new {
-      tasks {
-        ["binsh-function-with-listing"] {
-          desc = null
-          cmds {
-            new {
-              cmd {
-                "/bin/sh"
-                "-c"
-                """
-                echo start
-                echo end
-                """
-              }
-              task = null
-              embeddedShell = false
-              mustSucceed = true
+      ["binsh-function-with-listing"] {
+        desc = null
+        cmds {
+          new {
+            cmd {
+              "/bin/sh"
+              "-c"
+              """
+              echo start
+              echo end
+              """
             }
+            task = null
+            embeddedShell = false
+            mustSucceed = true
           }
-          env {}
-          files {}
-          inheritEnv = true
-          workingDir = "."
         }
+        env {}
+        files {}
+        inheritEnv = true
+        workingDir = "."
       }
     }
   }
   ["binsh-function-with-dynamic"] {
     new {
-      tasks {
-        ["binsh-function-with-dynamic"] {
-          desc = null
-          cmds {
-            new {
-              cmd {
-                "/bin/sh"
-                "-c"
-                """
-                echo start
-                echo end
-                """
-              }
-              task = null
-              embeddedShell = false
-              mustSucceed = true
+      ["binsh-function-with-dynamic"] {
+        desc = null
+        cmds {
+          new {
+            cmd {
+              "/bin/sh"
+              "-c"
+              """
+              echo start
+              echo end
+              """
             }
+            task = null
+            embeddedShell = false
+            mustSucceed = true
           }
-          env {}
-          files {}
-          inheritEnv = true
-          workingDir = "."
         }
+        env {}
+        files {}
+        inheritEnv = true
+        workingDir = "."
       }
     }
   }
   ["binsh-amending"] {
     new {
-      tasks {
-        ["binsh-amending"] {
-          desc = null
-          cmds {
-            new {
-              cmd {
-                "/bin/sh"
-                "-c"
-                "echo start"
-              }
-              task = null
-              embeddedShell = false
-              mustSucceed = true
+      ["binsh-amending"] {
+        desc = null
+        cmds {
+          new {
+            cmd {
+              "/bin/sh"
+              "-c"
+              "echo start"
             }
+            task = null
+            embeddedShell = false
+            mustSucceed = true
           }
-          env {}
-          files {}
-          inheritEnv = true
-          workingDir = "."
         }
+        env {}
+        files {}
+        inheritEnv = true
+        workingDir = "."
       }
     }
   }

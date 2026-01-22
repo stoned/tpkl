@@ -1,0 +1,11 @@
+extends "tpkl:tpkl"
+import "tpkl:tpkl"
+subject = argv.getOrNull(0) ?? "world"
+tasks {
+  ["hello"] {
+    cmds { new { cmd { "echo 'Hello \(subject)'" } } }
+  }
+  ["bye"] {
+    cmds { "echo 'Bye \(subject)'" |> tpkl.sh }
+  }
+}

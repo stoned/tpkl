@@ -18,12 +18,10 @@ func testModule(t *testing.T) string {
 	moduleSrc := `
 import "tpkl:tpkl"
 tasks: tpkl.Tasks = new {
-  tasks {
-    ["c"] {
-      cmds {
-        new {
-          cmd { "echo 'Hello, world!'" }
-        }
+  ["c"] {
+    cmds {
+      new {
+        cmd { "echo 'Hello, world!'" }
       }
     }
   }
