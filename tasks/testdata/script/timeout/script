@@ -2,22 +2,22 @@
 env TASK_SLEEP_DURATION=3
 
 ! exec tpkl run -t 500ms cmd-sleep
-stdout 'task timed out'
+stderr 'task timed out'
 
 ! exec tpkl run -t 500ms sh-sleep
-stdout 'task timed out'
+stderr 'task timed out'
 
 ! exec tpkl run -t 500ms bash-sleep
-stdout 'task timed out'
+stderr 'task timed out'
 
 #
 env TASK_SLEEP_DURATION=1
 
 exec tpkl run -t 1m cmd-sleep
-! stdout 'task timed out'
+! stderr 'task timed out'
 
 exec tpkl run -t 1m sh-sleep
-! stdout 'task timed out'
+! stderr 'task timed out'
 
 exec tpkl run -t 1m bash-sleep
-! stdout 'task timed out'
+! stderr 'task timed out'

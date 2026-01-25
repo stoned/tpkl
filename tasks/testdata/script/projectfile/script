@@ -1,6 +1,6 @@
 #
 ! exec tpkl run -m top.pkl top
-stdout 'Cannot find resource `prop:foo`'
+stderr 'Cannot find resource `prop:foo`'
 #
 cp PklProject-foo.pkl PklProject
 exec tpkl run -m top.pkl top

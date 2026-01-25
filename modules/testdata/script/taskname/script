@@ -6,3 +6,10 @@ stderr '–– Pkl Error ––\nType constraint `!isEmpty && !isBlank` violated
 
 ! exec tpkl eval blank-task-name-2.pkl
 stderr '–– Pkl Error ––\nType constraint `!isEmpty && !isBlank` violated.'
+
+exec tpkl run -m task-name-with-blank.pkl 'a '
+stdout '^run-a$'
+
+# note: there is litteral TAB in the following line
+exec tpkl run -m task-name-with-blank.pkl ' b	'
+stdout '^run-b$'

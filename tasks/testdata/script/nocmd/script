@@ -1,7 +1,7 @@
 # No command to exec
 ! exec tpkl run nocmd
-stdout 'exec: no command'
+stderr 'exec: no command'
 
 # No such command
 ! exec tpkl run nosuchcmd
-stdout 'exec: .*no-such-cmd-test.*: executable file not found'
+stderr 'exec: .*no-such-cmd-test.*: executable file not found'

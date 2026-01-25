@@ -1,3 +1,3 @@
 ! exec tpkl run -t 500ms test
-stdout 'task timed out'
+stderr 'task timed out'
 ! stdout '^test task$'

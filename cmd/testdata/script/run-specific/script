@@ -1,5 +1,5 @@
 ! exec tpkl run -m module.pkl no-such-task
-stdout 'unknown task: `no-such-task`'
+stderr 'unknown task: `no-such-task`'
 
 exec tpkl run -m module.pkl true
 empty stdout
