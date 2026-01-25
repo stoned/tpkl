@@ -1,11 +1,11 @@
 #
 ! exec tpkl run test
-stdout '–– Pkl Error ––'
-stdout 'Cannot find resource `env:VAR1`'
+stderr '–– Pkl Error ––'
+stderr 'Cannot find resource `env:VAR1`'
 #
 ! exec tpkl list
-stdout '–– Pkl Error ––'
-stdout 'Cannot find resource `env:VAR1`'
+stderr '–– Pkl Error ––'
+stderr 'Cannot find resource `env:VAR1`'
 #
 exec tpkl list -e VAR1 -e VAR2
 stdout '^t$'

@@ -1,0 +1,5 @@
+import "tpkl:tpkl"
+tasks: tpkl.Tasks = new {
+  ["a "] { cmds { new { cmd { "echo run-a" } } } }
+  [" b\t"] { cmds { new { cmd { "echo run-b" } } } }
+}

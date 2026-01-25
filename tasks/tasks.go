@@ -226,7 +226,7 @@ func ModuleTasks(ctx context.Context, module string,
 		evaluator, err = manager.NewEvaluator(ctx, opts...)
 	} else {
 		logger := log.FromContext(ctx).With().Logger()
-		logger.Debug().Str("projectdir", projectDir.String()).Msg("project")
+		logger.Debug().Str("projectdir", projectDir.String()).Send()
 		evaluator, err = manager.NewProjectEvaluator(ctx, projectDir, opts...)
 	}
 
@@ -267,7 +267,7 @@ func useModule(ctx context.Context, module string, workingDir string) (string, e
 	}
 
 	logger := log.FromContext(ctx)
-	logger.Debug().Str("module", module).Msg("tasks")
+	logger.Debug().Str("module", module).Send()
 
 	return module, err
 }

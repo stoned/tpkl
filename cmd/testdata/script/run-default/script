@@ -1,11 +1,11 @@
 ! exec tpkl run no-such-task
-stdout 'unknown task: `no-such-task`'
+stderr 'unknown task: `no-such-task`'
 
 exec tpkl run true
 empty stdout
 
 exec tpkl run -v true
-stdout task=true
+stderr task=true
 
 exec tpkl run true -p MyProp
 exec tpkl run true --property MyProp --property MyProp2 -p MyProp3
@@ -18,9 +18,10 @@ mkdir dir1/dir2/dir3
 cd dir1/dir2/dir3
 
 exec tpkl run -v true
-stdout task=true
+stderr task=true
 
 exec tpkl run true
 empty stdout
+empty stderr
 
 cd $WORK

@@ -1,9 +1,9 @@
 #
 ! exec tpkl run test
-stdout '–– Pkl Error ––'
+stderr '–– Pkl Error ––'
 #
 ! exec tpkl list
-stdout '–– Pkl Error ––'
+stderr '–– Pkl Error ––'
 #
 exec tpkl list -p MyProperty -p MyOtherProperty
 stdout '^ttrue$'

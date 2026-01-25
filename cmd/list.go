@@ -54,8 +54,7 @@ type ListRunner struct {
 
 // Run runs the 'list' command.
 func (r *ListRunner) Run(_ *cobra.Command, _ []string) {
-	logger := log.New("list", r.verbose)
-	ctx := logger.WithContext(context.Background())
+	ctx, logger := log.ContextWithLogger(context.Background(), "list", r.verbose)
 
 	err := tasks.List(ctx, os.Stdout, r.format.String(),
 		tasks.WithModule(r.module),

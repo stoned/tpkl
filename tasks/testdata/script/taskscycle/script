@@ -11,19 +11,19 @@ cmp stdout nocycle2-run.txt
 exec tpkl list -m cycle1.pkl
 cmp stdout cycle1-list.txt
 ! exec tpkl run -m cycle1.pkl A
-stdout 'tasks cycle:'
+stderr 'tasks cycle:'
 
 exec tpkl list -m cycle2.pkl
 cmp stdout cycle2-list.txt
 ! exec tpkl run -m cycle2.pkl A
-stdout 'tasks cycle:'
+stderr 'tasks cycle:'
 
 exec tpkl list -m cycle3.pkl
 cmp stdout cycle3-list.txt
 ! exec tpkl run -m cycle3.pkl A
-stdout 'tasks cycle:'
+stderr 'tasks cycle:'
 
 exec tpkl list -m cycle4.pkl
 cmp stdout cycle4-list.txt
 ! exec tpkl run -m cycle4.pkl A
-stdout 'plan for task `A`: unknown task: `Z`'
+stderr 'plan for task `A`: unknown task: `Z`'

@@ -261,8 +261,6 @@ func runTask(ctx context.Context, taskName string,
 	logger := log.FromContext(ctx).With().Str("cur", taskName).Logger()
 	ctx = logger.WithContext(ctx)
 
-	logger.Info().Msg("task")
-
 	if _, ok := tasks[taskName]; !ok {
 		return fmt.Errorf("%w: `%s`", ErrUnknownTask, taskName)
 	}
@@ -286,14 +284,19 @@ func runTask(ctx context.Context, taskName string,
 	for cmdIdx, cmd := range task.GetCmds() {
 		switch {
 		case cmd.Task != nil:
+			logger.Info().Str("call", *cmd.Task).Send()
 			cmdErr = runTask(ctx, *cmd.Task, tasks, frame, termChannel, termWaitGroup)
+
 		case cmd.EmbeddedShell:
-			logger.Info().Str("run", "shell").Msg(displayCommand(cmd.Cmd))
+			logger.Info().Str("shell", displayCommand(cmd.Cmd)).Send()
+			log.DebugShell(ctx, cmd.Cmd)
 
 			scriptName := fmt.Sprintf("%s[%d]", taskName, cmdIdx)
 			cmdErr = runShell(ctx, scriptName, cmd.Cmd, task.GetWorkingDir(), frame.EnvList())
+
 		default:
-			logger.Info().Str("run", "command").Msg(displayCommand(cmd.Cmd))
+			logger.Info().Str("cmd", displayCommand(cmd.Cmd)).Send()
+			log.DebugCmd(ctx, cmd.Cmd)
 
 			cmdErr = runCmd(ctx, cmd.Cmd, task.GetWorkingDir(), frame.EnvList())
 		}

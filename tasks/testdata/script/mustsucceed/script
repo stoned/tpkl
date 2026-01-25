@@ -10,4 +10,4 @@ empty stdout
 empty stderr
 #
 exec tpkl run -v t3
-stdout 'error="exit status 1"'
+stderr 'error="exit status 1"'

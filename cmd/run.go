@@ -51,8 +51,7 @@ type RunRunner struct {
 
 // Run runs the 'run' command.
 func (r *RunRunner) Run(_ *cobra.Command, args []string) {
-	logger := log.New("run", r.verbose)
-	ctx := logger.WithContext(context.Background())
+	ctx, logger := log.ContextWithLogger(context.Background(), "run", r.verbose)
 
 	err := tasks.Run(ctx, args[0],
 		tasks.WithArgs(args[1:]),
@@ -62,7 +61,7 @@ func (r *RunRunner) Run(_ *cobra.Command, args []string) {
 		tasks.WithVerbosity(r.verbose), // XXX not needed anymore?
 		tasks.WithTimeout(r.timeout))
 	if err != nil {
-		log.AsFatal(&logger, err.Error())
+		log.AsFatal(logger, err.Error())
 
 		e := (&tasks.CmdError{})
 		if errors.As(err, &e) {
