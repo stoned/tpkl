@@ -11,6 +11,7 @@ on:
 
 jobs:
   build:
+    name: build
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
@@ -35,6 +36,9 @@ jobs:
         chmod +x "${PKL}"
         echo "${DIR}" >> "${GITHUB_PATH}"
         echo "PKL=${PKL}" >> "${GITHUB_OUTPUT}"
+
+    - name: Generate
+      run: go generate ./...
   
     - name: Build
       run: go build -v ./...
