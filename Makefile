@@ -23,7 +23,7 @@ gen-pkl-tests: tpkl
 .PHONY: test stest cover cover/html
 GO_TEST= $(GO) test ./... -coverprofile $(COVER_OUTPUT)
 test: generate
-	$(GO_TEST) -race -p=1 $(TEST_FLAGS)
+	$(GO_TEST) -race -p=$$(nproc) $(TEST_FLAGS)
 
 stest: generate
 	$(GO_TEST) $(TEST_FLAGS)
