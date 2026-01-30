@@ -201,8 +201,6 @@ func TestSigHandler(t *testing.T) {
 func TestExitCode(t *testing.T) {
 	t.Parallel()
 
-	var err error
-
 	cases := []struct {
 		args     []string
 		exitCode int
@@ -236,7 +234,7 @@ func TestExitCode(t *testing.T) {
 			cmd.Stdout = os.Stdout
 			cmd.Stdin = os.Stdin
 
-			err = cmd.Run()
+			err := cmd.Run()
 			if testCase.exitCode == 0 {
 				if err != nil {
 					t.Errorf("unexpected error from tpkl command %q: %s", tpklCmdStr, err)
