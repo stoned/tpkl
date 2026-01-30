@@ -8,13 +8,11 @@ import (
 	"os/exec"
 	"os/signal"
 	"path/filepath"
-	"regexp"
 	"strconv"
 	"strings"
 	"sync"
 	"syscall"
 	"time"
-	"unicode"
 
 	"github.com/hmdsefi/gograph"
 	"mvdan.cc/sh/v3/expand"
@@ -281,6 +279,8 @@ func runTask(ctx context.Context, taskName string,
 
 	expandTaskProperties(task, frame.ExpandMapping())
 
+	logger.Trace().Str("workdir", task.GetWorkingDir()).Send()
+
 	for cmdIdx, cmd := range task.GetCmds() {
 		switch {
 		case cmd.Task != nil:
@@ -288,15 +288,13 @@ func runTask(ctx context.Context, taskName string,
 			cmdErr = runTask(ctx, *cmd.Task, tasks, frame, termChannel, termWaitGroup)
 
 		case cmd.EmbeddedShell:
-			logger.Info().Str("shell", displayCommand(cmd.Cmd)).Send()
-			log.DebugShell(ctx, cmd.Cmd)
+			log.ShellCmd(ctx, cmd.Cmd)
 
 			scriptName := fmt.Sprintf("%s[%d]", taskName, cmdIdx)
 			cmdErr = runShell(ctx, scriptName, cmd.Cmd, task.GetWorkingDir(), frame.EnvList())
 
 		default:
-			logger.Info().Str("cmd", displayCommand(cmd.Cmd)).Send()
-			log.DebugCmd(ctx, cmd.Cmd)
+			log.Cmd(ctx, cmd.Cmd)
 
 			cmdErr = runCmd(ctx, cmd.Cmd, task.GetWorkingDir(), frame.EnvList())
 		}
@@ -370,44 +368,6 @@ func runShell(ctx context.Context, taskName string, command []string, dir string
 	}
 
 	return nil
-}
-
-func displayCommand(command []string) string {
-	var displayCommand strings.Builder
-
-	const displayLen = 72
-
-	NLRegexp := regexp.MustCompile(`\n+`)
-
-	displayCommand.Grow(displayLen)
-
-	for _, cmd := range command {
-		c := NLRegexp.ReplaceAllString(cmd, " ")
-
-		displayCommand.WriteByte(' ')
-		displayCommand.WriteString(c)
-	}
-
-	return truncate(strings.TrimSpace(displayCommand.String()), displayLen)
-}
-
-func truncate(text string, maxLen int) string {
-	lastSpace := maxLen
-	length := 0
-
-	for i, r := range text {
-		if unicode.IsSpace(r) {
-			lastSpace = i
-		}
-
-		length++
-
-		if length > maxLen {
-			return text[:lastSpace] + "..."
-		}
-	}
-
-	return text
 }
 
 type taskFile struct {
