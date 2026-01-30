@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -16,50 +17,20 @@ import (
 	"golang.org/x/term"
 )
 
-type (
-	contextKey byte
-	logBuilder func() zerolog.Logger
-)
-
-const (
-	traceVerbosity = 3
-)
-
-const (
-	builderContextKey contextKey = iota
-)
-
 // FromContext retrieve a logger from a context.
 func FromContext(ctx context.Context) *zerolog.Logger {
 	return zerolog.Ctx(ctx)
 }
 
-// ContextWithLogger creates a logger builder, a logger, store them in
-// a context and returns the context and the logger.
+// ContextWithLogger creates a logger, stores it in a context and
+// returns the context and the logger.
 func ContextWithLogger(ctx context.Context, cmd string, verbosity int) (context.Context, *zerolog.Logger) {
 	logBuilder := builder(cmd, verbosity)
 	logger := logBuilder()
 
 	ctx = logger.WithContext(ctx)
-	ctx = contextWithBuilder(ctx, logBuilder)
 
 	return ctx, &logger
-}
-
-func contextWithBuilder(ctx context.Context, builder logBuilder) context.Context {
-	return context.WithValue(ctx, builderContextKey, builder)
-}
-
-func builderFromContext(ctx context.Context) logBuilder {
-	if val := ctx.Value(builderContextKey); val != nil {
-		if builder, ok := val.(logBuilder); ok {
-			return builder
-		}
-	}
-
-	// in case no builder was found in the context return a new one with a
-	// *high* verbosity level
-	return builder("no-command", traceVerbosity)
 }
 
 func builder(cmd string, verbosity int) func() zerolog.Logger {
@@ -87,13 +58,24 @@ func builder(cmd string, verbosity int) func() zerolog.Logger {
 
 		loggerOut := zerolog.NewConsoleWriter(
 			func(writer *zerolog.ConsoleWriter) {
-				writer.PartsOrder = logPartsOrder()
 				writer.TimeFormat = "15:04:05.000"
-				writer.FormatPartValueByName = getFormatPartValueByName(noColor)
-				writer.FieldsExclude = []string{"call", "cmd", "shell", "task", "tpkl"}
-				writer.FieldsOrder = []string{"cur"}
 				writer.NoColor = noColor
 				writer.Out = os.Stderr
+				writer.FormatPartValueByName = getFormatPartValueByName(noColor)
+				writer.FieldsExclude = []string{"_header", "call", "cmd", "cur", "shell", "task", "tpkl"}
+				writer.PartsOrder = []string{
+					zerolog.TimestampFieldName,
+					zerolog.LevelFieldName,
+					zerolog.CallerFieldName,
+					"tpkl",
+					"task",
+					"cur",
+					"call",
+					"cmd",
+					"shell",
+					zerolog.MessageFieldName,
+					"_header",
+				}
 			},
 		)
 		logger := zerolog.New(loggerOut).Level(level).With().Timestamp().Str("tpkl", cmd).Logger()
@@ -107,64 +89,75 @@ func AsFatal(logger *zerolog.Logger, msg string) {
 	logger.WithLevel(zerolog.FatalLevel).Msg(msg)
 }
 
-// DebugCmd log at debug level a command to be executed.
-func DebugCmd(ctx context.Context, command []string) {
-	logBuilder := builderFromContext(ctx)
-	logger := logBuilder()
+// Cmd logs command to be executed.
+func Cmd(ctx context.Context, command []string) {
+	logger := FromContext(ctx)
+	logLevel := logger.GetLevel()
 
-	if logger.GetLevel() > zerolog.DebugLevel {
+	switch {
+	case logLevel > zerolog.InfoLevel:
 		return
-	}
 
-	// │ U+2502 BOX DRAWINGS LIGHT VERTICAL
-	logger.Debug().Msg("\u2502 " + strings.Join(command, " "))
+	case logLevel == zerolog.InfoLevel:
+		logger.Info().Str("cmd", truncatedFoldedStrings(command)).Send()
+
+	case logLevel == zerolog.DebugLevel:
+		logger.Debug().Str("cmd", foldedStrings(command)).Send()
+
+	case logLevel <= zerolog.TraceLevel:
+		// ┌ U+250C BOX DRAWINGS LIGHT DOWN AND RIGHT
+		// ╵ U+2575 BOX DRAWINGS LIGHT UP
+		logger.Trace().Str("_header", "cmd").Msg("\u250c")
+		logger.Trace().Msg("\u2575 " + strings.Join(command, " "))
+	}
 }
 
-// DebugShell log at debug level a command to be executed by the
-// embedded shell.
-func DebugShell(ctx context.Context, command []string) {
-	logBuilder := builderFromContext(ctx)
-	logger := logBuilder()
+// ShellCmd logs a command to be executed by the embedded shell.
+func ShellCmd(ctx context.Context, command []string) {
+	logger := FromContext(ctx)
+	logLevel := logger.GetLevel()
 
-	if logger.GetLevel() > zerolog.DebugLevel {
+	switch {
+	case logLevel > zerolog.InfoLevel:
 		return
-	}
 
-	logger.Debug().Strs("args", command[1:]).Send()
+	case logLevel == zerolog.InfoLevel:
+		logger.Info().Str("shell", truncatedFoldedStrings(command)).Send()
 
-	lines := strings.Split(command[0], "\n")
+	case logLevel == zerolog.DebugLevel:
+		logger.Debug().Str("shell", foldedStrings(command)).Send()
 
-	if len(lines) == 1 {
-		logger.Debug().Msg("\u2502 " + command[0])
-	} else {
+	case logLevel <= zerolog.TraceLevel:
+		lines := strings.Split(command[0], "\n")
+
 		for idx, line := range lines {
-			// ╷ U+2577 BOX DRAWINGS LIGHT DOWN
+			// ┌ U+250C BOX DRAWINGS LIGHT DOWN AND RIGHT
 			// │ U+2502 BOX DRAWINGS LIGHT VERTICAL
 			// ╵ U+2575 BOX DRAWINGS LIGHT UP
-			switch {
-			case idx == 0:
-				logger.Debug().Msg("\u2577 " + line)
-			case idx == len(lines)-1:
-				logger.Debug().Msg("\u2575 " + line)
-			default:
-				logger.Debug().Msg("\u2502 " + line)
+			if idx == 0 {
+				logger.Trace().Strs("args", command[1:]).Send()
+				logger.Trace().Str("_header", "shell").Msg("\u250c")
+			}
+
+			if idx == len(lines)-1 {
+				logger.Trace().Msg("\u2575 " + line)
+			} else {
+				logger.Trace().Msg("\u2502 " + line)
 			}
 		}
 	}
 }
 
-func logPartsOrder() []string {
-	return []string{
-		zerolog.TimestampFieldName,
-		zerolog.LevelFieldName,
-		zerolog.CallerFieldName,
-		"tpkl",
-		"task",
-		"call",
-		"cmd",
-		"shell",
-		zerolog.MessageFieldName,
+func encodeKeyval(key, val any) string {
+	buff := new(strings.Builder)
+	encoder := logfmt.NewEncoder(buff)
+
+	err := encoder.EncodeKeyval(key, val)
+	if err != nil {
+		_ = encoder.EncodeKeyval(key, fmt.Sprintf("%+v", val))
 	}
+
+	return buff.String()
 }
 
 func getFormatPartValueByName(noColor bool) func(i any, s string) string {
@@ -177,24 +170,20 @@ func getFormatPartValueByName(noColor bool) func(i any, s string) string {
 	return func(value any, part string) string {
 		var ret, key string
 
-		encodeKeyval := func(key, val any) string {
-			buff := new(strings.Builder)
-			encoder := logfmt.NewEncoder(buff)
-
-			err := encoder.EncodeKeyval(key, val)
-			if err != nil {
-				_ = encoder.EncodeKeyval(key, fmt.Sprintf("%+v", val))
-			}
-
-			return buff.String()
+		if value == nil {
+			return ""
 		}
 
 		switch part {
-		case "task", "tpkl":
-			if value == nil {
-				return ""
+		case "_header":
+			valueString := fmt.Sprintf("%s", value)
+			if !noColor {
+				ret = bold(valueString)
+			} else {
+				ret = valueString
 			}
 
+		case "cur", "task", "tpkl":
 			if !noColor {
 				key = cyan(part + "=")
 			} else {
@@ -209,10 +198,6 @@ func getFormatPartValueByName(noColor bool) func(i any, s string) string {
 			ret = key + valueString
 
 		case "call", "cmd", "shell":
-			if value == nil {
-				return ""
-			}
-
 			if !noColor {
 				ret = bold(encodeKeyval(part, value))
 			} else {
@@ -254,4 +239,44 @@ func EnvNoColor() bool {
 	}
 
 	return !term.IsTerminal(int(os.Stderr.Fd()))
+}
+
+func foldedStrings(chunks []string) string {
+	var result strings.Builder
+
+	NLRegexp := regexp.MustCompile(`\n+`)
+
+	for _, chunk := range chunks {
+		folded := NLRegexp.ReplaceAllString(chunk, " ")
+
+		result.WriteByte(' ')
+		result.WriteString(folded)
+	}
+
+	return strings.TrimSpace(result.String())
+}
+
+func truncatedFoldedStrings(chunks []string) string {
+	const maxLen = 72
+
+	return truncate(foldedStrings(chunks), maxLen)
+}
+
+func truncate(text string, maxLen int) string {
+	lastSpace := maxLen
+	length := 0
+
+	for i, r := range text {
+		if unicode.IsSpace(r) {
+			lastSpace = i
+		}
+
+		length++
+
+		if length > maxLen {
+			return text[:lastSpace] + "..."
+		}
+	}
+
+	return text
 }
