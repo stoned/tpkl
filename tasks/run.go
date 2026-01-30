@@ -325,7 +325,7 @@ func runCmd(ctx context.Context, command []string, dir string, environ []string)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
-	ee := (&exec.ExitError{})
+	ee := &exec.ExitError{}
 
 	err := cmd.Run()
 	if errors.As(err, &ee) {
