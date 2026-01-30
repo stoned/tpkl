@@ -341,7 +341,7 @@ func runCmd(ctx context.Context, command []string, dir string, environ []string)
 	return nil
 }
 
-// runShell runs an arbitrary shell command or script with an mvdan.cc shell interpreter, so called
+// runShell runs an arbitrary shell command or script with a mvdan.cc shell interpreter, so called
 // "embedded shell" in tpkl. cf. https://github.com/mvdan/sh
 func runShell(ctx context.Context, taskName string, command []string, dir string, environ []string) error {
 	parser, err := syntax.NewParser().Parse(strings.NewReader(command[0]), taskName)
