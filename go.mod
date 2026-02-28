@@ -1,6 +1,6 @@
 module github.com/stoned/tpkl
 
-go 1.25.4
+go 1.26.0
 
 tool (
 	github.com/apple/pkl-go/cmd/pkl-gen-go
@@ -9,6 +9,7 @@ tool (
 
 require (
 	github.com/apple/pkl-go v0.12.1
+	github.com/go-logfmt/logfmt v0.6.1
 	github.com/google/go-cmp v0.7.0
 	github.com/helmfile/vals v0.43.1
 	github.com/hmdsefi/gograph v0.5.0
@@ -114,7 +115,6 @@ require (
 	github.com/getsops/sops/v3 v3.11.0 // indirect
 	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/go-jose/go-jose/v4 v4.1.3 // indirect
-	github.com/go-logfmt/logfmt v0.6.1 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-openapi/analysis v0.24.2 // indirect
