@@ -7,20 +7,18 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"slices"
 	"strings"
 )
 
 // Main is the entrypoint to be called via testscript.Main's commands.
 func Main() {
-	pkl, pklOk := os.LookupEnv("PKL")
-	if !pklOk {
+	pkl := os.Getenv("PKL_EXEC")
+	if pkl == "" {
 		pkl = "pkl"
 	}
 
-	allArgs := make([]string, 0, len(os.Args))
-
-	allArgs = append(allArgs, pkl)
-	allArgs = append(allArgs, os.Args[1:]...)
+	allArgs := slices.Concat([]string{pkl}, os.Args[1:])
 	command := exec.CommandContext(context.Background(), allArgs[0], allArgs[1:]...)
 	command.Stdin = os.Stdin
 	command.Stdout = os.Stdout
