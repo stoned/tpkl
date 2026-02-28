@@ -2,7 +2,7 @@ GO?=	go
 GOLANGCI_LINT?= golangci-lint
 GORELEASER?= goreleaser
 
-PKL?= pkl
+PKL_EXEC?= pkl
 
 COVER_OUTPUT= cover.out
 
@@ -18,7 +18,7 @@ generate:
 
 .PHONY: gen-pkl-tests
 gen-pkl-tests: tpkl
-	$(PKL) test --external-module-reader='tpkl=./tpkl readers' modules/testdata/pkl-test/test*.pkl --overwrite || [ "$$?" -eq 10 ] && $(MAKE) generate
+	$(PKL_EXEC) test --external-module-reader='tpkl=./tpkl readers' modules/testdata/pkl-test/test*.pkl --overwrite || [ "$$?" -eq 10 ] && $(MAKE) generate
 
 .PHONY: test stest cover cover/html
 GO_TEST= $(GO) test ./... -coverprofile $(COVER_OUTPUT)

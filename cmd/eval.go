@@ -6,11 +6,14 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"slices"
 	"strings"
 
 	"github.com/spf13/cobra"
 	"github.com/stoned/tpkl/extreaders"
 )
+
+const pklExecVar = "PKL_EXEC"
 
 // EvalCmd returns a cobra command to run tpkl eval command.
 func EvalCmd() *cobra.Command {
@@ -22,12 +25,12 @@ func EvalCmd() *cobra.Command {
 		DisableFlagParsing: true,
 		Run: func(_ *cobra.Command, args []string) {
 			var (
-				pkl, tpkl string
-				lookupOK  bool
+				tpkl     string
+				lookupOK bool
 			)
 
-			pkl, lookupOK = os.LookupEnv("PKL")
-			if !lookupOK {
+			pkl := os.Getenv(pklExecVar)
+			if pkl == "" {
 				pkl = "pkl"
 			}
 
@@ -37,11 +40,7 @@ func EvalCmd() *cobra.Command {
 			}
 
 			extReadersRegArgs := extreaders.ExternalReadersRegistrationArgs(tpkl)
-			allArgs := make([]string, 0, 2+len(extReadersRegArgs)+len(args))
-
-			allArgs = append(allArgs, pkl, "eval")
-			allArgs = append(allArgs, extReadersRegArgs...)
-			allArgs = append(allArgs, args...)
+			allArgs := slices.Concat([]string{pkl, "eval"}, extReadersRegArgs, args)
 			command := exec.CommandContext(context.Background(), allArgs[0], allArgs[1:]...)
 			command.Stdin = os.Stdin
 			command.Stdout = os.Stdout
@@ -65,8 +64,8 @@ func EvalCmd() *cobra.Command {
 Usage:
   {{.Use}}
 
-The Pkl command can be specified with the environment variable ` + "`PKL`" + `
-and defaults to ` + "`pkl`" + `.
+The Pkl command can be specified with the environment variable ` + "`" + pklExecVar +
+		"`" + `and defaults to ` + "`pkl`" + `.
 
 For more information, run ` + "`pkl eval --help`" + `.
 `
