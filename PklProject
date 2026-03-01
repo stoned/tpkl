@@ -1,0 +1,13 @@
+amends "pkl:Project"
+
+dependencies {
+  ["pkl.go"] {
+    local goMod = read("go.mod")
+    local version =
+      goMod.text
+        .split("\n")
+        .find((l) -> l.matches(Regex(#"^\s*github.com/apple/pkl-go\s+.*"#)))
+        .split(Regex(#"\s+v"#))[1]
+    uri = "package://pkg.pkl-lang.org/pkl-go/pkl.golang@\(version)"
+  }
+}
