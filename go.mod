@@ -3,12 +3,12 @@ module github.com/stoned/tpkl
 go 1.26.0
 
 tool (
-	github.com/apple/pkl-go/cmd/pkl-gen-go
-	github.com/stoned/tpkl/cmd/txtar
+  github.com/stoned/tpkl/cmd/pkl
+  github.com/stoned/tpkl/cmd/txtar
 )
 
 require (
-	github.com/apple/pkl-go v0.12.1
+	github.com/apple/pkl-go v0.13.0
 	github.com/go-logfmt/logfmt v0.6.1
 	github.com/google/go-cmp v0.7.0
 	github.com/helmfile/vals v0.43.1

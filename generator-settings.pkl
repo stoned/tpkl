@@ -1,5 +1,5 @@
-amends "package://pkg.pkl-lang.org/pkl-go/pkl.golang@0.12.1#/GeneratorSettings.pkl"
+amends "@pkl.go/GeneratorSettings.pkl"
 
 packageMappings {
-  ["tpkl.tpkl"] = "github.com/stoned/tpkl/modules/tpkl"
+  ["tpkl.tpkl"] = "modules/tpkl"
 }
