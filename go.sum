@@ -121,10 +121,8 @@ github.com/antchfx/jsonquery v1.3.6/go.mod h1:fGzSGJn9Y826Qd3pC8Wx45avuUwpkePsAC
 github.com/antchfx/xpath v1.3.2/go.mod h1:i54GszH55fYfBmoZXapTHN8T8tkcHfRgLyVwwqzXNcs=
 github.com/antchfx/xpath v1.3.5 h1:PqbXLC3TkfeZyakF5eeh3NTWEbYl4VHNVeufANzDbKQ=
 github.com/antchfx/xpath v1.3.5/go.mod h1:i54GszH55fYfBmoZXapTHN8T8tkcHfRgLyVwwqzXNcs=
-github.com/apple/pkl-go v0.12.1 h1:4G8vAAx7eMVOdUuzyCesbHcYBMbzDyRfS00+wA/LOM0=
-github.com/apple/pkl-go v0.12.1/go.mod h1:EDQmYVtFBok/eLI+9rT0EoBBXNtMM1THwR+rwBcAH3I=
-github.com/apple/pkl-go v0.13.0 h1:dWaTtgVtatyiECJbdsVmZ/n3JJZTDOyTum/QBHEFv5o=
-github.com/apple/pkl-go v0.13.0/go.mod h1:Ko3AgXOKd/vVYtsRZgoCZhymymz9RxqCIcfdZhOX85I=
+github.com/apple/pkl-go v0.13.1 h1:/9KN50jrVcHB+wUHL1Px6wi6jm/U7KsogUfAgF6dUt0=
+github.com/apple/pkl-go v0.13.1/go.mod h1:Ko3AgXOKd/vVYtsRZgoCZhymymz9RxqCIcfdZhOX85I=
 github.com/atotto/clipboard v0.1.4 h1:EH0zSVneZPSuFR11BlR9YppQTVDbh5+16AmcJi4g1z4=
 github.com/atotto/clipboard v0.1.4/go.mod h1:ZY9tmq7sm5xIbd9bOK4onWV4S6X0u6GY7Vn0Yu86PYI=
 github.com/aws/aws-sdk-go v1.55.8 h1:JRmEUbU52aJQZ2AjX4q4Wu7t4uZjOu71uyNmaWlUkJQ=
