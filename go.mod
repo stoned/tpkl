@@ -8,7 +8,7 @@ tool (
 )
 
 require (
-	github.com/apple/pkl-go v0.13.1
+	github.com/apple/pkl-go v0.13.2
 	github.com/go-logfmt/logfmt v0.6.1
 	github.com/google/go-cmp v0.7.0
 	github.com/helmfile/vals v0.43.1
