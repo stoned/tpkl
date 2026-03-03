@@ -62,6 +62,10 @@ linters:
       text: 'calculated cyclomatic complexity for function TestSigHandler is \d+'
       linters:
       - 'cyclop'
+    - path: 'tasks/run.go'
+      text: "Function 'runTask' is too long"
+      linters:
+      - 'funlen'
     - path: 'tasks/tasks.go'
       text: "Function 'ModuleTasks' is too long"
       linters:

@@ -140,6 +140,15 @@ type argsOption struct {
 	args []string
 }
 
+// WithDryrun initializes a struct to define a "dryrun option".
+func WithDryrun(dryrun bool) *dryrunOption {
+	return &dryrunOption{dryrun}
+}
+
+type dryrunOption struct {
+	dryrun bool
+}
+
 // WithEnv initializes a struct to define an "env option".
 func WithEnv(vars []string) *envOption {
 	return &envOption{vars}

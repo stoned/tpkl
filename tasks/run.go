@@ -27,6 +27,7 @@ import (
 // RunOptions are options for Run().
 type runOptions struct {
 	args       []string
+	dryrun     bool
 	env        []string
 	module     string
 	properties []string
@@ -43,6 +44,11 @@ type RunOption interface {
 // Set arguments Run()'s option.
 func (a *argsOption) setRunOption(o *runOptions) {
 	o.args = a.args
+}
+
+// Set dryRun Run()'s option.
+func (d *dryrunOption) setRunOption(o *runOptions) {
+	o.dryrun = d.dryrun
 }
 
 // Set env Run()'s option.
@@ -110,7 +116,7 @@ func Run(ctx context.Context, taskName string, options ...RunOption) error {
 
 	termChannel, termWaitGroup := termHandler()
 
-	err = runTask(ctx, taskName, tasks, frame, termChannel, termWaitGroup)
+	err = runTask(ctx, taskName, tasks, frame, termChannel, termWaitGroup, opts)
 	if context.Cause(ctx) != nil {
 		err = fmt.Errorf("%w: %w", context.Cause(ctx), err)
 	}
@@ -253,6 +259,7 @@ func planTask(_ context.Context, start string, tasks Tasks) error {
 func runTask(ctx context.Context, taskName string,
 	tasks Tasks, enclosingFrame *Frame,
 	termChannel chan any, termWaitGroup *sync.WaitGroup,
+	opts *runOptions,
 ) error {
 	var cmdErr error
 
@@ -285,18 +292,18 @@ func runTask(ctx context.Context, taskName string,
 		switch {
 		case cmd.Task != nil:
 			logger.Info().Str("call", *cmd.Task).Send()
-			cmdErr = runTask(ctx, *cmd.Task, tasks, frame, termChannel, termWaitGroup)
+			cmdErr = runTask(ctx, *cmd.Task, tasks, frame, termChannel, termWaitGroup, opts)
 
 		case cmd.EmbeddedShell:
 			log.ShellCmd(ctx, cmd.Cmd)
 
 			scriptName := fmt.Sprintf("%s[%d]", taskName, cmdIdx)
-			cmdErr = runShell(ctx, scriptName, cmd.Cmd, task.GetWorkingDir(), frame.EnvList())
+			cmdErr = runShell(ctx, scriptName, cmd.Cmd, task.GetWorkingDir(), frame.EnvList(), opts.dryrun)
 
 		default:
 			log.Cmd(ctx, cmd.Cmd)
 
-			cmdErr = runCmd(ctx, cmd.Cmd, task.GetWorkingDir(), frame.EnvList())
+			cmdErr = runCmd(ctx, cmd.Cmd, task.GetWorkingDir(), frame.EnvList(), opts.dryrun)
 		}
 
 		if cmdErr != nil {
@@ -314,7 +321,26 @@ func runTask(ctx context.Context, taskName string,
 }
 
 // runCmd runs an arbitrary command.
-func runCmd(ctx context.Context, command []string, dir string, environ []string) error {
+func runCmd(ctx context.Context, command []string, dir string, environ []string, dryrun bool) error {
+	if dryrun {
+		for idx, word := range command {
+			quoted, err := syntax.Quote(word, syntax.LangBash)
+			if err != nil {
+				fmt.Print(word)
+			} else {
+				fmt.Print(quoted)
+			}
+
+			if idx != len(command)-1 {
+				fmt.Print(" ")
+			}
+		}
+
+		fmt.Print("\n")
+
+		return nil
+	}
+
 	cmd := exec.CommandContext(ctx, command[0], command[1:]...)
 	cmd.Dir = dir
 	cmd.Env = environ
@@ -341,7 +367,7 @@ func runCmd(ctx context.Context, command []string, dir string, environ []string)
 
 // runShell runs an arbitrary shell command or script with a mvdan.cc shell interpreter, so called
 // "embedded shell" in tpkl. cf. https://github.com/mvdan/sh
-func runShell(ctx context.Context, taskName string, command []string, dir string, environ []string) error {
+func runShell(ctx context.Context, taskName string, command []string, dir string, environ []string, dryrun bool) error {
 	parser, err := syntax.NewParser().Parse(strings.NewReader(command[0]), taskName)
 	if err != nil {
 		return NewCmdError(1, err)
@@ -355,6 +381,12 @@ func runShell(ctx context.Context, taskName string, command []string, dir string
 	)
 	if err != nil {
 		return NewCmdError(1, err)
+	}
+
+	if dryrun {
+		fmt.Print(command[0], "\n")
+
+		return nil
 	}
 
 	err = runner.Run(ctx, parser)

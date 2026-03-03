@@ -15,6 +15,7 @@ import (
 //go:generate go tool txtar -o testdata/script/help.txtar -c testdata/script/help/script
 //go:generate go tool txtar -o testdata/script/list.txtar -c testdata/script/list/script -p 3 testdata/script/list/*.pkl testdata/script/list/*.txt testdata/script/list/*.go
 //go:generate go tool txtar -o testdata/script/run-default.txtar -c testdata/script/run-default/script -p 3 testdata/script/run-default/*.pkl
+//go:generate go tool txtar -o testdata/script/run-dry-run.txtar -c testdata/script/run-dry-run/script -p 3 testdata/script/run-dry-run/*.pkl
 //go:generate go tool txtar -o testdata/script/run-fallback.txtar -c testdata/script/run-fallback/script -p 3 testdata/script/run-fallback/*.pkl
 //go:generate go tool txtar -o testdata/script/run-specific.txtar -c testdata/script/run-specific/script -p 3 testdata/script/run-specific/*.pkl
 //go:generate go tool txtar -o testdata/script/simple-module.txtar -c testdata/script/simple-module/script -p 3 testdata/script/simple-module/*/*.pkl
