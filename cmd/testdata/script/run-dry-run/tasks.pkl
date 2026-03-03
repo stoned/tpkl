@@ -1,0 +1,11 @@
+import "tpkl:tpkl"
+tasks: tpkl.Tasks = new {
+  ["touch"] {
+    cmds {
+      new {
+        cmd { "echo touch > touch" }
+        embeddedShell = true
+      }
+    }
+  }
+}

@@ -1,0 +1,9 @@
+exec tpkl run -n touch
+stdout 'echo touch > touch'
+empty stderr
+! exists touch
+
+exec tpkl run touch
+empty stdout
+empty stderr
+exists touch

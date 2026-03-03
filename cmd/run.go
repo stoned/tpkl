@@ -26,6 +26,7 @@ func GetRunRunner() *RunRunner {
 	addModuleFlag(command, &runner.module)
 	addPropertyFlag(command, &runner.properties)
 	addVerboseFlag(command, &runner.verbose)
+	command.Flags().BoolVarP(&runner.dryrun, "dry-run", "n", false, "Do not execute tasks commands, print them")
 	runner.timeout = command.Flags().DurationP("timeout", "t", 0,
 		"Duration after which task execution will be timed out")
 
@@ -42,6 +43,7 @@ func RunCmd() *cobra.Command {
 // RunRunner is a context for the 'run' command.
 type RunRunner struct {
 	command    *cobra.Command
+	dryrun     bool
 	env        []string
 	module     string
 	properties []string
@@ -55,6 +57,7 @@ func (r *RunRunner) Run(_ *cobra.Command, args []string) {
 
 	err := tasks.Run(ctx, args[0],
 		tasks.WithArgs(args[1:]),
+		tasks.WithDryrun(r.dryrun),
 		tasks.WithEnv(r.env),
 		tasks.WithModule(r.module),
 		tasks.WithProperties(r.properties),
