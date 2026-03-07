@@ -14,7 +14,7 @@ func Main() {
 
 	// if at least one argument is provided check if it is a valid command
 	// or else assume it is a task to be run
-	if len(os.Args) > 1 {
+ 	if len(os.Args) > 1 && !strings.HasPrefix(os.Args[1], "__complete") {
 		var (
 			cmd *cobra.Command
 			err error
