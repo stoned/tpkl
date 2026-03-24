@@ -27,7 +27,7 @@ func GetRunRunner() *RunRunner {
 	addPropertyFlag(command, &runner.properties)
 	addVerboseFlag(command, &runner.verbose)
 	command.Flags().BoolVarP(&runner.dryrun, "dry-run", "n", false, "Do not execute tasks commands, print them")
-	runner.timeout = command.Flags().DurationP("timeout", "t", 0,
+	command.Flags().DurationVarP(&runner.timeout, "timeout", "t", 0,
 		"Duration after which task execution will be timed out")
 
 	runner.command = command
@@ -47,7 +47,7 @@ type RunRunner struct {
 	env        []string
 	module     string
 	properties []string
-	timeout    *time.Duration
+	timeout    time.Duration
 	verbose    int
 }
 

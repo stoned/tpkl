@@ -31,7 +31,7 @@ type runOptions struct {
 	env        []string
 	module     string
 	properties []string
-	timeout    *time.Duration
+	timeout    time.Duration
 	verbose    int
 	workingDir string
 }
@@ -96,8 +96,8 @@ func Run(ctx context.Context, taskName string, options ...RunOption) error {
 		return fmt.Errorf("run task: %w", err)
 	}
 
-	if opts.timeout != nil && *opts.timeout != 0 {
-		ctx, cancel = context.WithTimeoutCause(ctx, *opts.timeout, ErrTimeout)
+	if opts.timeout != 0 {
+		ctx, cancel = context.WithTimeoutCause(ctx, opts.timeout, ErrTimeout)
 		defer cancel()
 	}
 
