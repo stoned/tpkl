@@ -6,7 +6,7 @@ typealias Tasks = Mapping<taskName, Task>
 
 typealias taskName = String(!isEmpty && !isBlank)
 
-open class Task {
+class Task {
   desc: String?
   cmds: Listing<Command>
   env: Mapping<varName, String>

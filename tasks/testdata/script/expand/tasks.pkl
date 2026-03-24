@@ -19,4 +19,30 @@ tasks: tpkl.Tasks = new {
       }
     }
   }
+  ["c3"] {
+    cmds {
+      new {
+        cmd { "pwd" }
+        embeddedShell = false
+      }
+    }
+    workingDir = "$(TASK_WORKDIR_TEST)"
+  }
+  ["c4"] {
+    cmds {
+      new {
+        cmd { "pwd" }
+        embeddedShell = false
+      }
+    }
+    workingDir = "$(TPKL_MODULEDIR)"
+  }
+  ["c5"] {
+    cmds {
+      new {
+        cmd { "pwd" }
+        embeddedShell = false
+      }
+    }
+  }
 }

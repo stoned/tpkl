@@ -4,3 +4,14 @@ cmp stdout c1.txt
 #
 exec tpkl run c2
 cmp stdout c2.txt
+#
+env TASK_WORKDIR_TEST=$WORK/wd
+mkdir wd
+exec tpkl run c3
+stdout $WORK/wd
+#
+cd wd
+exec tpkl run c4
+stdout $WORK
+exec tpkl run c5
+stdout $WORK/wd
