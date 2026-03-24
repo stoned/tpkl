@@ -178,9 +178,9 @@ func NewTopFrame(taskName string, module string, env []string, args []string) *F
 func newTaskFrame(taskName string, task tpkl.Task, enclosingFrame *Frame) *Frame {
 	frame := NewEnclosedFrame(enclosingFrame)
 
-	frame.SetVars(task.GetEnv())
+	frame.SetVars(task.Env)
 
-	if task.GetInheritEnv() {
+	if task.InheritEnv {
 		frame.SetEnviron()
 	}
 
@@ -215,7 +215,7 @@ func planTask(_ context.Context, start string, tasks Tasks) error {
 		task := tasks[name]
 		node := &planNode{task: task}
 
-		for _, cmd := range task.GetCmds() {
+		for _, cmd := range task.Cmds {
 			if cmd.Task == nil {
 				continue
 			}
@@ -285,11 +285,11 @@ func runTask(ctx context.Context, taskName string,
 		return err
 	}
 
-	expandTaskProperties(task, frame.ExpandMapping())
+	expandTaskProperties(&task, frame.ExpandMapping())
 
-	logger.Trace().Str("workdir", task.GetWorkingDir()).Send()
+	logger.Trace().Str("workdir", task.WorkingDir).Send()
 
-	for cmdIdx, cmd := range task.GetCmds() {
+	for cmdIdx, cmd := range task.Cmds {
 		switch {
 		case cmd.Task != nil:
 			logger.Info().Str("call", *cmd.Task).Send()
@@ -299,12 +299,12 @@ func runTask(ctx context.Context, taskName string,
 			log.ShellCmd(ctx, cmd.Cmd)
 
 			scriptName := fmt.Sprintf("%s[%d]", taskName, cmdIdx)
-			cmdErr = runShell(ctx, scriptName, cmd.Cmd, task.GetWorkingDir(), frame.EnvList(), opts.dryrun)
+			cmdErr = runShell(ctx, scriptName, cmd.Cmd, task.WorkingDir, frame.EnvList(), opts.dryrun)
 
 		default:
 			log.Cmd(ctx, cmd.Cmd)
 
-			cmdErr = runCmd(ctx, cmd.Cmd, task.GetWorkingDir(), frame.EnvList(), opts.dryrun)
+			cmdErr = runCmd(ctx, cmd.Cmd, task.WorkingDir, frame.EnvList(), opts.dryrun)
 		}
 
 		if cmdErr != nil {
@@ -416,9 +416,8 @@ func newTaskFiles(task tpkl.Task, frame *Frame,
 	termChannel chan any, termWaitGroup *sync.WaitGroup,
 ) (*taskFiles, error) {
 	tfiles := taskFiles{Files: make(map[string]taskFile)}
-	files := task.GetFiles()
 
-	if len(files) == 0 {
+	if len(task.Files) == 0 {
 		return &tfiles, nil
 	}
 
@@ -439,7 +438,7 @@ func newTaskFiles(task tpkl.Task, frame *Frame,
 		_ = os.RemoveAll(tfiles.Dir)
 	}()
 
-	for key, file := range files {
+	for key, file := range task.Files {
 		var filename string
 
 		if file.Filename != nil {
@@ -533,10 +532,10 @@ func (f *Frame) setTaskFilesVars(files *taskFiles) error {
 	return nil
 }
 
-func expandTaskProperties(task tpkl.Task, mapping func(string) string) {
-	taskI, _ := task.(tpkl.TaskImpl)
+func expandTaskProperties(task *tpkl.Task, mapping func(string) string) {
+	task.WorkingDir = expansion.Expand(task.WorkingDir, mapping)
 
-	for _, cmd := range taskI.Cmds {
+	for _, cmd := range task.Cmds {
 		for i, word := range cmd.Cmd {
 			cmd.Cmd[i] = expansion.Expand(word, mapping)
 		}
