@@ -10,7 +10,7 @@ PKL_GENERATED_CODE_DIR= modules/tpkl
 
 .PHONY: build
 build tpkl: generate
-	env CGO_ENABLED=0 $(GO) build
+	$(GO) build
 
 .PHONY: generate  # XXX
 generate:
