@@ -9,6 +9,7 @@ import (
 )
 
 // Generate testscript test scripts
+//go:generate go tool txtar -o testdata/script/complete.txtar -c testdata/script/complete/script -p 3 testdata/script/complete/*.pkl testdata/script/complete/*.txt
 //go:generate go tool txtar -o testdata/script/eval.txtar -c testdata/script/eval/script -p 3 testdata/script/eval/*.pkl testdata/script/eval/*.txt
 //go:generate go tool txtar -o testdata/script/eval-no-pkl.txtar -c testdata/script/eval-no-pkl/script -p 3 testdata/script/eval-no-pkl/*.pkl
 //go:generate go tool txtar -o testdata/script/eval-no-tpkl.txtar -c testdata/script/eval-no-tpkl/script -p 3 testdata/script/eval-no-tpkl/*.pkl

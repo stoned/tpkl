@@ -10,10 +10,11 @@ import (
 // DirCmd returns a cobra command to list tpkl's embedded Pkl modules.
 func DirCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "dir",
-		Short: "List embedded Pkl modules",
-		Long:  "List tpkl embedded Pkl modules",
-		Args:  cobra.NoArgs,
+		Use:               "dir",
+		Short:             "List embedded Pkl modules",
+		Long:              "List tpkl embedded Pkl modules",
+		Args:              cobra.NoArgs,
+		ValidArgsFunction: cobra.NoFileCompletions,
 		Run: func(_ *cobra.Command, _ []string) {
 			for modname := range modules.Modules() {
 				fmt.Println(modname)

@@ -91,7 +91,7 @@ func Run(ctx context.Context, taskName string, options ...RunOption) error {
 	logger := log.FromContext(ctx).With().Str("task", taskName).Logger()
 	ctx = logger.WithContext(ctx)
 
-	opts.module, err = useModule(ctx, opts.module, opts.workingDir)
+	opts.module, err = UseModule(ctx, opts.module, opts.workingDir)
 	if err != nil {
 		return fmt.Errorf("run task: %w", err)
 	}
@@ -101,7 +101,7 @@ func Run(ctx context.Context, taskName string, options ...RunOption) error {
 		defer cancel()
 	}
 
-	frame := newTopFrame(taskName, opts.module, opts.env, opts.args)
+	frame := NewTopFrame(taskName, opts.module, opts.env, opts.args)
 
 	tasks, err := ModuleTasks(ctx, opts.module, WithPklEnv(frame.EnvList()),
 		WithPklProperties(opts.properties))
@@ -143,7 +143,8 @@ func termHandler() (chan any, *sync.WaitGroup) {
 	return termChannel, termWaitGroup
 }
 
-func newTopFrame(taskName string, module string, env []string, args []string) *Frame {
+// NewTopFrame create a toplevel frame for a task.
+func NewTopFrame(taskName string, module string, env []string, args []string) *Frame {
 	frame := NewFrame()
 
 	for _, variable := range env {

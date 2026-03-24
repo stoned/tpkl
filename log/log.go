@@ -25,63 +25,61 @@ func FromContext(ctx context.Context) *zerolog.Logger {
 // ContextWithLogger creates a logger, stores it in a context and
 // returns the context and the logger.
 func ContextWithLogger(ctx context.Context, cmd string, verbosity int) (context.Context, *zerolog.Logger) {
-	logBuilder := builder(cmd, verbosity)
-	logger := logBuilder()
+	logger := Builder(cmd, verbosity)
 
 	ctx = logger.WithContext(ctx)
 
 	return ctx, &logger
 }
 
-func builder(cmd string, verbosity int) func() zerolog.Logger {
-	return func() zerolog.Logger {
-		var (
-			level   zerolog.Level
-			noColor bool
-		)
+// Builder makes a new zerolog Logger.
+func Builder(cmd string, verbosity int) zerolog.Logger {
+	var (
+		level   zerolog.Level
+		noColor bool
+	)
 
-		switch {
-		case verbosity > 2: //nolint:mnd
-			level = zerolog.TraceLevel
-		case verbosity > 1:
-			level = zerolog.DebugLevel
-		case verbosity > 0:
-			level = zerolog.InfoLevel
-		default:
-			level = zerolog.WarnLevel
-		}
-
-		noColor = EnvNoColor()
-
-		// https://github.com/rs/zerolog/issues/114
-		zerolog.TimeFieldFormat = time.RFC3339Nano
-
-		loggerOut := zerolog.NewConsoleWriter(
-			func(writer *zerolog.ConsoleWriter) {
-				writer.TimeFormat = "15:04:05.000"
-				writer.NoColor = noColor
-				writer.Out = os.Stderr
-				writer.FormatPartValueByName = getFormatPartValueByName(noColor)
-				writer.FieldsExclude = []string{"_header", "call", "cmd", "cur", "shell", "task", "tpkl"}
-				writer.PartsOrder = []string{
-					zerolog.TimestampFieldName,
-					zerolog.LevelFieldName,
-					zerolog.CallerFieldName,
-					"tpkl",
-					"task",
-					"cur",
-					"call",
-					"cmd",
-					"shell",
-					zerolog.MessageFieldName,
-					"_header",
-				}
-			},
-		)
-		logger := zerolog.New(loggerOut).Level(level).With().Timestamp().Str("tpkl", cmd).Logger()
-
-		return logger
+	switch {
+	case verbosity > 2: //nolint:mnd
+		level = zerolog.TraceLevel
+	case verbosity > 1:
+		level = zerolog.DebugLevel
+	case verbosity > 0:
+		level = zerolog.InfoLevel
+	default:
+		level = zerolog.WarnLevel
 	}
+
+	noColor = EnvNoColor()
+
+	// https://github.com/rs/zerolog/issues/114
+	zerolog.TimeFieldFormat = time.RFC3339Nano
+
+	loggerOut := zerolog.NewConsoleWriter(
+		func(writer *zerolog.ConsoleWriter) {
+			writer.TimeFormat = "15:04:05.000"
+			writer.NoColor = noColor
+			writer.Out = os.Stderr
+			writer.FormatPartValueByName = getFormatPartValueByName(noColor)
+			writer.FieldsExclude = []string{"_header", "call", "cmd", "cur", "shell", "task", "tpkl"}
+			writer.PartsOrder = []string{
+				zerolog.TimestampFieldName,
+				zerolog.LevelFieldName,
+				zerolog.CallerFieldName,
+				"tpkl",
+				"task",
+				"cur",
+				"call",
+				"cmd",
+				"shell",
+				zerolog.MessageFieldName,
+				"_header",
+			}
+		},
+	)
+	logger := zerolog.New(loggerOut).Level(level).With().Timestamp().Str("tpkl", cmd).Logger()
+
+	return logger
 }
 
 // AsFatal generate a Fatal-like log with a message.

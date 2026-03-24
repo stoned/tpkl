@@ -131,6 +131,19 @@ func WithPklProperties(properties []string) func(*pkl.EvaluatorOptions) {
 	}
 }
 
+// WithPropertyListCommandRunning returns a pkl.Evaluator options function to set property "LIST_COMMAND_RUNNING".
+func WithPropertyListCommandRunning() func(*pkl.EvaluatorOptions) {
+	name := identifierPrefix + "LIST_COMMAND_RUNNING"
+
+	return func(opts *pkl.EvaluatorOptions) {
+		if opts.Properties == nil {
+			opts.Properties = make(map[string]string)
+		}
+
+		opts.Properties[name] = "true"
+	}
+}
+
 // WithArgs initializes a struct to define an "arguments option".
 func WithArgs(args []string) *argsOption {
 	return &argsOption{args}
@@ -264,8 +277,8 @@ func ModuleTasks(ctx context.Context, module string,
 	return out, nil
 }
 
-// useModule searches for the tasks PKL module to use and advertise it if requested.
-func useModule(ctx context.Context, module string, workingDir string) (string, error) {
+// UseModule searches for the tasks PKL module to use and advertise it if requested.
+func UseModule(ctx context.Context, module string, workingDir string) (string, error) {
 	var err error
 
 	if module == "" {

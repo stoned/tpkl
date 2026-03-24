@@ -60,15 +60,15 @@ func List(ctx context.Context, writer io.Writer, format string, options ...ListO
 		return fmt.Errorf("list tasks: %w: `%s`", ErrUnknownOption, format)
 	}
 
-	opts.module, err = useModule(ctx, opts.module, "") // XXX support working-dir
+	opts.module, err = UseModule(ctx, opts.module, "") // XXX support working-dir
 	if err != nil {
 		return fmt.Errorf("list tasks: %w", err)
 	}
 
-	frame := newTopFrame("", opts.module, opts.env, nil)
+	frame := NewTopFrame("", opts.module, opts.env, nil)
 
 	tasks, err := ModuleTasks(ctx, opts.module, WithPklEnv(frame.EnvList()), WithPklProperties(opts.properties),
-		WithPklProperties([]string{identifierPrefix + "LIST_COMMAND_RUNNING"}))
+		WithPropertyListCommandRunning())
 	if err != nil {
 		return err
 	}

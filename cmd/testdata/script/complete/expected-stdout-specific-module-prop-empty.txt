@@ -1,0 +1,4 @@
+bye	Task bye
+doit	Task doit
+hello	Task hello
+:0

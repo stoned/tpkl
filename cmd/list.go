@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"context"
 	"os"
 	"strings"
 
@@ -17,20 +16,29 @@ func GetListRunner() *ListRunner {
 	runner.format = tasks.FormatEnumArg()
 
 	command := &cobra.Command{
-		Use:   "list",
-		Short: "List tasks",
-		Long:  "List tpkl tasks defined in a Pkl module",
-		Args:  cobra.NoArgs,
-		Run:   runner.Run,
+		Use:               "list",
+		Short:             "List tasks",
+		Long:              "List tpkl tasks defined in a Pkl module",
+		Args:              cobra.NoArgs,
+		ValidArgsFunction: cobra.NoFileCompletions,
+		Run:               runner.Run,
 	}
 
 	addEnvFlag(command, &runner.env)
 	addModuleFlag(command, &runner.module)
 	addPropertyFlag(command, &runner.properties)
 	addVerboseFlag(command, &runner.verbose)
+
 	command.Flags().VarP(runner.format,
 		"output", "o",
 		"set output format. Supported formats: "+strings.Join(runner.format.Allowed, ", "))
+
+	err := command.RegisterFlagCompletionFunc("output",
+		cobra.FixedCompletions(runner.format.Allowed, cobra.ShellCompDirectiveDefault))
+	if err != nil {
+		logger := log.Builder(command.Name(), 0)
+		logger.Fatal().Err(err).Send()
+	}
 
 	runner.command = command
 
@@ -53,8 +61,8 @@ type ListRunner struct {
 }
 
 // Run runs the 'list' command.
-func (r *ListRunner) Run(_ *cobra.Command, _ []string) {
-	ctx, logger := log.ContextWithLogger(context.Background(), "list", r.verbose)
+func (r *ListRunner) Run(cmd *cobra.Command, _ []string) {
+	ctx, logger := log.ContextWithLogger(cmd.Context(), "list", r.verbose)
 
 	err := tasks.List(ctx, os.Stdout, r.format.String(),
 		tasks.WithModule(r.module),
