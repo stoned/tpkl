@@ -177,12 +177,12 @@ type propertiesOption struct {
 }
 
 // WithTimeout initializes a struct to define a "timeout option".
-func WithTimeout(timeout *time.Duration) *timeoutOption {
+func WithTimeout(timeout time.Duration) *timeoutOption {
 	return &timeoutOption{timeout}
 }
 
 type timeoutOption struct {
-	timeout *time.Duration
+	timeout time.Duration
 }
 
 // WithVerbosity initializes a struct to define a "verbosity option".
