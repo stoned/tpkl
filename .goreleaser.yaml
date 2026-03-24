@@ -8,8 +8,6 @@ before:
   - go test ./...
 builds:
 - id: tpkl
-  env:
-  - CGO_ENABLED=0
   ldflags:
   - -s -w
   goos:
