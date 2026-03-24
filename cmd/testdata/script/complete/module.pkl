@@ -1,0 +1,22 @@
+import "tpkl:tpkl"
+tasks: tpkl.Tasks = new {
+  ["hello"] {
+    cmds {
+      "echo hello" |> tpkl.sh
+    }
+  }
+
+  ["doit"] {
+    cmds {
+      "echo done" |> tpkl.sh
+    }
+  }
+
+  when (read?("prop:bye") != null) {
+  ["bye"] {
+    cmds {
+      "echo bye" |> tpkl.sh
+    }
+  }
+}
+}

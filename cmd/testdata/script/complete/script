@@ -1,0 +1,24 @@
+#
+exec tpkl __complete ''
+cmp stdout expected-stdout-notasks-empty.txt
+cmp stderr expected-stderr-notasks-empty.txt
+#
+exec tpkl __complete -m module.pkl ''
+cmp stdout expected-stdout-specific-module-empty.txt
+cmp stderr expected-stderr-specific-module-empty.txt
+#
+exec tpkl __complete -m module.pkl -p bye ''
+cmp stdout expected-stdout-specific-module-prop-empty.txt
+cmp stderr expected-stderr-specific-module-prop-empty.txt
+#
+exec tpkl __complete cat ''
+cmp stdout expected-stdout-cat-empty.txt
+cmp stderr expected-stderr-cat-empty.txt
+#
+exec tpkl __complete dir ''
+cmp stdout expected-stdout-dir-empty.txt
+cmp stderr expected-stderr-dir-empty.txt
+#
+exec tpkl __complete list ''
+cmp stdout expected-stdout-list-empty.txt
+cmp stderr expected-stderr-list-empty.txt

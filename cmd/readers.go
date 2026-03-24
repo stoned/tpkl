@@ -8,10 +8,11 @@ import (
 // ReadersCmd returns a cobra command to run custom readers for Pkl.
 func ReadersCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "readers",
-		Short: "Run external readers for Pkl",
-		Long:  "Run external readers for Pkl",
-		Args:  cobra.NoArgs,
+		Use:               "readers",
+		Short:             "Run external readers for Pkl",
+		Long:              "Run external readers for Pkl",
+		Args:              cobra.NoArgs,
+		ValidArgsFunction: cobra.NoFileCompletions,
 		Run: func(_ *cobra.Command, _ []string) {
 			extreaders.Run()
 		},

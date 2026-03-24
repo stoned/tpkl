@@ -8,14 +8,22 @@ import (
 
 // RootCmd returns a root cobra command for tpkl.
 func RootCmd() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:     "tpkl",
-		Short:   "Tasks and tools for Pkl",
-		Long:    "Run tasks defined in a Pkl module and readers for pkl command",
-		Version: version(),
+	runner := &RunRunner{}
+	command := &cobra.Command{
+		Use:               "tpkl [flags]\n  tpkl <task> [flags] [-- args]...",
+		Short:             "Tasks and tools for Pkl",
+		Long:              "Run tasks defined in a Pkl module and readers for pkl command",
+		Version:           version(),
+		Args:              cobra.MinimumNArgs(1),
+		Run:               runner.Run,
+		ValidArgsFunction: validArgsRun,
 	}
 
-	cmd.AddCommand(
+	runner.command = command
+
+	addRunFlags(runner)
+
+	command.AddCommand(
 		CatCmd(),
 		DirCmd(),
 		EvalCmd(),
@@ -25,7 +33,7 @@ func RootCmd() *cobra.Command {
 		VersionCmd(),
 	)
 
-	return cmd
+	return command
 }
 
 func version() string {

@@ -1,0 +1,10 @@
+cat	Print an embedded Pkl module
+completion	Generate the autocompletion script for the specified shell
+dir	List embedded Pkl modules
+eval	Render Pkl module(s)
+help	Help about any command
+list	List tasks
+readers	Run external readers for Pkl
+run	Run task (default)
+version	Version for tpkl
+:0
