@@ -110,7 +110,6 @@ func (r *RunRunner) Run(cmd *cobra.Command, args []string) {
 		tasks.WithEnv(r.env),
 		tasks.WithModule(r.module),
 		tasks.WithProperties(r.properties),
-		tasks.WithVerbosity(r.verbose), // XXX not needed anymore?
 		tasks.WithTimeout(r.timeout))
 	if err != nil {
 		log.AsFatal(logger, err.Error())
