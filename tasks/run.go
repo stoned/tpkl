@@ -32,7 +32,6 @@ type runOptions struct {
 	module     string
 	properties []string
 	timeout    time.Duration
-	verbose    int
 	workingDir string
 }
 
@@ -69,11 +68,6 @@ func (p *propertiesOption) setRunOption(o *runOptions) {
 // Set timeout Run()'s option.
 func (t *timeoutOption) setRunOption(o *runOptions) {
 	o.timeout = t.timeout
-}
-
-// Set verbose Run()'s option.
-func (v *verbosityOption) setRunOption(o *runOptions) {
-	o.verbose = v.verbose
 }
 
 // Run executes task from a Pkl module.

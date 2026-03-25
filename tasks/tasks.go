@@ -198,15 +198,6 @@ type timeoutOption struct {
 	timeout time.Duration
 }
 
-// WithVerbosity initializes a struct to define a "verbosity option".
-func WithVerbosity(verbose int) *verbosityOption {
-	return &verbosityOption{verbose}
-}
-
-type verbosityOption struct {
-	verbose int
-}
-
 // ModuleTasks returns tpkl Tasks defined in module.
 func ModuleTasks(ctx context.Context, module string,
 	options ...func(*pkl.EvaluatorOptions),
