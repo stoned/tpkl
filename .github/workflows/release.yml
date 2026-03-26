@@ -27,7 +27,7 @@ jobs:
     - name: Setup Pkl
       id: setup_pkl
       env:
-        PKL_VERSION: 0.30.2
+        PKL_VERSION: 0.31.1
       shell: bash
       run: |-
         set -u
