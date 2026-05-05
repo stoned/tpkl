@@ -3,7 +3,9 @@ package modules
 
 import (
 	"embed"
+	"io/fs"
 	"log"
+	"strings"
 )
 
 //go:embed *.pkl
@@ -11,20 +13,26 @@ var embeddedModules embed.FS
 
 // Modules "export" the map of embedded Pkl modules.
 func Modules() map[string]string {
-	var data []byte
-
-	var err error
-
-	files := []string{"tpkl"}
 	mods := map[string]string{}
 
-	for idx := range files {
-		data, err = embeddedModules.ReadFile(files[idx] + ".pkl")
+	err := fs.WalkDir(embeddedModules, ".", func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
-			log.Fatalf("Error reading embedded module `%s`: %s\n", files[idx], err)
+			return err
 		}
 
-		mods[files[idx]] = string(data)
+		if !d.IsDir() {
+			data, err := fs.ReadFile(embeddedModules, path)
+			if err != nil {
+				return err //nolint:wrapcheck
+			}
+
+			mods[strings.TrimSuffix(path, ".pkl")] = string(data)
+		}
+
+		return nil
+	})
+	if err != nil {
+		log.Fatalf("Error reading embedded modules: %s\n", err)
 	}
 
 	return mods
