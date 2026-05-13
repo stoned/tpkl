@@ -7,11 +7,14 @@ typealias Tasks = Mapping<taskName, Task>
 typealias taskName = String(!isEmpty && !isBlank)
 
 class Task {
-  desc: String?
   cmds: Listing<Command>
+  doc: String?
   env: Mapping<varName, String>
   files: taskFiles
   inheritEnv: Boolean = true
+  fixed summary: String =
+    doc.ifNonNull((d) -> d.split("\n").find((l) -> !l.isBlank))
+      ?? ""
   workingDir: String = "."
 }
 

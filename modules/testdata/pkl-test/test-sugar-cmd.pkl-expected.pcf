@@ -2,7 +2,6 @@ examples {
   ["cmd-anonymous-function-with-string"] {
     new {
       ["cmd-anonymous-function"] {
-        desc = null
         cmds {
           new {
             cmd {
@@ -14,9 +13,11 @@ examples {
             mustSucceed = true
           }
         }
+        doc = null
         env {}
         files {}
         inheritEnv = true
+        summary = ""
         workingDir = "."
       }
     }
@@ -24,7 +25,6 @@ examples {
   ["cmd-anonymous-function-with-list"] {
     new {
       ["cmd-anonymous-function-with-list"] {
-        desc = null
         cmds {
           new {
             cmd {
@@ -36,9 +36,11 @@ examples {
             mustSucceed = true
           }
         }
+        doc = null
         env {}
         files {}
         inheritEnv = true
+        summary = ""
         workingDir = "."
       }
     }
@@ -46,7 +48,6 @@ examples {
   ["cmd-anonymous-function-with-listing"] {
     new {
       ["cmd-anonymous-function-with-listing"] {
-        desc = null
         cmds {
           new {
             cmd {
@@ -58,9 +59,11 @@ examples {
             mustSucceed = true
           }
         }
+        doc = null
         env {}
         files {}
         inheritEnv = true
+        summary = ""
         workingDir = "."
       }
     }
@@ -68,7 +71,6 @@ examples {
   ["cmd-anonymous-function-with-dynamic"] {
     new {
       ["cmd-anonymous-function-with-dynamic"] {
-        desc = null
         cmds {
           new {
             cmd {
@@ -80,9 +82,11 @@ examples {
             mustSucceed = true
           }
         }
+        doc = null
         env {}
         files {}
         inheritEnv = true
+        summary = ""
         workingDir = "."
       }
     }
@@ -90,7 +94,6 @@ examples {
   ["cmd-function-with-string"] {
     new {
       ["cmd-function"] {
-        desc = null
         cmds {
           new {
             cmd {
@@ -102,9 +105,11 @@ examples {
             mustSucceed = true
           }
         }
+        doc = null
         env {}
         files {}
         inheritEnv = true
+        summary = ""
         workingDir = "."
       }
     }
@@ -112,7 +117,6 @@ examples {
   ["cmd-function-with-list"] {
     new {
       ["cmd-function-with-list"] {
-        desc = null
         cmds {
           new {
             cmd {
@@ -124,9 +128,11 @@ examples {
             mustSucceed = true
           }
         }
+        doc = null
         env {}
         files {}
         inheritEnv = true
+        summary = ""
         workingDir = "."
       }
     }
@@ -134,7 +140,6 @@ examples {
   ["cmd-function-with-listing"] {
     new {
       ["cmd-function-with-listing"] {
-        desc = null
         cmds {
           new {
             cmd {
@@ -146,9 +151,11 @@ examples {
             mustSucceed = true
           }
         }
+        doc = null
         env {}
         files {}
         inheritEnv = true
+        summary = ""
         workingDir = "."
       }
     }
@@ -156,7 +163,6 @@ examples {
   ["cmd-function-with-dynamic"] {
     new {
       ["cmd-function-with-dynamic"] {
-        desc = null
         cmds {
           new {
             cmd {
@@ -168,9 +174,11 @@ examples {
             mustSucceed = true
           }
         }
+        doc = null
         env {}
         files {}
         inheritEnv = true
+        summary = ""
         workingDir = "."
       }
     }
@@ -178,7 +186,6 @@ examples {
   ["cmd-amending"] {
     new {
       ["cmd-amending"] {
-        desc = null
         cmds {
           new {
             cmd {
@@ -190,9 +197,11 @@ examples {
             mustSucceed = true
           }
         }
+        doc = null
         env {}
         files {}
         inheritEnv = true
+        summary = ""
         workingDir = "."
       }
     }

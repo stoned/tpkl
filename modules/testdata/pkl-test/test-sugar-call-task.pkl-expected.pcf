@@ -2,7 +2,6 @@ examples {
   ["task-anonymous-function"] {
     new {
       ["task-anonymous-function"] {
-        desc = null
         cmds {
           new {
             cmd {}
@@ -11,9 +10,11 @@ examples {
             mustSucceed = true
           }
         }
+        doc = null
         env {}
         files {}
         inheritEnv = true
+        summary = ""
         workingDir = "."
       }
     }
@@ -21,7 +22,6 @@ examples {
   ["task-function"] {
     new {
       ["task-function"] {
-        desc = null
         cmds {
           new {
             cmd {}
@@ -30,9 +30,11 @@ examples {
             mustSucceed = true
           }
         }
+        doc = null
         env {}
         files {}
         inheritEnv = true
+        summary = ""
         workingDir = "."
       }
     }

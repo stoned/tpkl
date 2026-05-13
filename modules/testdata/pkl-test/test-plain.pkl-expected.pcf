@@ -2,7 +2,6 @@ examples {
   ["default"] {
     new {
       ["default"] {
-        desc = null
         cmds {
           new {
             cmd {
@@ -13,9 +12,11 @@ examples {
             mustSucceed = true
           }
         }
+        doc = null
         env {}
         files {}
         inheritEnv = true
+        summary = ""
         workingDir = "."
       }
     }
@@ -23,7 +24,6 @@ examples {
   ["cmd"] {
     new {
       ["cmd"] {
-        desc = null
         cmds {
           new {
             cmd {
@@ -35,9 +35,11 @@ examples {
             mustSucceed = true
           }
         }
+        doc = null
         env {}
         files {}
         inheritEnv = true
+        summary = ""
         workingDir = "."
       }
     }
