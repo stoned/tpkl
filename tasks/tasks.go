@@ -58,7 +58,7 @@ var (
 	ErrUnknownOption = errors.New("unknown option")
 )
 
-// Tasks is a mapping from string to tpkl.Task.
+// Tasks maps task names to their properties as tpkl.Task values.
 type Tasks map[string]tpkl.Task
 
 // CmdError wraps an error encountered running a command.
