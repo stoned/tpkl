@@ -40,8 +40,6 @@ var (
 	ErrIO = errors.New("I/O error")
 	// ErrJSONMarshal signals an error marshaling as JSON.
 	ErrJSONMarshal = errors.New("error marshaling as JSON")
-	// ErrJSONUnmarshal signals an error unmarshaling the Pkl expression tasksExpression rendered as JSON.
-	ErrJSONUnmarshal = errors.New("error unmarshaling module output")
 	// ErrNewEvaluator signals an error creating a Pkl evaluator.
 	ErrNewEvaluator = errors.New("error creating Pkl evaluator")
 	// ErrNoModule signals an error loading/searching for a Pkl module.
