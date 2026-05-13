@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
 	"os"
 	"strings"
 
@@ -21,7 +22,7 @@ func GetListRunner() *ListRunner {
 		Long:              "List tpkl tasks defined in a Pkl module",
 		Args:              cobra.NoArgs,
 		ValidArgsFunction: cobra.NoFileCompletions,
-		Run:               runner.Run,
+		RunE:              runner.Run,
 	}
 
 	addEnvFlag(command, &runner.env)
@@ -31,7 +32,10 @@ func GetListRunner() *ListRunner {
 
 	command.Flags().VarP(runner.format,
 		"output", "o",
-		"set output format. Supported formats: "+strings.Join(runner.format.Allowed, ", "))
+		"Set output format. Supported formats: "+strings.Join(runner.format.Allowed, ", "))
+
+	command.Flags().BoolVarP(&runner.long, "long", "l", false,
+		`List tasks with documentation summary (same as output format "summary")`)
 
 	err := command.RegisterFlagCompletionFunc("output",
 		cobra.FixedCompletions(runner.format.Allowed, cobra.ShellCompDirectiveDefault))
@@ -55,14 +59,28 @@ type ListRunner struct {
 	command    *cobra.Command
 	env        []string
 	format     *enumarg.EnumArg
+	long       bool
 	module     string
 	properties []string
 	verbose    int
 }
 
 // Run runs the 'list' command.
-func (r *ListRunner) Run(cmd *cobra.Command, _ []string) {
+func (r *ListRunner) Run(cmd *cobra.Command, _ []string) error {
 	ctx, logger := log.ContextWithLogger(cmd.Context(), "list", r.verbose)
+
+	flags := cmd.Flags()
+	if flags.Changed("long") && flags.Changed("output") {
+		return fmt.Errorf("%w: '%s' and '%s'", ErrMutuallyExclusiveFlags,
+			flags.Lookup("long").Name, flags.Lookup("output").Name)
+	}
+
+	if r.long {
+		err := r.format.Set("summary")
+		if err != nil {
+			return fmt.Errorf("error setting output format: %w", err)
+		}
+	}
 
 	err := tasks.List(ctx, os.Stdout, r.format.String(),
 		tasks.WithModule(r.module),
@@ -71,4 +89,6 @@ func (r *ListRunner) Run(cmd *cobra.Command, _ []string) {
 	if err != nil {
 		logger.Fatal().Msg(err.Error())
 	}
+
+	return nil
 }

@@ -1,0 +1,39 @@
+import "tpkl:tpkl"
+
+tasks: tpkl.Tasks = new {
+  ["nodoc"] {
+    cmds {
+      new {
+        cmd { "echo 'nodoc!'" }
+      }
+    }
+  }
+
+  ["task"] {
+    doc =
+      """
+      The **task** task.
+      foo bar
+      baz
+      """
+    cmds {
+      new {
+        cmd { "echo 'Hello, world!'" }
+      }
+    }
+  }
+
+  when (read?("prop:cond") != null) {
+    ["condTask"] {
+      doc =
+        """
+        Conditional task.
+        """
+      cmds {
+        new {
+          cmd { "echo 'conditional!'" }
+        }
+      }
+    }
+  }
+}

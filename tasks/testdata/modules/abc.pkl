@@ -1,0 +1,27 @@
+import "tpkl:tpkl"
+
+tasks: tpkl.Tasks = new {
+  ["a"] {
+    cmds {
+      new {
+        cmd { "echo a" }
+      }
+    }
+  }
+
+  ["b"] {
+    cmds {
+      new {
+        cmd { "echo b" }
+      }
+    }
+  }
+
+  ["c"] {
+    cmds {
+      new {
+        cmd { "echo c" }
+      }
+    }
+  }
+}
