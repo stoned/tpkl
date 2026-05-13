@@ -17,6 +17,8 @@ import (
 	"golang.org/x/term"
 )
 
+const headerField = "_header"
+
 // FromContext retrieve a logger from a context.
 func FromContext(ctx context.Context) *zerolog.Logger {
 	return zerolog.Ctx(ctx)
@@ -61,7 +63,7 @@ func Builder(cmd string, verbosity int) zerolog.Logger {
 			writer.NoColor = noColor
 			writer.Out = os.Stderr
 			writer.FormatPartValueByName = getFormatPartValueByName(noColor)
-			writer.FieldsExclude = []string{"_header", "call", "cmd", "cur", "shell", "task", "tpkl"}
+			writer.FieldsExclude = []string{headerField, "call", "cmd", "cur", "shell", "task", "tpkl"}
 			writer.PartsOrder = []string{
 				zerolog.TimestampFieldName,
 				zerolog.LevelFieldName,
@@ -73,7 +75,7 @@ func Builder(cmd string, verbosity int) zerolog.Logger {
 				"cmd",
 				"shell",
 				zerolog.MessageFieldName,
-				"_header",
+				headerField,
 			}
 		},
 	)
@@ -105,7 +107,7 @@ func Cmd(ctx context.Context, command []string) {
 	case logLevel <= zerolog.TraceLevel:
 		// ┌ U+250C BOX DRAWINGS LIGHT DOWN AND RIGHT
 		// ╵ U+2575 BOX DRAWINGS LIGHT UP
-		logger.Trace().Str("_header", "cmd").Msg("\u250c")
+		logger.Trace().Str(headerField, "cmd").Msg("\u250c")
 		logger.Trace().Msg("\u2575 " + strings.Join(command, " "))
 	}
 }
@@ -134,7 +136,7 @@ func ShellCmd(ctx context.Context, command []string) {
 			// ╵ U+2575 BOX DRAWINGS LIGHT UP
 			if idx == 0 {
 				logger.Trace().Strs("args", command[1:]).Send()
-				logger.Trace().Str("_header", "shell").Msg("\u250c")
+				logger.Trace().Str(headerField, "shell").Msg("\u250c")
 			}
 
 			if idx == len(lines)-1 {
@@ -173,7 +175,7 @@ func getFormatPartValueByName(noColor bool) func(i any, s string) string {
 		}
 
 		switch part {
-		case "_header":
+		case headerField:
 			valueString := fmt.Sprintf("%s", value)
 			if !noColor {
 				ret = bold(valueString)

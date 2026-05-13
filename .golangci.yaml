@@ -8,20 +8,33 @@ linters:
   - 'depguard'
   - 'exhaustruct'
   - 'gochecknoinits'
+  - 'gomodguard'  # superseded bu 'gomodguard_v2'
   - 'wsl'  # superseded by 'wsl_v5'
   exclusions:
     rules:
     - path: '_test\.go$'
       linters:
+      - 'goconst'
       - 'godoclint'
     - path: 'cmd/eval.go'
       text: 'G204: Subprocess launched with a potential tainted input or cmd arguments'
+      linters:
+      - 'gosec'
+    - path: 'cmd/eval.go'
+      text: 'G702: Command injection via taint analysis'
       linters:
       - 'gosec'
     - path: 'cmd/pklwrapper/pklwrapper.go'
       text: 'G204: Subprocess launched with a potential tainted input or cmd arguments'
       linters:
       - 'gosec'
+    - path: 'cmd/pklwrapper/pklwrapper.go'
+      text: 'G702: Command injection via taint analysis'
+      linters:
+      - 'gosec'
+    - path: 'log/log.go'
+      linters:
+      - 'goconst'
     - path: 'log/log.go'
       text: 'var-naming: avoid package names that conflict with Go standard library package names'
       linters:
