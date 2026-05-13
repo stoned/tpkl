@@ -1,0 +1,78 @@
+amends "pkl:test"
+
+import "tpkl:tpkl"
+
+examples {
+  ["none"] {
+    new tpkl.Tasks {
+      ["t1"] {}
+    }
+  }
+
+  ["oneline"] {
+    new tpkl.Tasks {
+      ["t1"] {
+        doc = "the task t1"
+      }
+    }
+  }
+
+  ["moredoc"] {
+    new tpkl.Tasks {
+      ["t1"] {
+        doc =
+          """
+          the task t1
+
+          This tasks does something.
+          """
+      }
+    }
+  }
+
+  ["space"] {
+    new tpkl.Tasks {
+      ["t1"] {
+        doc =
+          """
+
+          the task t1
+
+          This tasks does something.
+          """
+      }
+    }
+  }
+
+  ["morespace"] {
+    new tpkl.Tasks {
+      ["t1"] {
+        doc =
+          """
+          \t
+          the task t1
+
+          This tasks does something.
+          """
+      }
+    }
+  }
+
+  ["stillmorespace"] {
+    new tpkl.Tasks {
+      ["t1"] {
+        doc =
+          """
+
+           \t 
+
+          \t
+
+          the task t1
+
+          This tasks does something.
+          """
+      }
+    }
+  }
+}

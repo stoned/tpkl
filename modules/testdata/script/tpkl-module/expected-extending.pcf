@@ -1,6 +1,5 @@
 tasks {
   ["hello"] {
-    desc = null
     cmds {
       new {
         cmd {
@@ -11,13 +10,14 @@ tasks {
         mustSucceed = true
       }
     }
+    doc = null
     env {}
     files {}
     inheritEnv = true
+    summary = ""
     workingDir = "."
   }
   ["bye"] {
-    desc = null
     cmds {
       new {
         cmd {
@@ -28,9 +28,11 @@ tasks {
         mustSucceed = true
       }
     }
+    doc = null
     env {}
     files {}
     inheritEnv = true
+    summary = ""
     workingDir = "."
   }
 }

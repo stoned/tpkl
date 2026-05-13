@@ -1,0 +1,103 @@
+examples {
+  ["none"] {
+    new {
+      ["t1"] {
+        cmds {}
+        doc = null
+        env {}
+        files {}
+        inheritEnv = true
+        summary = ""
+        workingDir = "."
+      }
+    }
+  }
+  ["oneline"] {
+    new {
+      ["t1"] {
+        cmds {}
+        doc = "the task t1"
+        env {}
+        files {}
+        inheritEnv = true
+        summary = "the task t1"
+        workingDir = "."
+      }
+    }
+  }
+  ["moredoc"] {
+    new {
+      ["t1"] {
+        cmds {}
+        doc = """
+          the task t1
+          
+          This tasks does something.
+          """
+        env {}
+        files {}
+        inheritEnv = true
+        summary = "the task t1"
+        workingDir = "."
+      }
+    }
+  }
+  ["space"] {
+    new {
+      ["t1"] {
+        cmds {}
+        doc = """
+          
+          the task t1
+          
+          This tasks does something.
+          """
+        env {}
+        files {}
+        inheritEnv = true
+        summary = "the task t1"
+        workingDir = "."
+      }
+    }
+  }
+  ["morespace"] {
+    new {
+      ["t1"] {
+        cmds {}
+        doc = """
+          \t
+          the task t1
+          
+          This tasks does something.
+          """
+        env {}
+        files {}
+        inheritEnv = true
+        summary = "the task t1"
+        workingDir = "."
+      }
+    }
+  }
+  ["stillmorespace"] {
+    new {
+      ["t1"] {
+        cmds {}
+        doc = """
+          
+           \t 
+          
+          \t
+          
+          the task t1
+          
+          This tasks does something.
+          """
+        env {}
+        files {}
+        inheritEnv = true
+        summary = "the task t1"
+        workingDir = "."
+      }
+    }
+  }
+}

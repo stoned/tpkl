@@ -2,7 +2,6 @@ examples {
   ["bash-anonymous-function-with-string"] {
     new {
       ["bash-anonymous-function-with-string"] {
-        desc = null
         cmds {
           new {
             cmd {
@@ -15,9 +14,11 @@ examples {
             mustSucceed = true
           }
         }
+        doc = null
         env {}
         files {}
         inheritEnv = true
+        summary = ""
         workingDir = "."
       }
     }
@@ -25,7 +26,6 @@ examples {
   ["bash-anonymous-function-with-list"] {
     new {
       ["bash-anonymous-function-with-list"] {
-        desc = null
         cmds {
           new {
             cmd {
@@ -41,9 +41,11 @@ examples {
             mustSucceed = true
           }
         }
+        doc = null
         env {}
         files {}
         inheritEnv = true
+        summary = ""
         workingDir = "."
       }
     }
@@ -51,7 +53,6 @@ examples {
   ["bash-anonymous-function-with-listing"] {
     new {
       ["bash-anonymous-function-with-listing"] {
-        desc = null
         cmds {
           new {
             cmd {
@@ -67,9 +68,11 @@ examples {
             mustSucceed = true
           }
         }
+        doc = null
         env {}
         files {}
         inheritEnv = true
+        summary = ""
         workingDir = "."
       }
     }
@@ -77,7 +80,6 @@ examples {
   ["bash-anonymous-function-with-dynamic"] {
     new {
       ["bash-anonymous-function-with-dynamic"] {
-        desc = null
         cmds {
           new {
             cmd {
@@ -93,9 +95,11 @@ examples {
             mustSucceed = true
           }
         }
+        doc = null
         env {}
         files {}
         inheritEnv = true
+        summary = ""
         workingDir = "."
       }
     }
@@ -103,7 +107,6 @@ examples {
   ["bash-function-with-string"] {
     new {
       ["bash-function-with-string"] {
-        desc = null
         cmds {
           new {
             cmd {
@@ -116,9 +119,11 @@ examples {
             mustSucceed = true
           }
         }
+        doc = null
         env {}
         files {}
         inheritEnv = true
+        summary = ""
         workingDir = "."
       }
     }
@@ -126,7 +131,6 @@ examples {
   ["bash-function-with-list"] {
     new {
       ["bash-function-with-list"] {
-        desc = null
         cmds {
           new {
             cmd {
@@ -142,9 +146,11 @@ examples {
             mustSucceed = true
           }
         }
+        doc = null
         env {}
         files {}
         inheritEnv = true
+        summary = ""
         workingDir = "."
       }
     }
@@ -152,7 +158,6 @@ examples {
   ["bash-function-with-listing"] {
     new {
       ["bash-function-with-listing"] {
-        desc = null
         cmds {
           new {
             cmd {
@@ -168,9 +173,11 @@ examples {
             mustSucceed = true
           }
         }
+        doc = null
         env {}
         files {}
         inheritEnv = true
+        summary = ""
         workingDir = "."
       }
     }
@@ -178,7 +185,6 @@ examples {
   ["bash-function-with-dynamic"] {
     new {
       ["bash-function-with-dynamic"] {
-        desc = null
         cmds {
           new {
             cmd {
@@ -194,9 +200,11 @@ examples {
             mustSucceed = true
           }
         }
+        doc = null
         env {}
         files {}
         inheritEnv = true
+        summary = ""
         workingDir = "."
       }
     }
@@ -204,7 +212,6 @@ examples {
   ["bash-amending"] {
     new {
       ["bash-amending"] {
-        desc = null
         cmds {
           new {
             cmd {
@@ -217,9 +224,11 @@ examples {
             mustSucceed = true
           }
         }
+        doc = null
         env {}
         files {}
         inheritEnv = true
+        summary = ""
         workingDir = "."
       }
     }
