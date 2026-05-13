@@ -39,14 +39,6 @@ linters:
       text: 'var-naming: avoid package names that conflict with Go standard library package names'
       linters:
       - 'revive'
-    - path: 'tasks/list.go'
-      text: 'the given struct should be annotated with the `json` tag'
-      linters:
-      - 'musttag'
-    - path: 'tasks/list.go'
-      text: 'list.* - result 0 \(error\) is always nil'
-      linters:
-      - 'unparam'
     - path: 'tasks/run.go'
       text: 'G204: Subprocess launched with a potential tainted input or cmd arguments'
       linters:
@@ -77,10 +69,6 @@ linters:
       - 'cyclop'
     - path: 'tasks/run.go'
       text: "Function 'runTask' is too long"
-      linters:
-      - 'funlen'
-    - path: 'tasks/tasks.go'
-      text: "Function 'ModuleTasks' is too long"
       linters:
       - 'funlen'
     - path: 'tasks/tasks.go'
