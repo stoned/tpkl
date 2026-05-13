@@ -1,0 +1,38 @@
+{
+  "nodoc": {
+    "Cmds": [
+      {
+        "Cmd": [
+          "echo 'nodoc!'"
+        ],
+        "Task": null,
+        "EmbeddedShell": true,
+        "MustSucceed": true
+      }
+    ],
+    "Doc": null,
+    "Env": {},
+    "Files": {},
+    "InheritEnv": true,
+    "Summary": "",
+    "WorkingDir": "."
+  },
+  "task": {
+    "Cmds": [
+      {
+        "Cmd": [
+          "echo 'Hello, world!'"
+        ],
+        "Task": null,
+        "EmbeddedShell": true,
+        "MustSucceed": true
+      }
+    ],
+    "Doc": "The **task** task.\nfoo bar\nbaz",
+    "Env": {},
+    "Files": {},
+    "InheritEnv": true,
+    "Summary": "The **task** task.",
+    "WorkingDir": "."
+  }
+}

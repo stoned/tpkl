@@ -21,6 +21,15 @@ cd $WORK
 stderr 'invalid argument "NoSuchOutputFormat".* is not included in '
 
 # check various list formats
+exec tpkl list -l
+cmp stdout list-default-long.txt
+
+exec tpkl list --long
+cmp stdout list-default-long.txt
+
+exec tpkl list -o summary
+cmp stdout list-default-long.txt
+
 exec tpkl list -o name
 cmp stdout list-default.txt
 

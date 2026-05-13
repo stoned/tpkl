@@ -2,40 +2,30 @@ package tasks_test
 
 import (
 	"bytes"
+	"embed"
 	"encoding/json"
 	"errors"
-	"os"
-	"path/filepath"
+	"fmt"
+	"regexp"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
+	"github.com/google/go-cmp/cmp/cmpopts"
 	"github.com/stoned/tpkl/tasks"
 )
 
-func testModule(t *testing.T) string {
+//go:embed testdata/modules/*.json
+var jsonFiles embed.FS
+
+func jsonDocument(t *testing.T, name string) string {
 	t.Helper()
 
-	moduleSrc := `
-import "tpkl:tpkl"
-tasks: tpkl.Tasks = new {
-  ["c"] {
-    cmds {
-      new {
-        cmd { "echo 'Hello, world!'" }
-      }
-    }
-  }
-}
-`
-	moduleFile := filepath.Join(t.TempDir(), "module.pkl")
-	_ = os.Mkdir(filepath.Dir(moduleFile), 0o750)
-
-	err := os.WriteFile(moduleFile, []byte(moduleSrc), 0o600)
+	content, err := jsonFiles.ReadFile(name)
 	if err != nil {
-		t.Fatalf("failed to write to file %q: %s", moduleFile, err)
+		t.Fatalf("failed to get embedded file %q: %s", name, err)
 	}
 
-	return moduleFile
+	return string(content)
 }
 
 // TestListUnsupportedFormat the List() function with an unsupported format.
@@ -43,52 +33,203 @@ func TestListUnsupportedFormat(t *testing.T) {
 	t.Parallel()
 
 	b := new(bytes.Buffer)
-	module := testModule(t)
 	want := tasks.ErrUnknownOption
 
-	err := tasks.List(t.Context(), b, "uNsuPpoRtedOptIOn", tasks.WithModule(module))
+	err := tasks.List(t.Context(), b, "uNsuPpoRtedOptIOn", tasks.WithModule("testdata/modules/tasks.pkl"))
 	if !errors.Is(err, want) {
 		t.Errorf("expecting error %q, got %q", want, err)
 	}
 }
 
-// TestListName test the List() function with the "name" option.
+// TestListName test the List() function with the "name" format.
 func TestListName(t *testing.T) {
 	t.Parallel()
 
-	buff := new(bytes.Buffer)
-	module := testModule(t)
-
-	err := tasks.List(t.Context(), buff, "name", tasks.WithModule(module))
-	if err != nil {
-		t.Fatalf("unexpected error %q", err)
+	cases := []struct {
+		module   string
+		props    []string
+		expected string
+	}{
+		{
+			module:   "testdata/modules/notask.pkl",
+			expected: "",
+		},
+		{
+			module:   "testdata/modules/abc.pkl",
+			expected: "a\nb\nc\n",
+		},
+		{
+			module:   "testdata/modules/acb.pkl",
+			expected: "a\nb\nc\n",
+		},
+		{
+			module:   "testdata/modules/tasks.pkl",
+			expected: "nodoc\ntask\n",
+		},
+		{
+			module:   "testdata/modules/tasks.pkl",
+			props:    []string{"cond=1"},
+			expected: "condTask\nnodoc\ntask\n",
+		},
 	}
 
-	want := "c\n"
-	got := buff.String()
+	for _, testCase := range cases {
+		desc := fmt.Sprintf("module=%s,props=%q", testCase.module, testCase.props)
+		t.Run(desc, func(t *testing.T) {
+			t.Parallel()
 
-	diff := cmp.Diff(want, got)
-	if diff != "" {
-		t.Errorf("Mismatch (-want, +got):\n%s", diff)
+			buf := new(bytes.Buffer)
+
+			opts := []tasks.ListOption{
+				tasks.WithModule(testCase.module),
+				tasks.WithProperties(testCase.props),
+			}
+
+			err := tasks.List(t.Context(), buf, "name", opts...)
+			if err != nil {
+				t.Fatalf("unexpected error %q", err)
+			}
+
+			got := buf.String()
+
+			diff := cmp.Diff(testCase.expected, got)
+			if diff != "" {
+				t.Errorf("Mismatch (-want, +got):\n%s", diff)
+			}
+		})
 	}
 }
 
-// TestListJSON test the List() function with the "json" option.
+// TestListJSON test the List() function with the "json" format.
 func TestListJSON(t *testing.T) {
 	t.Parallel()
 
-	buf := new(bytes.Buffer)
-	module := testModule(t)
-
-	err := tasks.List(t.Context(), buf, "json", tasks.WithModule(module))
-	if err != nil {
-		t.Fatalf("unexpected error %q", err)
+	cases := []struct {
+		module   string
+		props    []string
+		expected string
+	}{
+		{
+			module:   "testdata/modules/notask.pkl",
+			expected: jsonDocument(t, "testdata/modules/notask.json"),
+		},
+		{
+			module:   "testdata/modules/abc.pkl",
+			expected: jsonDocument(t, "testdata/modules/abc.json"),
+		},
+		{
+			module:   "testdata/modules/acb.pkl",
+			expected: jsonDocument(t, "testdata/modules/abc.json"),
+		},
+		{
+			module:   "testdata/modules/tasks.pkl",
+			props:    []string{"cond=1"},
+			expected: jsonDocument(t, "testdata/modules/tasks-cond.json"),
+		},
+		{
+			module:   "testdata/modules/tasks.pkl",
+			expected: jsonDocument(t, "testdata/modules/tasks.json"),
+		},
 	}
 
-	var d any
+	jsonTransformer := cmpopts.AcyclicTransformer("unmarshalJSON", func(s string) map[string]any {
+		var ret map[string]any
 
-	err = json.Unmarshal(buf.Bytes(), &d)
-	if err != nil {
-		t.Errorf("unexpected error decoding JSON %q", err)
+		err := json.Unmarshal([]byte(s), &ret)
+		if err != nil {
+			t.Fatalf("unexpected error decoding JSON %v: %q", s, err)
+		}
+
+		return ret
+	})
+
+	for _, testCase := range cases {
+		desc := fmt.Sprintf("module=%s,props=%q", testCase.module, testCase.props)
+		t.Run(desc, func(t *testing.T) {
+			t.Parallel()
+
+			buf := new(bytes.Buffer)
+
+			opts := []tasks.ListOption{
+				tasks.WithModule(testCase.module),
+				tasks.WithProperties(testCase.props),
+			}
+
+			err := tasks.List(t.Context(), buf, "json", opts...)
+			if err != nil {
+				t.Fatalf("unexpected error %q", err)
+			}
+
+			diff := cmp.Diff(testCase.expected, buf.String(), jsonTransformer)
+			if diff != "" {
+				t.Errorf("Mismatch (-want, +got):\n%s", diff)
+			}
+		})
+	}
+}
+
+type reCase struct {
+	re   *regexp.Regexp
+	expr string
+}
+
+// TestListSummary test the List() function with the "summary" format.
+func TestListSummary(t *testing.T) {
+	t.Parallel()
+
+	newReCase := func(e string) reCase {
+		return reCase{
+			re:   regexp.MustCompile(e),
+			expr: e,
+		}
+	}
+
+	cases := []struct {
+		reCase
+
+		module string
+		props  []string
+	}{
+		{
+			module: "testdata/modules/abc.pkl",
+			reCase: newReCase(`(?m)\Aa\nb\nc\n\z`),
+		},
+		{
+			module: "testdata/modules/notask.pkl",
+			reCase: newReCase(`(?m)\A\z`),
+		},
+		{
+			module: "testdata/modules/tasks.pkl",
+			props:  []string{"cond"},
+			reCase: newReCase(`(?m)\AcondTask\s+Conditional task\.\nnodoc\ntask\s+The \*\*task\*\* task\.\n`),
+		},
+		{
+			module: "testdata/modules/tasks.pkl",
+			reCase: newReCase(`(?m)\Anodoc\ntask\s+The \*\*task\*\* task\.\n`),
+		},
+	}
+
+	for _, testCase := range cases {
+		desc := fmt.Sprintf("module=%s,props=%q", testCase.module, testCase.props)
+		t.Run(desc, func(t *testing.T) {
+			t.Parallel()
+
+			buf := new(bytes.Buffer)
+
+			opts := []tasks.ListOption{
+				tasks.WithModule(testCase.module),
+				tasks.WithProperties(testCase.props),
+			}
+
+			err := tasks.List(t.Context(), buf, "summary", opts...)
+			if err != nil {
+				t.Fatalf("unexpected error %q", err)
+			}
+
+			got := buf.String()
+			if !testCase.re.MatchString(got) {
+				t.Errorf("%q does not match %q", got, testCase.expr)
+			}
+		})
 	}
 }

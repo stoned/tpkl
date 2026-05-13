@@ -14,7 +14,7 @@ import (
 // FormatEnumArg returns github.com/spf13/pflag to record
 // a CLI flag to set List()'s format.
 func FormatEnumArg() *enumarg.EnumArg {
-	return enumarg.New([]string{"name", "json"}, "name")
+	return enumarg.New([]string{"name", "json", "summary"}, "name") //nolint:goconst
 }
 
 // Options for List().
@@ -45,7 +45,7 @@ func (p *propertiesOption) setListOption(o *listOptions) {
 }
 
 // List lists tasks defined in a Pkl module.
-func List(ctx context.Context, writer io.Writer, format string, options ...ListOption) error {
+func List(ctx context.Context, writer io.Writer, format string, options ...ListOption) error { //nolint:cyclop
 	var err error
 
 	opts := &listOptions{}
@@ -54,8 +54,9 @@ func List(ctx context.Context, writer io.Writer, format string, options ...ListO
 	}
 
 	switch format {
-	case "name":
 	case "json":
+	case "name":
+	case "summary":
 	default:
 		return fmt.Errorf("list tasks: %w: `%s`", ErrUnknownOption, format)
 	}
@@ -74,10 +75,12 @@ func List(ctx context.Context, writer io.Writer, format string, options ...ListO
 	}
 
 	switch format {
-	case "name":
-		return listName(tasks, writer)
 	case "json":
 		return listJSON(tasks, writer)
+	case "name":
+		return listName(tasks, writer)
+	case "summary":
+		return list(tasks, writer)
 	}
 
 	return nil
@@ -102,6 +105,35 @@ func listName(tasks Tasks, writer io.Writer) error {
 
 	for _, t := range names {
 		_, err := fmt.Fprintln(writer, t)
+		if err != nil {
+			return fmt.Errorf("%w: %w", ErrIO, err)
+		}
+	}
+
+	return nil
+}
+
+func list(tasks Tasks, writer io.Writer) error {
+	names := slices.Sorted(maps.Keys(tasks))
+
+	nameMaxLen := 0
+
+	for _, name := range names {
+		l := len(name)
+		if l > nameMaxLen {
+			nameMaxLen = l
+		}
+	}
+
+	for _, name := range names {
+		var line string
+		if tasks[name].Summary != "" {
+			line = fmt.Sprintf("%-*s  %s", nameMaxLen, name, tasks[name].Summary)
+		} else {
+			line = name
+		}
+
+		_, err := fmt.Fprintln(writer, line)
 		if err != nil {
 			return fmt.Errorf("%w: %w", ErrIO, err)
 		}

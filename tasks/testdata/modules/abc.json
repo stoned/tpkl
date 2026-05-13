@@ -1,0 +1,56 @@
+{
+  "a": {
+    "Cmds": [
+      {
+        "Cmd": [
+          "echo a"
+        ],
+        "Task": null,
+        "EmbeddedShell": true,
+        "MustSucceed": true
+      }
+    ],
+    "Doc": null,
+    "Env": {},
+    "Files": {},
+    "InheritEnv": true,
+    "Summary": "",
+    "WorkingDir": "."
+  },
+  "b": {
+    "Cmds": [
+      {
+        "Cmd": [
+          "echo b"
+        ],
+        "Task": null,
+        "EmbeddedShell": true,
+        "MustSucceed": true
+      }
+    ],
+    "Doc": null,
+    "Env": {},
+    "Files": {},
+    "InheritEnv": true,
+    "Summary": "",
+    "WorkingDir": "."
+  },
+  "c": {
+    "Cmds": [
+      {
+        "Cmd": [
+          "echo c"
+        ],
+        "Task": null,
+        "EmbeddedShell": true,
+        "MustSucceed": true
+      }
+    ],
+    "Doc": null,
+    "Env": {},
+    "Files": {},
+    "InheritEnv": true,
+    "Summary": "",
+    "WorkingDir": "."
+  }
+}

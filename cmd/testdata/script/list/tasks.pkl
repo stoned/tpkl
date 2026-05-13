@@ -1,5 +1,30 @@
 import "tpkl:tpkl"
 tasks: tpkl.Tasks = new {
+  ["a"] {
+    doc = "**a task**"
+    cmds {
+      new {
+        cmd { "echo this is task test" }
+        embeddedShell = true
+      }
+    }
+  }
+
+  ["b"] {
+    doc =
+    """
+    this is the `b` task
+    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula
+    eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient
+    """
+    cmds {
+      new {
+        cmd { "echo this is task test" }
+        embeddedShell = true
+      }
+    }
+  }
+
   ["test"] {
     cmds {
       new {

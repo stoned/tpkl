@@ -1,9 +1,14 @@
 package cmd
 
 import (
+	"errors"
+
 	"github.com/spf13/cobra"
 	"github.com/stoned/tpkl/log"
 )
+
+// ErrMutuallyExclusiveFlags signals an error about mutually exclusive flags.
+var ErrMutuallyExclusiveFlags = errors.New("mutually exclusive flags specified")
 
 func addEnvFlag(cmd *cobra.Command, variable *[]string) {
 	cmd.Flags().StringArrayVarP(variable, "env-var", "e", nil, "Set environment variable `name[=value]` (repeatable)")
