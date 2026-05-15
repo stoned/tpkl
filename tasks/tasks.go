@@ -58,6 +58,42 @@ var (
 	ErrUnknownOption = errors.New("unknown option")
 )
 
+// EvalError signals a Pkl evaluation error.
+type EvalError struct {
+	module string
+	expr   string
+	err    error
+}
+
+func (r *EvalError) Error() string {
+	var sep string
+	if r.err != nil && strings.HasPrefix(r.err.Error(), "–– Pkl Error ––") {
+		sep = "\n"
+	} else {
+		sep = " "
+	}
+
+	return fmt.Sprintf("error evaluating expression `%s` in module `%s`:%s%s", r.expr, r.module, sep, r.err)
+}
+
+// Is implements the interface expected by errors.Is for EvalError.
+func (r *EvalError) Is(err error) bool {
+	if err == nil {
+		return false
+	}
+
+	var evalErr *EvalError
+
+	ok := errors.As(err, &evalErr)
+
+	return ok
+}
+
+// Unwrap implements the interface expected by errors.Unwrap for EvalError.
+func (r *EvalError) Unwrap() error {
+	return r.err
+}
+
 // Tasks maps task names to their properties as tpkl.Task values.
 type Tasks map[string]tpkl.Task
 
@@ -248,19 +284,12 @@ func ModuleTasks(ctx context.Context, module string,
 	err = evaluator.EvaluateExpression(ctx,
 		pkl.FileSource(module), tasksExpression, &out)
 	if err != nil {
-		var sep string
-		if strings.HasPrefix(err.Error(), "–– Pkl Error ––") {
-			sep = "\n"
-		} else {
-			sep = " "
-		}
-
-		retError := fmt.Errorf("%w: `%s`: expression `%s`:%s%w", ErrEvaluateExpr, module, tasksExpression, sep, err)
+		e := &EvalError{module, tasksExpression, err}
 		if context.Cause(ctx) != nil {
-			retError = fmt.Errorf("%w: %w", context.Cause(ctx), retError)
+			return nil, fmt.Errorf("%w: %w", context.Cause(ctx), e)
 		}
 
-		return nil, retError
+		return nil, e
 	}
 
 	return out, nil
