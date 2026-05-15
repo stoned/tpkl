@@ -2,117 +2,138 @@ package tasks_test
 
 import (
 	"errors"
-	"os"
-	"path/filepath"
 	"strings"
 	"testing"
 
+	"github.com/apple/pkl-go/pkl"
+	"github.com/google/go-cmp/cmp"
 	"github.com/stoned/tpkl/tasks"
 )
 
-func writeFile(t *testing.T, filename string, content string) {
-	t.Helper()
+// TestTaskModules tests tasks.ModuleTaks().
+func TestTaskModules(t *testing.T) {
+	t.Parallel()
 
-	_ = os.Mkdir(filepath.Dir(filename), 0o750)
-
-	err := os.WriteFile(filename, []byte(content), 0o600)
-	if err != nil {
-		t.Fatalf("failed to write to file %q: %s", filename, err)
-	}
-}
-
-const exampleModuleFragment = `
-tasks: tpkl.Tasks = new {
-  tasks {
-    ["c"] {
-      cmds {
-        new {
-          cmd { "echo 'Hello, world!'" }
-        }
-      }
-    }
-  }
-}
-`
-
-func inoperativeModuleTextSource(t *testing.T) string {
-	t.Helper()
-
-	return `import "tpkl:tpk"  // typo` + exampleModuleFragment
-}
-
-type moduleTestCase struct {
-	src             string
-	expectedError   error
-	expectedMessage string
-}
-
-func inoperativeModuleTestCases(t *testing.T) map[string]moduleTestCase {
-	t.Helper()
-
-	return map[string]moduleTestCase{
+	testCases := map[string]struct {
+		err    any
+		module string
+		msg    string
+		nTasks int
+		props  []string
+	}{
 		"EmptyModule": {
-			src:           ``,
-			expectedError: tasks.ErrEvaluateExpr,
+			module: "testdata/modules/empty.pkl",
+			nTasks: 0,
+		},
+		"RandomModule": {
+			module: "testdata/modules/other.pkl",
+			nTasks: 0,
 		},
 		"NoTask": {
-			src:           `foo = "bar"`,
-			expectedError: tasks.ErrEvaluateExpr,
+			module: "testdata/modules/notask.pkl",
+			nTasks: 0,
+		},
+		"SomeTasks": {
+			module: "testdata/modules/tasks.pkl",
+			nTasks: 2,
+		},
+		"MoreTasks": {
+			props:  []string{"cond"},
+			module: "testdata/modules/tasks.pkl",
+			nTasks: 3,
 		},
 		"PklError": {
-			src:             inoperativeModuleTextSource(t),
-			expectedError:   tasks.ErrEvaluateExpr,
-			expectedMessage: `Pkl Error`,
+			err:    new(tasks.EvalError),
+			module: "testdata/modules/inoperative.pkl",
+			msg:    "Pkl Error",
 		},
 	}
-}
 
-// TestModuleTasks_NoTask tests evaluating tasks from inoperative tpkl Pkl modules.
-func TestModuleTasksWithInoperativeModule(t *testing.T) {
-	t.Parallel()
-
-	for name, testCase := range inoperativeModuleTestCases(t) {
+	for name, testCase := range testCases {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
-			moduleFile := filepath.Join(t.TempDir(), t.Name()+".pkl")
-			writeFile(t, moduleFile, testCase.src)
-
-			_, err := tasks.ModuleTasks(t.Context(), moduleFile)
-			if !errors.Is(err, testCase.expectedError) {
-				t.Fatalf("want error %q, got %q", testCase.expectedError, err)
+			opts := []func(*pkl.EvaluatorOptions){
+				tasks.WithPklProperties(testCase.props),
 			}
 
-			if testCase.expectedMessage != "" {
-				if !strings.Contains(err.Error(), testCase.expectedMessage) {
-					t.Errorf("want error message to contains %q, got %q", testCase.expectedMessage, err.Error())
+			tasks, err := tasks.ModuleTasks(t.Context(), testCase.module, opts...)
+			if testCase.err != nil {
+				if !errors.As(err, &testCase.err) {
+					t.Fatalf("want error %q, got %q", testCase.err, err)
+				}
+			}
+
+			if testCase.msg != "" {
+				if !strings.Contains(err.Error(), testCase.msg) {
+					t.Errorf("want error message to contains %q, got %q", testCase.msg, err.Error())
+				}
+			}
+
+			nTasks := len(tasks)
+
+			diff := cmp.Diff(testCase.nTasks, nTasks)
+			if diff != "" {
+				t.Errorf("Mismatch in tasks number (-want, +got):\n%s", diff)
+			}
+		})
+	}
+}
+
+// TestRunNoTask tests running tasks from inoperative tpkl Pkl modules.
+func TestRunNoTask(t *testing.T) {
+	t.Parallel()
+
+	testCases := map[string]struct {
+		module string
+		err    any
+		msg    string
+	}{
+		"EmptyModule": {
+			module: "testdata/modules/empty.pkl",
+			err:    tasks.ErrUnknownTask,
+		},
+		"NoTask": {
+			module: "testdata/modules/notask.pkl",
+			err:    tasks.ErrUnknownTask,
+		},
+		"NoSuchTask": {
+			module: "testdata/modules/tasks.pkl",
+			err:    tasks.ErrUnknownTask,
+		},
+		"PklError": {
+			module: "testdata/modules/inoperative.pkl",
+			err:    new(tasks.EvalError),
+			msg:    `Pkl Error`,
+		},
+	}
+
+	for name, testCase := range testCases {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+
+			err := tasks.Run(t.Context(), "no-such-task"+t.Name(), tasks.WithModule(testCase.module))
+			if testCase.err != nil {
+				if !errors.As(err, &testCase.err) {
+					t.Fatalf("want error %q, got %q", testCase.err, err)
+				}
+			}
+
+			if testCase.msg != "" {
+				if !strings.Contains(err.Error(), testCase.msg) {
+					t.Errorf("want error message to contains %q, got %q", testCase.msg, err.Error())
 				}
 			}
 		})
 	}
 }
 
-// TestRun_NoTask tests running tasks from inoperative tpkl Pkl modules.
-func TestRunInoperativeModule(t *testing.T) {
+// TestEvalErrorImplementsErrorInterface tests that tasks.EvalError implements error.
+func TestEvalErrorImplementsErrorInterface(t *testing.T) {
 	t.Parallel()
 
-	for name, testCase := range inoperativeModuleTestCases(t) {
-		t.Run(name, func(t *testing.T) {
-			t.Parallel()
-
-			moduleFile := filepath.Join(t.TempDir(), t.Name()+".pkl")
-			writeFile(t, moduleFile, testCase.src)
-
-			err := tasks.Run(t.Context(), "no-such-task"+t.Name(), tasks.WithModule(moduleFile))
-			if !errors.Is(err, testCase.expectedError) {
-				t.Fatalf("want error %q, got %q", testCase.expectedError, err)
-			}
-
-			if testCase.expectedMessage != "" {
-				if !strings.Contains(err.Error(), testCase.expectedMessage) {
-					t.Errorf("want error message to contains %q, got %q", testCase.expectedMessage, err.Error())
-				}
-			}
-		})
+	var err any = new(tasks.EvalError)
+	if _, ok := err.(error); !ok {
+		t.Errorf("expected type %T to implement error", err)
 	}
 }

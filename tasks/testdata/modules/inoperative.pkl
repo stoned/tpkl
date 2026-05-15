@@ -1,0 +1,13 @@
+import "tpkl:tpk" // typo
+
+tasks: tpkl.Tasks = new {
+  tasks {
+    ["c"] {
+      cmds {
+        new {
+          cmd { "echo 'Hello, world!'" }
+        }
+      }
+    }
+  }
+}
