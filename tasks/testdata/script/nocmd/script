@@ -1,3 +1,8 @@
+# No cmds in task definition
+exec tpkl run nocmds
+empty stdout
+empty stderr
+
 # No command to exec
 ! exec tpkl run nocmd
 stderr 'exec: no command'
