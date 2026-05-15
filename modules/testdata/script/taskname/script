@@ -1,11 +1,11 @@
 ! exec tpkl eval empty-task-name.pkl
-stderr '–– Pkl Error ––\nType constraint `!isEmpty && !isBlank` violated.'
+stderr '–– Pkl Error ––\nType constraint `!isBlank` violated.'
 
 ! exec tpkl eval blank-task-name-1.pkl
-stderr '–– Pkl Error ––\nType constraint `!isEmpty && !isBlank` violated.'
+stderr '–– Pkl Error ––\nType constraint `!isBlank` violated.'
 
 ! exec tpkl eval blank-task-name-2.pkl
-stderr '–– Pkl Error ––\nType constraint `!isEmpty && !isBlank` violated.'
+stderr '–– Pkl Error ––\nType constraint `!isBlank` violated.'
 
 exec tpkl run -m task-name-with-blank.pkl 'a '
 stdout '^run-a$'
