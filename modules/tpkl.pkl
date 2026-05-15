@@ -4,7 +4,7 @@ tasks: Tasks
 
 typealias Tasks = Mapping<taskName, Task>
 
-typealias taskName = String(!isEmpty && !isBlank)
+typealias taskName = String(!isBlank)
 
 class Task {
   cmds: Listing<Command>
