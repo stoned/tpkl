@@ -1,3 +1,4 @@
-doit	Task doit
-hello	Task hello
+doit	The **doit** task
+end
+hello	hello task.
 :0

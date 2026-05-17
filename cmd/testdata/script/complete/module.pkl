@@ -1,14 +1,27 @@
 import "tpkl:tpkl"
 tasks: tpkl.Tasks = new {
   ["hello"] {
+    doc = "hello task."
     cmds {
       "echo hello" |> tpkl.sh
     }
   }
 
   ["doit"] {
+    doc = """
+    The **doit** task
+
+    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula
+    eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient
+    """
     cmds {
       "echo done" |> tpkl.sh
+    }
+  }
+
+  ["end"] {
+    cmds {
+      "echo end" |> tpkl.sh
     }
   }
 
