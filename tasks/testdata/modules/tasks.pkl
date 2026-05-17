@@ -23,6 +23,16 @@ tasks: tpkl.Tasks = new {
     }
   }
 
+  ["neon"] {
+    doc = "***this*** **is** *the* `neon` task"
+    cmds {
+      new {
+        cmd { "echo neon" }
+        embeddedShell = true
+      }
+    }
+  }
+
   when (read?("prop:cond") != null) {
     ["condTask"] {
       doc =
