@@ -41,8 +41,7 @@ func validArgsRun(cmd *cobra.Command, args []string, _ string) ([]string, cobra.
 
 	names := slices.Sorted(maps.Keys(tasks))
 	for _, task := range names {
-		// XXX get task description
-		completions = append(completions, cobra.CompletionWithDesc(task, "Task "+task))
+		completions = append(completions, cobra.CompletionWithDesc(task, tasks[task].Summary))
 	}
 
 	return completions, cobra.ShellCompDirectiveDefault
