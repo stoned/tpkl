@@ -35,12 +35,12 @@ func TestTaskModules(t *testing.T) {
 		},
 		"SomeTasks": {
 			module: "testdata/modules/tasks.pkl",
-			nTasks: 2,
+			nTasks: 3,
 		},
 		"MoreTasks": {
 			props:  []string{"cond"},
 			module: "testdata/modules/tasks.pkl",
-			nTasks: 3,
+			nTasks: 4,
 		},
 		"PklError": {
 			err:    new(tasks.EvalError),

@@ -17,6 +17,24 @@
     "Summary": "Conditional task.",
     "WorkingDir": "."
   },
+  "neon": {
+    "Cmds": [
+      {
+        "Cmd": [
+          "echo neon"
+        ],
+        "Task": null,
+        "EmbeddedShell": true,
+        "MustSucceed": true
+      }
+    ],
+    "Doc": "***this*** **is** *the* `neon` task",
+    "Env": {},
+    "Files": {},
+    "InheritEnv": true,
+    "Summary": "***this*** **is** *the* `neon` task",
+    "WorkingDir": "."
+  },
   "nodoc": {
     "Cmds": [
       {

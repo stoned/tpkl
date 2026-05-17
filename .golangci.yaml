@@ -1,7 +1,4 @@
 version: '2'
-run:
-  build-tags:
-  - 'generate'
 linters:
   default: 'all'
   disable:

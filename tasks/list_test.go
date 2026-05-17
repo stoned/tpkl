@@ -64,12 +64,12 @@ func TestListName(t *testing.T) {
 		},
 		{
 			module:   "testdata/modules/tasks.pkl",
-			expected: "nodoc\ntask\n",
+			expected: "neon\nnodoc\ntask\n",
 		},
 		{
 			module:   "testdata/modules/tasks.pkl",
 			props:    []string{"cond=1"},
-			expected: "condTask\nnodoc\ntask\n",
+			expected: "condTask\nneon\nnodoc\ntask\n",
 		},
 	}
 
@@ -201,11 +201,18 @@ func TestListSummary(t *testing.T) {
 		{
 			module: "testdata/modules/tasks.pkl",
 			props:  []string{"cond"},
-			reCase: newReCase(`(?m)\AcondTask\s+Conditional task\.\nnodoc\ntask\s+The \*\*task\*\* task\.\n`),
+			reCase: newReCase(`(?m)\A` +
+				`condTask\s+Conditional task\.\s+\n` +
+				`neon\s+\*this\* \*\*is\*\* \*the\* neon task\s+\n` +
+				`nodoc\s+\n` +
+				`task\s+The \*\*task\*\* task\.\s+\n\z`),
 		},
 		{
 			module: "testdata/modules/tasks.pkl",
-			reCase: newReCase(`(?m)\Anodoc\ntask\s+The \*\*task\*\* task\.\n`),
+			reCase: newReCase(`(?m)\A` +
+				`neon\s+\*this\* \*\*is\*\* \*the\* neon task\s+\n` +
+				`nodoc\s+\n` +
+				`task\s+The \*\*task\*\* task\.\s+\n\z`),
 		},
 	}
 

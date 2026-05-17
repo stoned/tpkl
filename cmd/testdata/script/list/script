@@ -30,6 +30,9 @@ cmp stdout list-default-long.txt
 exec tpkl list -o summary
 cmp stdout list-default-long.txt
 
+exec tpkl list -o summary-raw
+cmp stdout list-default-summary-raw.txt
+
 exec tpkl list -o name
 cmp stdout list-default.txt
 
