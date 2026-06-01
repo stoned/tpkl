@@ -1,0 +1,10 @@
+import "tpkl:tpkl"
+tasks: tpkl.Tasks = new {
+  ["top"] {
+    cmds {
+      new {
+        task = "no-such-task"
+      }
+    }
+  }
+}

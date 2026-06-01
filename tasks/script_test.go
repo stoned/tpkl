@@ -19,6 +19,7 @@ import (
 //go:generate go tool txtar -o testdata/script/inheritenv.txtar -c testdata/script/inheritenv/script -p 3 testdata/script/inheritenv/*.pkl testdata/script/inheritenv/*.txt
 //go:generate go tool txtar -o testdata/script/mustsucceed.txtar -c testdata/script/mustsucceed/script -p 3 testdata/script/mustsucceed/*.pkl
 //go:generate go tool txtar -o testdata/script/nocmd.txtar -c testdata/script/nocmd/script -p 3 testdata/script/nocmd/*.pkl
+//go:generate go tool txtar -o testdata/script/nosuchtask.txtar -c testdata/script/nosuchtask/script -p 3 testdata/script/nosuchtask/*.pkl
 //go:generate go tool txtar -o testdata/script/projectfile.txtar -c testdata/script/projectfile/script -p 3 testdata/script/projectfile/*.pkl
 //go:generate go tool txtar -o testdata/script/property-flag.txtar -c testdata/script/property-flag/script -p 3 testdata/script/property-flag/*.pkl
 //go:generate go tool txtar -o testdata/script/sh.txtar -c testdata/script/sh/script -p 3 testdata/script/sh/*.pkl testdata/script/sh/*.txt
