@@ -18,7 +18,8 @@ generate:
 
 .PHONY: gen-pkl-tests
 gen-pkl-tests: tpkl
-	$(PKL_EXEC) test --external-module-reader='tpkl=./tpkl readers' modules/testdata/pkl-test/test*.pkl --overwrite || [ "$$?" -eq 10 ] && $(MAKE) generate
+	$(PKL_EXEC) test --external-module-reader='tpkl=./tpkl readers' modules/testdata/pkl-test/test*.pkl --overwrite || if [ "$$?" -eq 10 ]; then exit 0; else exit $?; fi
+	$(MAKE) generate
 
 .PHONY: test stest cover cover/html
 GO_TEST= $(GO) test ./... -coverprofile $(COVER_OUTPUT)
