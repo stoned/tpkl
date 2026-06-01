@@ -1,0 +1,27 @@
+import "tpkl:tpkl"
+
+names {
+  "anonymous-function-with-string"
+  "anonymous-function-with-list"
+  "anonymous-function-with-listing"
+  "anonymous-function-with-dynamic"
+  "function-with-string"
+  "function-with-list"
+  "function-with-listing"
+  "function-with-dynamic"
+  "amending"
+}
+
+embeddedShellExamples = import("test-sugar-embedded-shell.pkl").examples
+bashExamples = import("test-sugar-bash.pkl").examples
+binShExamples = import("test-sugar-binsh.pkl").examples
+cmdExamples = import("test-sugar-cmd.pkl").examples
+
+tasks: tpkl.Tasks = new {
+  for (n in names) {
+    ["bash-\(n)"] = bashExamples[n][0]
+    ["binsh-\(n)"] = binShExamples[n][0]
+    ["cmd-\(n)"] = cmdExamples[n][0]
+    ["embedded-shell-\(n)"] = embeddedShellExamples[n][0]
+  }
+}

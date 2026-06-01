@@ -1,1 +1,114 @@
 exec pkl-wrapper test
+
+# Test bash sugar run
+exec tpkl run -m tasks-sugar.pkl bash-anonymous-function-with-string
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl bash-anonymous-function-with-list
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl bash-anonymous-function-with-listing
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl bash-anonymous-function-with-dynamic
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl bash-function-with-string
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl bash-function-with-list
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl bash-function-with-listing
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl bash-function-with-dynamic
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl bash-amending
+cmp stdout run-sugar-expected-stdout.txt
+
+# Test /bin/sh sugar run
+exec tpkl run -m tasks-sugar.pkl binsh-anonymous-function-with-string
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl binsh-anonymous-function-with-list
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl binsh-anonymous-function-with-listing
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl binsh-anonymous-function-with-dynamic
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl binsh-function-with-string
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl binsh-function-with-list
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl binsh-function-with-listing
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl binsh-function-with-dynamic
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl binsh-amending
+cmp stdout run-sugar-expected-stdout.txt
+
+
+# Test command sugar run
+exec tpkl run -m tasks-sugar.pkl cmd-anonymous-function-with-string
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl cmd-anonymous-function-with-list
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl cmd-anonymous-function-with-listing
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl cmd-anonymous-function-with-dynamic
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl cmd-function-with-string
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl cmd-function-with-list
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl cmd-function-with-listing
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl cmd-function-with-dynamic
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl cmd-amending
+cmp stdout run-sugar-expected-stdout.txt
+
+# Test embedded shell sugar run
+exec tpkl run -m tasks-sugar.pkl embedded-shell-anonymous-function-with-string
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl embedded-shell-anonymous-function-with-list
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl embedded-shell-anonymous-function-with-listing
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl embedded-shell-anonymous-function-with-dynamic
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl embedded-shell-function-with-string
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl embedded-shell-function-with-list
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl embedded-shell-function-with-listing
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl embedded-shell-function-with-dynamic
+cmp stdout run-sugar-expected-stdout.txt
+
+exec tpkl run -m tasks-sugar.pkl embedded-shell-amending
+cmp stdout run-sugar-expected-stdout.txt
