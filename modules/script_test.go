@@ -13,7 +13,7 @@ import (
 //go:generate go tool txtar -o testdata/script/taskname.txtar -c testdata/script/taskname/script -p 3 testdata/script/taskname/*.pkl
 //go:generate go tool txtar -o testdata/script/tpkl-module.txtar -c testdata/script/tpkl-module/script -p 3 testdata/script/tpkl-module/*.pkl testdata/script/tpkl-module/*.pcf
 //go:generate go tool txtar -o testdata/pkl-test/test.txtar -c testdata/pkl-test/script -p 2 testdata/pkl-test/PklProject testdata/pkl-test/*.pkl testdata/pkl-test/*.pcf
-//go:generate go tool txtar -o testdata/pkl-test/test.txtar -c testdata/pkl-test/script -p 2 testdata/pkl-test/PklProject testdata/pkl-test/*.pkl testdata/pkl-test/*.pcf
+//go:generate go tool txtar -o testdata/pkl-test/test.txtar -c testdata/pkl-test/script -p 2 testdata/pkl-test/PklProject* testdata/pkl-test/*.pkl testdata/pkl-test/*.pcf testdata/pkl-test/*.txt
 
 func TestMain(m *testing.M) {
 	testscript.Main(m, map[string]func(){
@@ -34,6 +34,6 @@ func TestPkl(t *testing.T) {
 	t.Parallel()
 
 	testscript.Run(t, testscript.Params{
-		Dir: "testdata/pkl-test",
+		Files: []string{"testdata/pkl-test/test.txtar"},
 	})
 }

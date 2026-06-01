@@ -7,93 +7,79 @@ examples {
   // sugar for running a command
   //
 
-  ["cmd-anonymous-function-with-string"] {
-    new tpkl.Tasks {
-      ["cmd-anonymous-function"] {
-        cmds {
-          "echo start" |> tpkl.cmd
+  ["anonymous-function-with-string"] {
+    new tpkl.Task {
+      cmds {
+        (#"printf %s\n"# |> tpkl.cmd) {
+          cmd { "arg1"; "arg 2" }
         }
       }
     }
   }
 
-  ["cmd-anonymous-function-with-list"] {
-    new tpkl.Tasks {
-      ["cmd-anonymous-function-with-list"] {
-        cmds {
-          List("echo", "start") |> tpkl.cmd
+  ["anonymous-function-with-list"] {
+    new tpkl.Task {
+      cmds {
+        List("printf", "%s\n", "arg1", "arg 2") |> tpkl.cmd
+      }
+    }
+  }
+
+  ["anonymous-function-with-listing"] {
+    new tpkl.Task {
+      cmds {
+        new Listing { "printf"; #"%s\n"#; "arg1"; "arg 2" } |> tpkl.cmd
+      }
+    }
+  }
+
+  ["anonymous-function-with-dynamic"] {
+    new tpkl.Task {
+      cmds {
+        new Dynamic { "printf"; #"%s\n"#; "arg1"; "arg 2" } |> tpkl.cmd
+      }
+    }
+  }
+
+  ["function-with-string"] {
+    new tpkl.Task {
+      cmds {
+        (tpkl.cmd(#"printf %s\n"#)) {
+          cmd { "arg1"; "arg 2" }
         }
       }
     }
   }
 
-  ["cmd-anonymous-function-with-listing"] {
-    new tpkl.Tasks {
-      ["cmd-anonymous-function-with-listing"] {
-        cmds {
-          new Listing { "echo"; "start" } |> tpkl.cmd
-        }
+  ["function-with-list"] {
+    new tpkl.Task {
+      cmds {
+        tpkl.cmd(List("printf", #"%s\n"#, "arg1", "arg 2"))
       }
     }
   }
 
-  ["cmd-anonymous-function-with-dynamic"] {
-    new tpkl.Tasks {
-      ["cmd-anonymous-function-with-dynamic"] {
-        cmds {
-          new Dynamic { "echo"; "start" } |> tpkl.cmd
-        }
+  ["function-with-listing"] {
+    new tpkl.Task {
+      cmds {
+        tpkl.cmd(new Listing { "printf"; #"%s\n"#; "arg1"; "arg 2" })
       }
     }
   }
 
-  ["cmd-function-with-string"] {
-    new tpkl.Tasks {
-      ["cmd-function"] {
-        cmds {
-          tpkl.cmd("echo start")
-        }
+  ["function-with-dynamic"] {
+    new tpkl.Task {
+      cmds {
+        tpkl.cmd(new Dynamic { "printf"; #"%s\n"#; "arg1"; "arg 2" })
       }
     }
   }
 
-  ["cmd-function-with-list"] {
-    new tpkl.Tasks {
-      ["cmd-function-with-list"] {
-        cmds {
-          tpkl.cmd(List("echo", "start"))
-        }
-      }
-    }
-  }
-
-  ["cmd-function-with-listing"] {
-    new tpkl.Tasks {
-      ["cmd-function-with-listing"] {
-        cmds {
-          tpkl.cmd(new Listing { "echo"; "start" })
-        }
-      }
-    }
-  }
-
-  ["cmd-function-with-dynamic"] {
-    new tpkl.Tasks {
-      ["cmd-function-with-dynamic"] {
-        cmds {
-          tpkl.cmd(new Dynamic { "echo"; "start" })
-        }
-      }
-    }
-  }
-
-  ["cmd-amending"] {
-    new tpkl.Tasks {
-      ["cmd-amending"] {
-        cmds {
-          (tpkl.Cmd) {
-            cmd { "echo"; "start" }
-          }
+  ["amending"] {
+    new tpkl.Task {
+      cmds {
+        (tpkl.Cmd) {
+          cmd { "printf"; #"%s\n"#; "arg1"; "arg 2" }
         }
       }
     }

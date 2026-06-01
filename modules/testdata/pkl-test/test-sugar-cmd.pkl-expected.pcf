@@ -1,209 +1,212 @@
 examples {
-  ["cmd-anonymous-function-with-string"] {
+  ["anonymous-function-with-string"] {
     new {
-      ["cmd-anonymous-function"] {
-        cmds {
-          new {
-            cmd {
-              "echo"
-              "start"
-            }
-            task = null
-            embeddedShell = false
-            mustSucceed = true
+      cmds {
+        new {
+          cmd {
+            "printf"
+            #"%s\n"#
+            "arg1"
+            "arg 2"
           }
+          task = null
+          embeddedShell = false
+          mustSucceed = true
         }
-        doc = null
-        env {}
-        files {}
-        inheritEnv = true
-        summary = ""
-        workingDir = "."
       }
+      doc = null
+      env {}
+      files {}
+      inheritEnv = true
+      summary = ""
+      workingDir = "."
     }
   }
-  ["cmd-anonymous-function-with-list"] {
+  ["anonymous-function-with-list"] {
     new {
-      ["cmd-anonymous-function-with-list"] {
-        cmds {
-          new {
-            cmd {
-              "echo"
-              "start"
-            }
-            task = null
-            embeddedShell = false
-            mustSucceed = true
+      cmds {
+        new {
+          cmd {
+            "printf"
+            """
+            %s
+            
+            """
+            "arg1"
+            "arg 2"
           }
+          task = null
+          embeddedShell = false
+          mustSucceed = true
         }
-        doc = null
-        env {}
-        files {}
-        inheritEnv = true
-        summary = ""
-        workingDir = "."
       }
+      doc = null
+      env {}
+      files {}
+      inheritEnv = true
+      summary = ""
+      workingDir = "."
     }
   }
-  ["cmd-anonymous-function-with-listing"] {
+  ["anonymous-function-with-listing"] {
     new {
-      ["cmd-anonymous-function-with-listing"] {
-        cmds {
-          new {
-            cmd {
-              "echo"
-              "start"
-            }
-            task = null
-            embeddedShell = false
-            mustSucceed = true
+      cmds {
+        new {
+          cmd {
+            "printf"
+            #"%s\n"#
+            "arg1"
+            "arg 2"
           }
+          task = null
+          embeddedShell = false
+          mustSucceed = true
         }
-        doc = null
-        env {}
-        files {}
-        inheritEnv = true
-        summary = ""
-        workingDir = "."
       }
+      doc = null
+      env {}
+      files {}
+      inheritEnv = true
+      summary = ""
+      workingDir = "."
     }
   }
-  ["cmd-anonymous-function-with-dynamic"] {
+  ["anonymous-function-with-dynamic"] {
     new {
-      ["cmd-anonymous-function-with-dynamic"] {
-        cmds {
-          new {
-            cmd {
-              "echo"
-              "start"
-            }
-            task = null
-            embeddedShell = false
-            mustSucceed = true
+      cmds {
+        new {
+          cmd {
+            "printf"
+            #"%s\n"#
+            "arg1"
+            "arg 2"
           }
+          task = null
+          embeddedShell = false
+          mustSucceed = true
         }
-        doc = null
-        env {}
-        files {}
-        inheritEnv = true
-        summary = ""
-        workingDir = "."
       }
+      doc = null
+      env {}
+      files {}
+      inheritEnv = true
+      summary = ""
+      workingDir = "."
     }
   }
-  ["cmd-function-with-string"] {
+  ["function-with-string"] {
     new {
-      ["cmd-function"] {
-        cmds {
-          new {
-            cmd {
-              "echo"
-              "start"
-            }
-            task = null
-            embeddedShell = false
-            mustSucceed = true
+      cmds {
+        new {
+          cmd {
+            "printf"
+            #"%s\n"#
+            "arg1"
+            "arg 2"
           }
+          task = null
+          embeddedShell = false
+          mustSucceed = true
         }
-        doc = null
-        env {}
-        files {}
-        inheritEnv = true
-        summary = ""
-        workingDir = "."
       }
+      doc = null
+      env {}
+      files {}
+      inheritEnv = true
+      summary = ""
+      workingDir = "."
     }
   }
-  ["cmd-function-with-list"] {
+  ["function-with-list"] {
     new {
-      ["cmd-function-with-list"] {
-        cmds {
-          new {
-            cmd {
-              "echo"
-              "start"
-            }
-            task = null
-            embeddedShell = false
-            mustSucceed = true
+      cmds {
+        new {
+          cmd {
+            "printf"
+            #"%s\n"#
+            "arg1"
+            "arg 2"
           }
+          task = null
+          embeddedShell = false
+          mustSucceed = true
         }
-        doc = null
-        env {}
-        files {}
-        inheritEnv = true
-        summary = ""
-        workingDir = "."
       }
+      doc = null
+      env {}
+      files {}
+      inheritEnv = true
+      summary = ""
+      workingDir = "."
     }
   }
-  ["cmd-function-with-listing"] {
+  ["function-with-listing"] {
     new {
-      ["cmd-function-with-listing"] {
-        cmds {
-          new {
-            cmd {
-              "echo"
-              "start"
-            }
-            task = null
-            embeddedShell = false
-            mustSucceed = true
+      cmds {
+        new {
+          cmd {
+            "printf"
+            #"%s\n"#
+            "arg1"
+            "arg 2"
           }
+          task = null
+          embeddedShell = false
+          mustSucceed = true
         }
-        doc = null
-        env {}
-        files {}
-        inheritEnv = true
-        summary = ""
-        workingDir = "."
       }
+      doc = null
+      env {}
+      files {}
+      inheritEnv = true
+      summary = ""
+      workingDir = "."
     }
   }
-  ["cmd-function-with-dynamic"] {
+  ["function-with-dynamic"] {
     new {
-      ["cmd-function-with-dynamic"] {
-        cmds {
-          new {
-            cmd {
-              "echo"
-              "start"
-            }
-            task = null
-            embeddedShell = false
-            mustSucceed = true
+      cmds {
+        new {
+          cmd {
+            "printf"
+            #"%s\n"#
+            "arg1"
+            "arg 2"
           }
+          task = null
+          embeddedShell = false
+          mustSucceed = true
         }
-        doc = null
-        env {}
-        files {}
-        inheritEnv = true
-        summary = ""
-        workingDir = "."
       }
+      doc = null
+      env {}
+      files {}
+      inheritEnv = true
+      summary = ""
+      workingDir = "."
     }
   }
-  ["cmd-amending"] {
+  ["amending"] {
     new {
-      ["cmd-amending"] {
-        cmds {
-          new {
-            cmd {
-              "echo"
-              "start"
-            }
-            task = null
-            embeddedShell = false
-            mustSucceed = true
+      cmds {
+        new {
+          cmd {
+            "printf"
+            #"%s\n"#
+            "arg1"
+            "arg 2"
           }
+          task = null
+          embeddedShell = false
+          mustSucceed = true
         }
-        doc = null
-        env {}
-        files {}
-        inheritEnv = true
-        summary = ""
-        workingDir = "."
       }
+      doc = null
+      env {}
+      files {}
+      inheritEnv = true
+      summary = ""
+      workingDir = "."
     }
   }
 }

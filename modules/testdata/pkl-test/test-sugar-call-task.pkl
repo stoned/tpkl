@@ -8,21 +8,17 @@ examples {
   //
 
   ["task-anonymous-function"] {
-    new tpkl.Tasks {
-      ["task-anonymous-function"] {
-        cmds {
-          "called-task" |> tpkl.task
-        }
+    new tpkl.Task {
+      cmds {
+        "called-task" |> tpkl.task
       }
     }
   }
 
   ["task-function"] {
-    new tpkl.Tasks {
-      ["task-function"] {
-        cmds {
-          tpkl.task("called-task")
-        }
+    new tpkl.Task {
+      cmds {
+        tpkl.task("called-task")
       }
     }
   }

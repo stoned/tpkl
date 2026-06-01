@@ -1,207 +1,201 @@
 examples {
-  ["embedded-shell-anonymous-function-with-string"] {
+  ["anonymous-function-with-string"] {
     new {
-      ["embedded-shell-anonymous-function-with-string"] {
-        cmds {
-          new {
-            cmd {
-              "echo start"
-            }
-            task = null
-            embeddedShell = true
-            mustSucceed = true
+      cmds {
+        new {
+          cmd {
+            #"printf '%s\n' "$@""#
+            "arg1"
+            "arg 2"
           }
+          task = null
+          embeddedShell = true
+          mustSucceed = true
         }
-        doc = null
-        env {}
-        files {}
-        inheritEnv = true
-        summary = ""
-        workingDir = "."
       }
+      doc = null
+      env {}
+      files {}
+      inheritEnv = true
+      summary = ""
+      workingDir = "."
     }
   }
-  ["embedded-shell-anonymous-function-with-list"] {
+  ["anonymous-function-with-list"] {
     new {
-      ["embedded-shell-anonymous-function-with-list"] {
-        cmds {
-          new {
-            cmd {
-              "echo start"
-              "-x"
-            }
-            task = null
-            embeddedShell = true
-            mustSucceed = true
+      cmds {
+        new {
+          cmd {
+            #"printf '%s\n' "$@""#
+            "arg1"
+            "arg 2"
           }
+          task = null
+          embeddedShell = true
+          mustSucceed = true
         }
-        doc = null
-        env {}
-        files {}
-        inheritEnv = true
-        summary = ""
-        workingDir = "."
       }
+      doc = null
+      env {}
+      files {}
+      inheritEnv = true
+      summary = ""
+      workingDir = "."
     }
   }
-  ["embedded-shell-anonymous-function-with-listing"] {
+  ["anonymous-function-with-listing"] {
     new {
-      ["embedded-shell-anonymous-function-with-listing"] {
-        cmds {
-          new {
-            cmd {
-              "echo start"
-              "-x"
-            }
-            task = null
-            embeddedShell = true
-            mustSucceed = true
+      cmds {
+        new {
+          cmd {
+            #"printf '%s\n' "$@""#
+            "arg1"
+            "arg 2"
           }
+          task = null
+          embeddedShell = true
+          mustSucceed = true
         }
-        doc = null
-        env {}
-        files {}
-        inheritEnv = true
-        summary = ""
-        workingDir = "."
       }
+      doc = null
+      env {}
+      files {}
+      inheritEnv = true
+      summary = ""
+      workingDir = "."
     }
   }
-  ["embedded-shell-anonymous-function-with-dynamic"] {
+  ["anonymous-function-with-dynamic"] {
     new {
-      ["embedded-shell-anonymous-function-with-dynamic"] {
-        cmds {
-          new {
-            cmd {
-              "echo start"
-              "-x"
-            }
-            task = null
-            embeddedShell = true
-            mustSucceed = true
+      cmds {
+        new {
+          cmd {
+            #"printf '%s\n' "$@""#
+            "-"
+            "arg1"
+            "arg 2"
           }
+          task = null
+          embeddedShell = true
+          mustSucceed = true
         }
-        doc = null
-        env {}
-        files {}
-        inheritEnv = true
-        summary = ""
-        workingDir = "."
       }
+      doc = null
+      env {}
+      files {}
+      inheritEnv = true
+      summary = ""
+      workingDir = "."
     }
   }
-  ["embedded-shell-function-with-string"] {
+  ["function-with-string"] {
     new {
-      ["embedded-shell-function-with-string"] {
-        cmds {
-          new {
-            cmd {
-              "echo start"
-            }
-            task = null
-            embeddedShell = true
-            mustSucceed = true
+      cmds {
+        new {
+          cmd {
+            #"printf '%s\n' "$@""#
+            "arg1"
+            "arg 2"
           }
+          task = null
+          embeddedShell = true
+          mustSucceed = true
         }
-        doc = null
-        env {}
-        files {}
-        inheritEnv = true
-        summary = ""
-        workingDir = "."
       }
+      doc = null
+      env {}
+      files {}
+      inheritEnv = true
+      summary = ""
+      workingDir = "."
     }
   }
-  ["embedded-shell-function-with-list"] {
+  ["function-with-list"] {
     new {
-      ["embedded-shell-function-with-list"] {
-        cmds {
-          new {
-            cmd {
-              "echo start"
-              "-x"
-            }
-            task = null
-            embeddedShell = true
-            mustSucceed = true
+      cmds {
+        new {
+          cmd {
+            #"printf '%s\n' "$@""#
+            "arg1"
+            "arg 2"
           }
+          task = null
+          embeddedShell = true
+          mustSucceed = true
         }
-        doc = null
-        env {}
-        files {}
-        inheritEnv = true
-        summary = ""
-        workingDir = "."
       }
+      doc = null
+      env {}
+      files {}
+      inheritEnv = true
+      summary = ""
+      workingDir = "."
     }
   }
-  ["embedded-shell-function-with-listing"] {
+  ["function-with-listing"] {
     new {
-      ["embedded-shell-function-with-listing"] {
-        cmds {
-          new {
-            cmd {
-              "echo start"
-              "-x"
-            }
-            task = null
-            embeddedShell = true
-            mustSucceed = true
+      cmds {
+        new {
+          cmd {
+            #"printf '%s\n' "$@""#
+            "arg1"
+            "arg 2"
           }
+          task = null
+          embeddedShell = true
+          mustSucceed = true
         }
-        doc = null
-        env {}
-        files {}
-        inheritEnv = true
-        summary = ""
-        workingDir = "."
       }
+      doc = null
+      env {}
+      files {}
+      inheritEnv = true
+      summary = ""
+      workingDir = "."
     }
   }
-  ["embedded-shell-function-with-dynamic"] {
+  ["function-with-dynamic"] {
     new {
-      ["embedded-shell-function-with-dynamic"] {
-        cmds {
-          new {
-            cmd {
-              "echo start"
-              "-x"
-            }
-            task = null
-            embeddedShell = true
-            mustSucceed = true
+      cmds {
+        new {
+          cmd {
+            #"printf '%s\n' "$@""#
+            "arg1"
+            "arg 2"
           }
+          task = null
+          embeddedShell = true
+          mustSucceed = true
         }
-        doc = null
-        env {}
-        files {}
-        inheritEnv = true
-        summary = ""
-        workingDir = "."
       }
+      doc = null
+      env {}
+      files {}
+      inheritEnv = true
+      summary = ""
+      workingDir = "."
     }
   }
-  ["embedded-shell-amending"] {
+  ["amending"] {
     new {
-      ["embedded-shell-amending"] {
-        cmds {
-          new {
-            cmd {
-              "echo start"
-              "-x"
-            }
-            task = null
-            embeddedShell = true
-            mustSucceed = true
+      cmds {
+        new {
+          cmd {
+            #"printf '%s\n' "$@""#
+            "arg1"
+            "arg 2"
           }
+          task = null
+          embeddedShell = true
+          mustSucceed = true
         }
-        doc = null
-        env {}
-        files {}
-        inheritEnv = true
-        summary = ""
-        workingDir = "."
       }
+      doc = null
+      env {}
+      files {}
+      inheritEnv = true
+      summary = ""
+      workingDir = "."
     }
   }
 }

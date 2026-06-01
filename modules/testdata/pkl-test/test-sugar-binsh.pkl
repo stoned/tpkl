@@ -7,93 +7,79 @@ examples {
   // sugar for running a script with /bin/sh
   //
 
-  ["binsh-anonymous-function-with-string"] {
-    new tpkl.Tasks {
-      ["binsh-anonymous-function-with-string"] {
-        cmds {
-          "echo start" |> tpkl.binsh
+  ["anonymous-function-with-string"] {
+    new tpkl.Task {
+      cmds {
+        (#"printf '%s\n' "$@""# |> tpkl.binsh) {
+          cmd { "-"; "arg1"; "arg 2" }
         }
       }
     }
   }
 
-  ["binsh-anonymous-function-with-list"] {
-    new tpkl.Tasks {
-      ["binsh-anonymous-function-with-list"] {
-        cmds {
-          List("echo start", "echo end") |> tpkl.binsh
+  ["anonymous-function-with-list"] {
+    new tpkl.Task {
+      cmds {
+        List(#"printf '%s\n' "$@""#, "-", "arg1", "arg 2") |> tpkl.binsh
+      }
+    }
+  }
+
+  ["anonymous-function-with-listing"] {
+    new tpkl.Task {
+      cmds {
+        new Listing { #"printf '%s\n' "$@""#; "-"; "arg1"; "arg 2" } |> tpkl.binsh
+      }
+    }
+  }
+
+  ["anonymous-function-with-dynamic"] {
+    new tpkl.Task {
+      cmds {
+        new Dynamic { #"printf '%s\n' "$@""#; "-"; "arg1"; "arg 2" } |> tpkl.binsh
+      }
+    }
+  }
+
+  ["function-with-string"] {
+    new tpkl.Task {
+      cmds {
+        (tpkl.binsh(#"printf '%s\n' "$@""#)) {
+          cmd { "-"; "arg1"; "arg 2" }
         }
       }
     }
   }
 
-  ["binsh-anonymous-function-with-listing"] {
-    new tpkl.Tasks {
-      ["binsh-anonymous-function-with-listing"] {
-        cmds {
-          new Listing { "echo start"; "echo end" } |> tpkl.binsh
-        }
+  ["function-with-list"] {
+    new tpkl.Task {
+      cmds {
+        tpkl.binsh(List(#"printf '%s\n' "$@""#, "-", "arg1", "arg 2"))
       }
     }
   }
 
-  ["binsh-anonymous-function-with-dynamic"] {
-    new tpkl.Tasks {
-      ["binsh-anonymous-function-with-dynamic"] {
-        cmds {
-          new Dynamic { "echo start"; "echo end" } |> tpkl.binsh
-        }
+  ["function-with-listing"] {
+    new tpkl.Task {
+      cmds {
+        tpkl.binsh(new Listing { #"printf '%s\n' "$@""#; "-"; "arg1"; "arg 2" })
       }
     }
   }
 
-  ["binsh-function-with-string"] {
-    new tpkl.Tasks {
-      ["binsh-function-with-string"] {
-        cmds {
-          tpkl.binsh("echo start")
-        }
+  ["function-with-dynamic"] {
+    new tpkl.Task {
+      cmds {
+        tpkl.binsh(new Dynamic { #"printf '%s\n' "$@""#; "-"; "arg1"; "arg 2" })
       }
     }
   }
 
-  ["binsh-function-with-list"] {
-    new tpkl.Tasks {
-      ["binsh-function-with-list"] {
-        cmds {
-          tpkl.binsh(List("echo start", "echo end"))
-        }
-      }
-    }
-  }
-
-  ["binsh-function-with-listing"] {
-    new tpkl.Tasks {
-      ["binsh-function-with-listing"] {
-        cmds {
-          tpkl.binsh(new Listing { "echo start"; "echo end" })
-        }
-      }
-    }
-  }
-
-  ["binsh-function-with-dynamic"] {
-    new tpkl.Tasks {
-      ["binsh-function-with-dynamic"] {
-        cmds {
-          tpkl.binsh(new Dynamic { "echo start"; "echo end" })
-        }
-      }
-    }
-  }
-
-  ["binsh-amending"] {
-    new tpkl.Tasks {
-      ["binsh-amending"] {
-        cmds {
-          (tpkl.Binsh) {
-            cmd { "echo start" }
-          }
+  ["amending"] {
+    new tpkl.Task {
+      cmds {
+        (tpkl.Binsh) {
+          cmd { #"printf '%s\n' "$@""#; "-"; "arg1"; "arg 2" }
         }
       }
     }
