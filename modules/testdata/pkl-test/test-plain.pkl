@@ -3,6 +3,14 @@ amends "pkl:test"
 import "tpkl:tpkl"
 
 examples {
+  ["notasks"] {
+    new tpkl.Tasks {}
+  }
+
+  ["nocmds"] {
+    new tpkl.Task {}
+  }
+
   ["default"] {
     new tpkl.Task {
       cmds {

@@ -1,4 +1,18 @@
 examples {
+  ["notasks"] {
+    new {}
+  }
+  ["nocmds"] {
+    new {
+      cmds {}
+      doc = null
+      env {}
+      files {}
+      inheritEnv = true
+      summary = ""
+      workingDir = "."
+    }
+  }
   ["default"] {
     new {
       cmds {
