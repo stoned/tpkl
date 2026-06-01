@@ -290,7 +290,7 @@ func runTask(ctx context.Context, taskName string,
 			cmdErr = runTask(ctx, *cmd.Task, tasks, frame, termChannel, termWaitGroup, opts)
 
 		case cmd.EmbeddedShell:
-			log.ShellCmd(ctx, cmd.Cmd)
+			log.Shell(ctx, cmd.Cmd)
 
 			scriptName := fmt.Sprintf("%s[%d]", taskName, cmdIdx)
 			cmdErr = runShell(ctx, scriptName, cmd.Cmd, task.WorkingDir, frame.EnvList(), opts.dryrun)

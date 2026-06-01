@@ -4,6 +4,7 @@ package log
 import (
 	"context"
 	"fmt"
+	"io"
 	"os"
 	"regexp"
 	"strconv"
@@ -11,13 +12,15 @@ import (
 	"time"
 	"unicode"
 
+	"charm.land/lipgloss/v2"
+	"github.com/charmbracelet/colorprofile"
 	"github.com/go-logfmt/logfmt"
-	"github.com/mgutz/ansi"
 	"github.com/rs/zerolog"
-	"golang.org/x/term"
 )
 
-const headerField = "_header"
+const (
+	lineIndent = " "
+)
 
 // FromContext retrieve a logger from a context.
 func FromContext(ctx context.Context) *zerolog.Logger {
@@ -38,7 +41,7 @@ func ContextWithLogger(ctx context.Context, cmd string, verbosity int) (context.
 func Builder(cmd string, verbosity int) zerolog.Logger {
 	var (
 		level   zerolog.Level
-		noColor bool
+		nocolor bool
 	)
 
 	switch {
@@ -52,7 +55,7 @@ func Builder(cmd string, verbosity int) zerolog.Logger {
 		level = zerolog.WarnLevel
 	}
 
-	noColor = EnvNoColor()
+	nocolor = noColor(os.Stderr)
 
 	// https://github.com/rs/zerolog/issues/114
 	zerolog.TimeFieldFormat = time.RFC3339Nano
@@ -60,14 +63,13 @@ func Builder(cmd string, verbosity int) zerolog.Logger {
 	loggerOut := zerolog.NewConsoleWriter(
 		func(writer *zerolog.ConsoleWriter) {
 			writer.TimeFormat = "15:04:05.000"
-			writer.NoColor = noColor
+			writer.NoColor = nocolor
 			writer.Out = os.Stderr
-			writer.FormatPartValueByName = getFormatPartValueByName(noColor)
-			writer.FieldsExclude = []string{headerField, "call", "cmd", "cur", "shell", "task", "tpkl"}
+			writer.FormatPartValueByName = getFormatPartValueByName(nocolor)
+			writer.FieldsExclude = []string{"call", "cmd", "cur", "shell", "task", "tpkl"}
 			writer.PartsOrder = []string{
 				zerolog.TimestampFieldName,
 				zerolog.LevelFieldName,
-				zerolog.CallerFieldName,
 				"tpkl",
 				"task",
 				"cur",
@@ -75,7 +77,6 @@ func Builder(cmd string, verbosity int) zerolog.Logger {
 				"cmd",
 				"shell",
 				zerolog.MessageFieldName,
-				headerField,
 			}
 		},
 	)
@@ -89,8 +90,10 @@ func AsFatal(logger *zerolog.Logger, msg string) {
 	logger.WithLevel(zerolog.FatalLevel).Msg(msg)
 }
 
-// Cmd logs command to be executed.
+// Cmd logs a command to be executed.
 func Cmd(ctx context.Context, command []string) {
+	var cmd string
+
 	logger := FromContext(ctx)
 	logLevel := logger.GetLevel()
 
@@ -99,21 +102,22 @@ func Cmd(ctx context.Context, command []string) {
 		return
 
 	case logLevel == zerolog.InfoLevel:
-		logger.Info().Str("cmd", truncatedFoldedStrings(command)).Send()
+		cmd = truncatedFoldedStrings(command)
 
 	case logLevel == zerolog.DebugLevel:
-		logger.Debug().Str("cmd", foldedStrings(command)).Send()
+		cmd = foldedStrings(command)
 
 	case logLevel <= zerolog.TraceLevel:
-		// ┌ U+250C BOX DRAWINGS LIGHT DOWN AND RIGHT
-		// ╵ U+2575 BOX DRAWINGS LIGHT UP
-		logger.Trace().Str(headerField, "cmd").Msg("\u250c")
-		logger.Trace().Msg("\u2575 " + strings.Join(command, " "))
+		cmd = strings.Join(command, " ")
 	}
+
+	logger.Info().Str("cmd", cmd).Send()
 }
 
-// ShellCmd logs a command to be executed by the embedded shell.
-func ShellCmd(ctx context.Context, command []string) {
+// Shell logs a command to be executed by the embedded shell.
+func Shell(ctx context.Context, command []string) {
+	var fields []any
+
 	logger := FromContext(ctx)
 	logLevel := logger.GetLevel()
 
@@ -122,30 +126,16 @@ func ShellCmd(ctx context.Context, command []string) {
 		return
 
 	case logLevel == zerolog.InfoLevel:
-		logger.Info().Str("shell", truncatedFoldedStrings(command)).Send()
+		fields = append(fields, "shell", truncatedFoldedStrings(command[0:1]))
 
 	case logLevel == zerolog.DebugLevel:
-		logger.Debug().Str("shell", foldedStrings(command)).Send()
+		fields = append(fields, "shell", foldedStrings(command[0:1]))
 
 	case logLevel <= zerolog.TraceLevel:
-		lines := strings.Split(command[0], "\n")
-
-		for idx, line := range lines {
-			// ┌ U+250C BOX DRAWINGS LIGHT DOWN AND RIGHT
-			// │ U+2502 BOX DRAWINGS LIGHT VERTICAL
-			// ╵ U+2575 BOX DRAWINGS LIGHT UP
-			if idx == 0 {
-				logger.Trace().Strs("args", command[1:]).Send()
-				logger.Trace().Str(headerField, "shell").Msg("\u250c")
-			}
-
-			if idx == len(lines)-1 {
-				logger.Trace().Msg("\u2575 " + line)
-			} else {
-				logger.Trace().Msg("\u2502 " + line)
-			}
-		}
+		fields = append(fields, "shell", command[0], "args", command[1:])
 	}
+
+	logger.Info().Fields(fields).Send()
 }
 
 func encodeKeyval(key, val any) string {
@@ -160,11 +150,31 @@ func encodeKeyval(key, val any) string {
 	return buff.String()
 }
 
-func getFormatPartValueByName(noColor bool) func(i any, s string) string {
-	var bold, cyan func(string) string
-	if !noColor {
-		bold = ansi.ColorFunc("white+b")
-		cyan = ansi.ColorFunc("cyan")
+func getFormatPartValueByName(nocolor bool) func(i any, s string) string {
+	var cyan, yellow, faint func(string) string
+
+	if !nocolor {
+		yellowStyle := lipgloss.NewStyle().Foreground(lipgloss.Yellow)
+
+		yellow = func(s string) string {
+			return yellowStyle.Render(s)
+		}
+
+		cyanStyle := lipgloss.NewStyle().Foreground(lipgloss.Cyan)
+
+		cyan = func(s string) string {
+			return cyanStyle.Render(s)
+		}
+
+		faintStyle := lipgloss.NewStyle().Faint(true)
+
+		faint = func(s string) string {
+			return faintStyle.Render(s)
+		}
+	} else {
+		yellow = func(s string) string { return s }
+		cyan = func(s string) string { return s }
+		faint = func(s string) string { return s }
 	}
 
 	return func(value any, part string) string {
@@ -175,38 +185,49 @@ func getFormatPartValueByName(noColor bool) func(i any, s string) string {
 		}
 
 		switch part {
-		case headerField:
-			valueString := fmt.Sprintf("%s", value)
-			if !noColor {
-				ret = bold(valueString)
-			} else {
-				ret = valueString
-			}
-
 		case "cur", "task", "tpkl":
-			if !noColor {
-				key = cyan(part + "=")
-			} else {
-				key = part + "="
+			key = cyan(part + "=")
+
+			val := fmt.Sprintf("%s", value)
+			if quotep(val) {
+				val = strconv.Quote(val)
 			}
 
-			valueString := fmt.Sprintf("%s", value)
-			if quotep(valueString) {
-				valueString = strconv.Quote(valueString)
-			}
+			ret = key + val
 
-			ret = key + valueString
+		case "call", "cmd":
+			ret = yellow(encodeKeyval(part, value))
 
-		case "call", "cmd", "shell":
-			if !noColor {
-				ret = bold(encodeKeyval(part, value))
+		case "shell":
+			val := fmt.Sprintf("%s", value)
+			if strings.Contains(val, "\n") {
+				ret = formatMultiline(val, part, faint, yellow)
 			} else {
-				ret = encodeKeyval(part, value)
+				ret = yellow(encodeKeyval(part, value))
 			}
 		}
 
 		return ret
 	}
+}
+
+func formatMultiline(value string, part string, faint, colorize func(string) string) string {
+	var buf strings.Builder
+
+	linePrefix := faint(lineIndent + "\u2502 ")
+
+	buf.WriteByte('\n')
+	buf.WriteString(lineIndent)
+	buf.WriteString(colorize(part + "="))
+	buf.WriteByte('\n')
+
+	for line := range strings.SplitSeq(value, "\n") {
+		buf.WriteString(linePrefix)
+		buf.WriteString(colorize(line))
+		buf.WriteByte('\n')
+	}
+
+	return buf.String()
 }
 
 func quotep(s string) bool {
@@ -219,26 +240,21 @@ func quotep(s string) bool {
 	return false
 }
 
-// EnvNoColor lookups relevant environment variables and if stdout
-// is a terminal and returns true if *no* color output should be done.
+// noColor, using github.com/charmbracelet/colorprofile, lookups
+// relevant environment variables and terminal properties and returns
+// true if *no* color output should be done.
 //
+// https://github.com/charmbracelet/colorprofile
 // https://bixense.com/clicolors/
 // https://no-color.org/
-func EnvNoColor() bool {
-	if os.Getenv("NO_COLOR") != "" {
+func noColor(output io.Writer) bool {
+	p := colorprofile.Detect(output, os.Environ())
+	switch p { //nolint:exhaustive
+	case colorprofile.NoTTY, colorprofile.Ascii:
 		return true
-	}
-
-	force, ok := os.LookupEnv("CLICOLOR_FORCE")
-	if ok && force != "0" {
+	default:
 		return false
 	}
-
-	if (ok && force == "0") || os.Getenv("CLICOLOR") == "0" {
-		return true
-	}
-
-	return !term.IsTerminal(int(os.Stderr.Fd()))
 }
 
 func foldedStrings(chunks []string) string {
