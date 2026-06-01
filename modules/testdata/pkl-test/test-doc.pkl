@@ -4,75 +4,63 @@ import "tpkl:tpkl"
 
 examples {
   ["none"] {
-    new tpkl.Tasks {
-      ["t1"] {}
-    }
+    new tpkl.Task {}
   }
 
   ["oneline"] {
-    new tpkl.Tasks {
-      ["t1"] {
-        doc = "the task t1"
-      }
+    new tpkl.Task {
+      doc = "the task t1"
     }
   }
 
   ["moredoc"] {
-    new tpkl.Tasks {
-      ["t1"] {
-        doc =
-          """
-          the task t1
+    new tpkl.Task {
+      doc =
+        """
+        the task t1
 
-          This tasks does something.
-          """
-      }
+        This tasks does something.
+        """
     }
   }
 
   ["space"] {
-    new tpkl.Tasks {
-      ["t1"] {
-        doc =
-          """
+    new tpkl.Task {
+      doc =
+        """
 
-          the task t1
+        the task t1
 
-          This tasks does something.
-          """
-      }
+        This tasks does something.
+        """
     }
   }
 
   ["morespace"] {
-    new tpkl.Tasks {
-      ["t1"] {
-        doc =
-          """
-          \t
-          the task t1
+    new tpkl.Task {
+      doc =
+        """
+        \t
+        the task t1
 
-          This tasks does something.
-          """
-      }
+        This tasks does something.
+        """
     }
   }
 
   ["stillmorespace"] {
-    new tpkl.Tasks {
-      ["t1"] {
-        doc =
-          """
+    new tpkl.Task {
+      doc =
+        """
 
-           \t 
+         \t 
 
-          \t
+        \t
 
-          the task t1
+        the task t1
 
-          This tasks does something.
-          """
-      }
+        This tasks does something.
+        """
     }
   }
 }

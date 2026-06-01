@@ -4,25 +4,21 @@ import "tpkl:tpkl"
 
 examples {
   ["default"] {
-    new tpkl.Tasks {
-      ["default"] {
-        cmds {
-          new {
-            cmd { "echo default" }
-          }
+    new tpkl.Task {
+      cmds {
+        new {
+          cmd { "echo default" }
         }
       }
     }
   }
 
   ["cmd"] {
-    new tpkl.Tasks {
-      ["cmd"] {
-        cmds {
-          new {
-            embeddedShell = false
-            cmd { "echo"; "cmd" }
-          }
+    new tpkl.Task {
+      cmds {
+        new {
+          embeddedShell = false
+          cmd { "echo"; "cmd" }
         }
       }
     }
