@@ -5,9 +5,9 @@
         "cmd": [
           "echo a"
         ],
-        "task": null,
         "embeddedShell": true,
-        "mustSucceed": true
+        "mustSucceed": true,
+        "task": null
       }
     ],
     "doc": null,
@@ -23,9 +23,9 @@
         "cmd": [
           "echo b"
         ],
-        "task": null,
         "embeddedShell": true,
-        "mustSucceed": true
+        "mustSucceed": true,
+        "task": null
       }
     ],
     "doc": null,
@@ -41,9 +41,9 @@
         "cmd": [
           "echo c"
         ],
-        "task": null,
         "embeddedShell": true,
-        "mustSucceed": true
+        "mustSucceed": true,
+        "task": null
       }
     ],
     "doc": null,

@@ -5,9 +5,9 @@
         "cmd": [
           "echo neon"
         ],
-        "task": null,
         "embeddedShell": true,
-        "mustSucceed": true
+        "mustSucceed": true,
+        "task": null
       }
     ],
     "doc": "***this*** **is** *the* `neon` task",
@@ -29,9 +29,9 @@
         "cmd": [
           "echo 'nodoc!'"
         ],
-        "task": null,
         "embeddedShell": true,
-        "mustSucceed": true
+        "mustSucceed": true,
+        "task": null
       }
     ],
     "doc": null,
@@ -47,9 +47,9 @@
         "cmd": [
           "echo 'Hello, world!'"
         ],
-        "task": null,
         "embeddedShell": true,
-        "mustSucceed": true
+        "mustSucceed": true,
+        "task": null
       }
     ],
     "doc": "The **task** task.\nfoo bar\nbaz",
