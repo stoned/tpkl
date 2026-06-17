@@ -12,7 +12,13 @@
     ],
     "doc": "***this*** **is** *the* `neon` task",
     "env": {},
-    "files": {},
+    "files": {
+      "dummy": {
+        "content": "foo",
+        "filename": "dummy.txt",
+        "varname": "FOO"
+      }
+    },
     "inheritEnv": true,
     "summary": "***this*** **is** *the* `neon` task",
     "workingDir": "."
