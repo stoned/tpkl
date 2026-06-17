@@ -3,3 +3,7 @@ amends "@pkl.go/GeneratorSettings.pkl"
 packageMappings {
   ["tpkl.tpkl"] = "github.com/stoned/tpkl/modules/tpkl"
 }
+
+structTags {
+  ["json"] = "%{name}"
+}

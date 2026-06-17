@@ -1,56 +1,56 @@
 {
   "a": {
-    "Cmds": [
+    "cmds": [
       {
-        "Cmd": [
+        "cmd": [
           "echo a"
         ],
-        "Task": null,
-        "EmbeddedShell": true,
-        "MustSucceed": true
+        "task": null,
+        "embeddedShell": true,
+        "mustSucceed": true
       }
     ],
-    "Doc": null,
-    "Env": {},
-    "Files": {},
-    "InheritEnv": true,
-    "Summary": "",
-    "WorkingDir": "."
+    "doc": null,
+    "env": {},
+    "files": {},
+    "inheritEnv": true,
+    "summary": "",
+    "workingDir": "."
   },
   "b": {
-    "Cmds": [
+    "cmds": [
       {
-        "Cmd": [
+        "cmd": [
           "echo b"
         ],
-        "Task": null,
-        "EmbeddedShell": true,
-        "MustSucceed": true
+        "task": null,
+        "embeddedShell": true,
+        "mustSucceed": true
       }
     ],
-    "Doc": null,
-    "Env": {},
-    "Files": {},
-    "InheritEnv": true,
-    "Summary": "",
-    "WorkingDir": "."
+    "doc": null,
+    "env": {},
+    "files": {},
+    "inheritEnv": true,
+    "summary": "",
+    "workingDir": "."
   },
   "c": {
-    "Cmds": [
+    "cmds": [
       {
-        "Cmd": [
+        "cmd": [
           "echo c"
         ],
-        "Task": null,
-        "EmbeddedShell": true,
-        "MustSucceed": true
+        "task": null,
+        "embeddedShell": true,
+        "mustSucceed": true
       }
     ],
-    "Doc": null,
-    "Env": {},
-    "Files": {},
-    "InheritEnv": true,
-    "Summary": "",
-    "WorkingDir": "."
+    "doc": null,
+    "env": {},
+    "files": {},
+    "inheritEnv": true,
+    "summary": "",
+    "workingDir": "."
   }
 }
