@@ -4,7 +4,6 @@ package log
 import (
 	"context"
 	"fmt"
-	"io"
 	"os"
 	"regexp"
 	"strconv"
@@ -13,9 +12,9 @@ import (
 	"unicode"
 
 	"charm.land/lipgloss/v2"
-	"github.com/charmbracelet/colorprofile"
 	"github.com/go-logfmt/logfmt"
 	"github.com/rs/zerolog"
+	"github.com/stoned/tpkl/internal/term"
 )
 
 const (
@@ -55,7 +54,7 @@ func Builder(cmd string, verbosity int) zerolog.Logger {
 		level = zerolog.WarnLevel
 	}
 
-	nocolor = noColor(os.Stderr)
+	nocolor = term.NoColor(os.Stderr)
 
 	// https://github.com/rs/zerolog/issues/114
 	zerolog.TimeFieldFormat = time.RFC3339Nano
@@ -238,23 +237,6 @@ func quotep(s string) bool {
 	}
 
 	return false
-}
-
-// noColor, using github.com/charmbracelet/colorprofile, lookups
-// relevant environment variables and terminal properties and returns
-// true if *no* color output should be done.
-//
-// https://github.com/charmbracelet/colorprofile
-// https://bixense.com/clicolors/
-// https://no-color.org/
-func noColor(output io.Writer) bool {
-	p := colorprofile.Detect(output, os.Environ())
-	switch p { //nolint:exhaustive
-	case colorprofile.NoTTY, colorprofile.Ascii:
-		return true
-	default:
-		return false
-	}
 }
 
 func foldedStrings(chunks []string) string {
