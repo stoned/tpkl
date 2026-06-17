@@ -31,6 +31,13 @@ tasks: tpkl.Tasks = new {
         embeddedShell = true
       }
     }
+    files {
+      ["dummy"] {
+        content = "foo"
+        filename = "dummy.txt"
+        varname = "FOO"
+      }
+    }
   }
 
   when (read?("prop:cond") != null) {
