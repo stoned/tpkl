@@ -1,74 +1,74 @@
 {
   "condTask": {
-    "Cmds": [
+    "cmds": [
       {
-        "Cmd": [
+        "cmd": [
           "echo 'conditional!'"
         ],
-        "Task": null,
-        "EmbeddedShell": true,
-        "MustSucceed": true
+        "task": null,
+        "embeddedShell": true,
+        "mustSucceed": true
       }
     ],
-    "Doc": "Conditional task.",
-    "Env": {},
-    "Files": {},
-    "InheritEnv": true,
-    "Summary": "Conditional task.",
-    "WorkingDir": "."
+    "doc": "Conditional task.",
+    "env": {},
+    "files": {},
+    "inheritEnv": true,
+    "summary": "Conditional task.",
+    "workingDir": "."
   },
   "neon": {
-    "Cmds": [
+    "cmds": [
       {
-        "Cmd": [
+        "cmd": [
           "echo neon"
         ],
-        "Task": null,
-        "EmbeddedShell": true,
-        "MustSucceed": true
+        "task": null,
+        "embeddedShell": true,
+        "mustSucceed": true
       }
     ],
-    "Doc": "***this*** **is** *the* `neon` task",
-    "Env": {},
-    "Files": {},
-    "InheritEnv": true,
-    "Summary": "***this*** **is** *the* `neon` task",
-    "WorkingDir": "."
+    "doc": "***this*** **is** *the* `neon` task",
+    "env": {},
+    "files": {},
+    "inheritEnv": true,
+    "summary": "***this*** **is** *the* `neon` task",
+    "workingDir": "."
   },
   "nodoc": {
-    "Cmds": [
+    "cmds": [
       {
-        "Cmd": [
+        "cmd": [
           "echo 'nodoc!'"
         ],
-        "Task": null,
-        "EmbeddedShell": true,
-        "MustSucceed": true
+        "task": null,
+        "embeddedShell": true,
+        "mustSucceed": true
       }
     ],
-    "Doc": null,
-    "Env": {},
-    "Files": {},
-    "InheritEnv": true,
-    "Summary": "",
-    "WorkingDir": "."
+    "doc": null,
+    "env": {},
+    "files": {},
+    "inheritEnv": true,
+    "summary": "",
+    "workingDir": "."
   },
   "task": {
-    "Cmds": [
+    "cmds": [
       {
-        "Cmd": [
+        "cmd": [
           "echo 'Hello, world!'"
         ],
-        "Task": null,
-        "EmbeddedShell": true,
-        "MustSucceed": true
+        "task": null,
+        "embeddedShell": true,
+        "mustSucceed": true
       }
     ],
-    "Doc": "The **task** task.\nfoo bar\nbaz",
-    "Env": {},
-    "Files": {},
-    "InheritEnv": true,
-    "Summary": "The **task** task.",
-    "WorkingDir": "."
+    "doc": "The **task** task.\nfoo bar\nbaz",
+    "env": {},
+    "files": {},
+    "inheritEnv": true,
+    "summary": "The **task** task.",
+    "workingDir": "."
   }
 }
