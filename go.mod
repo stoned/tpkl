@@ -7,12 +7,10 @@ tool (
 	github.com/stoned/tpkl/cmd/txtar
 )
 
-replace github.com/apple/pkl-go  => /home/seb/arena/roi/github.com/apple/pkl-go
-
 require (
 	charm.land/glamour/v2 v2.0.1
 	charm.land/lipgloss/v2 v2.0.5
-	github.com/apple/pkl-go v0.14.0
+	github.com/apple/pkl-go v0.14.1-0.20260713192136-7e50882e0ccb
 	github.com/charmbracelet/colorprofile v0.4.3
 	github.com/go-logfmt/logfmt v0.6.1
 	github.com/google/go-cmp v0.7.0
