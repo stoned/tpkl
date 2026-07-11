@@ -48,11 +48,9 @@ func validArgsRun(cmd *cobra.Command, args []string, _ string) ([]string, cobra.
 }
 
 func addRunFlags(runner *RunRunner) {
+	addEvalFlags(runner)
+
 	cmd := runner.command
-	addEnvFlag(cmd, &runner.env)
-	addModuleFlag(cmd, &runner.module)
-	addPropertyFlag(cmd, &runner.properties)
-	addVerboseFlag(cmd, &runner.verbose)
 	cmd.Flags().BoolVarP(&runner.dryrun, "dry-run", "n", false, "Do not execute tasks commands, print them")
 	cmd.Flags().DurationVarP(&runner.timeout, "timeout", "t", 0,
 		"Duration after which task execution will be timed out")
@@ -90,13 +88,12 @@ func RunCmd() *cobra.Command {
 
 // RunRunner is a context for the 'run' command.
 type RunRunner struct {
-	command    *cobra.Command
-	dryrun     bool
-	env        []string
-	module     string
-	properties []string
-	timeout    time.Duration
-	verbose    int
+	CommandRunner
+	EvalRunner
+	VerboseRunner
+
+	dryrun  bool
+	timeout time.Duration
 }
 
 // Run runs the 'run' command.

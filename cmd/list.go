@@ -25,10 +25,9 @@ func GetListRunner() *ListRunner {
 		RunE:              runner.Run,
 	}
 
-	addEnvFlag(command, &runner.env)
-	addModuleFlag(command, &runner.module)
-	addPropertyFlag(command, &runner.properties)
-	addVerboseFlag(command, &runner.verbose)
+	runner.command = command
+
+	addEvalFlags(runner)
 
 	command.Flags().VarP(runner.format,
 		"output", "o",
@@ -44,8 +43,6 @@ func GetListRunner() *ListRunner {
 		logger.Fatal().Err(err).Send()
 	}
 
-	runner.command = command
-
 	return runner
 }
 
@@ -56,13 +53,12 @@ func ListCmd() *cobra.Command {
 
 // ListRunner is a context for the 'list' command.
 type ListRunner struct {
-	command    *cobra.Command
-	env        []string
-	format     *enumarg.EnumArg
-	long       bool
-	module     string
-	properties []string
-	verbose    int
+	CommandRunner
+	EvalRunner
+	VerboseRunner
+
+	format *enumarg.EnumArg
+	long   bool
 }
 
 // Run runs the 'list' command.
