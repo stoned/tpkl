@@ -123,6 +123,7 @@ require (
 	github.com/felixge/httpsnoop v1.1.0 // indirect
 	github.com/fujiwara/tfstate-lookup v1.12.1 // indirect
 	github.com/fxamacker/cbor/v2 v2.9.2 // indirect
+	github.com/gerow/pager v0.0.0-20190420205801-6d4a2327822f // indirect
 	github.com/getsops/gopgagent v0.0.0-20241224165529-7044f28e491e // indirect
 	github.com/getsops/sops/v3 v3.13.2 // indirect
 	github.com/ghodss/yaml v1.0.0 // indirect

@@ -26,48 +26,46 @@ import (
 
 // RunOptions are options for Run().
 type runOptions struct {
-	args       []string
-	dryrun     bool
-	env        []string
-	module     string
-	properties []string
-	timeout    time.Duration
-	workingDir string
+	evalOptions
+
+	args    []string
+	dryrun  bool
+	timeout time.Duration
 }
 
 // RunOption is Run()'s options interface.
 type RunOption interface {
-	setRunOption(o *runOptions)
+	setRunOption(opts *runOptions)
 }
 
 // Set arguments Run()'s option.
-func (a *argsOption) setRunOption(o *runOptions) {
-	o.args = a.args
+func (o *argsOption) setRunOption(opts *runOptions) {
+	opts.args = o.args
 }
 
 // Set dryRun Run()'s option.
-func (d *dryrunOption) setRunOption(o *runOptions) {
-	o.dryrun = d.dryrun
+func (o *dryrunOption) setRunOption(opts *runOptions) {
+	opts.dryrun = o.dryrun
 }
 
 // Set env Run()'s option.
-func (e *envOption) setRunOption(o *runOptions) {
-	o.env = e.env
+func (o *envOption) setRunOption(opts *runOptions) {
+	opts.env = o.env
 }
 
 // Set module Run()'s option.
-func (m *moduleOption) setRunOption(o *runOptions) {
-	o.module = m.module
+func (o *moduleOption) setRunOption(opts *runOptions) {
+	opts.module = o.module
 }
 
 // Set properties Run()'s option.
-func (p *propertiesOption) setRunOption(o *runOptions) {
-	o.properties = p.properties
+func (o *propertiesOption) setRunOption(opts *runOptions) {
+	opts.properties = o.properties
 }
 
 // Set timeout Run()'s option.
-func (t *timeoutOption) setRunOption(o *runOptions) {
-	o.timeout = t.timeout
+func (o *timeoutOption) setRunOption(opts *runOptions) {
+	opts.timeout = o.timeout
 }
 
 // Run executes task from a Pkl module.

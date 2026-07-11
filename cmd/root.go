@@ -28,6 +28,7 @@ func RootCmd() *cobra.Command {
 		DirCmd(),
 		EvalCmd(),
 		ListCmd(),
+		ManCmd(),
 		ReadersCmd(),
 		RunCmd(),
 		VersionCmd(),

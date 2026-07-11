@@ -178,6 +178,14 @@ func WithPropertyListCommandRunning() func(*pkl.EvaluatorOptions) {
 	}
 }
 
+// evalOptions are options for commands implementations which run a Pkl evaluation.
+type evalOptions struct {
+	envOption
+	moduleOption
+	propertiesOption
+	workingDirOption
+}
+
 // WithArgs initializes a struct to define an "arguments option".
 func WithArgs(args []string) *argsOption {
 	return &argsOption{args}
@@ -214,6 +222,15 @@ type moduleOption struct {
 	module string
 }
 
+// WithNoPager initializes a struct to define a "nopager option".
+func WithNoPager(nopager bool) *nopagerOption {
+	return &nopagerOption{nopager}
+}
+
+type nopagerOption struct {
+	nopager bool
+}
+
 // WithProperties initializes a struct to define a "properties option".
 func WithProperties(properties []string) *propertiesOption {
 	return &propertiesOption{properties}
@@ -230,6 +247,12 @@ func WithTimeout(timeout time.Duration) *timeoutOption {
 
 type timeoutOption struct {
 	timeout time.Duration
+}
+
+// XXX support --working-dir/-w/-C option
+
+type workingDirOption struct {
+	workingDir string
 }
 
 // ModuleTasks returns tpkl Tasks defined in module.

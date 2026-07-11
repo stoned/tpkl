@@ -23,29 +23,27 @@ func FormatEnumArg() *enumarg.EnumArg {
 
 // Options for List().
 type listOptions struct {
-	env        []string
-	module     string
-	properties []string
+	evalOptions
 }
 
 // ListOption is  List()'s options interface.
 type ListOption interface {
-	setListOption(o *listOptions)
+	setListOption(opts *listOptions)
 }
 
 // Set env List()'s option.
-func (e *envOption) setListOption(o *listOptions) {
-	o.env = e.env
+func (o *envOption) setListOption(opts *listOptions) {
+	opts.env = o.env
 }
 
 // Set module List()'s option.
-func (m *moduleOption) setListOption(o *listOptions) {
-	o.module = m.module
+func (o *moduleOption) setListOption(opts *listOptions) {
+	opts.module = o.module
 }
 
 // Set properties List()'s option.
-func (p *propertiesOption) setListOption(o *listOptions) {
-	o.properties = p.properties
+func (o *propertiesOption) setListOption(opts *listOptions) {
+	opts.properties = o.properties
 }
 
 // List lists tasks defined in a Pkl module.

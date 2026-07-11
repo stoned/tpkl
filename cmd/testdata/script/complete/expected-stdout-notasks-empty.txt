@@ -4,6 +4,7 @@ dir	List embedded Pkl modules
 eval	Render Pkl module(s)
 help	Help about any command
 list	List tasks
+man	Show task documentation
 readers	Run external readers for Pkl
 run	Run task (default)
 version	Version for tpkl
