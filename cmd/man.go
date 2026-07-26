@@ -53,7 +53,8 @@ func (r *ManRunner) Run(cmd *cobra.Command, args []string) {
 		tasks.WithNoPager(r.nopager),
 		tasks.WithEnv(r.env),
 		tasks.WithModule(r.module),
-		tasks.WithProperties(r.properties))
+		tasks.WithProperties(r.properties),
+		tasks.WithWorkingDir(r.workingDir))
 	if err != nil {
 		log.AsFatal(logger, err.Error())
 

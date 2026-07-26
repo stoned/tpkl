@@ -1,0 +1,25 @@
+import "tpkl:tpkl"
+
+tasks: tpkl.Tasks = new {
+  ["tpkl-pwd"] {
+    cmds {
+      new {
+        cmd { "echo"; "$(TPKL_PWD)" }
+        embeddedShell = false
+      }
+    }
+  }
+  ["tpkl-pwd-tmp"] {
+    cmds {
+      new {
+        cmd { "echo"; "$(TPKL_PWD)" }
+        embeddedShell = false
+      }
+      new {
+        cmd { "pwd 1>&2" }
+        embeddedShell = true
+      }
+    }
+    workingDir = "/tmp"
+  }
+}

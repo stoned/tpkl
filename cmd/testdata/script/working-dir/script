@@ -1,0 +1,56 @@
+#
+! exec tpkl list
+stderr 'list tasks: no module:'
+empty stdout
+
+#
+! exec tpkl man true
+stderr 'man task: no module:'
+empty stdout
+
+#
+! exec tpkl run true
+stderr 'run task: no module:'
+empty stdout
+
+#
+exec tpkl -w dir1 list
+stdout ^true$
+empty stderr
+
+#
+! exec tpkl -w no-such-directory list
+stderr '.*/no-such-directory: no such file or directory.*'
+
+#
+exec tpkl -w dir1 -vv list
+stdout ^true$
+stderr workdir=$WORK/dir1
+stderr module=$WORK/dir1/tasks.pkl
+
+#
+exec tpkl -w dir1 man true
+stdout '^No documentation for true$'
+empty stderr
+
+#
+exec tpkl -w dir1 -vv man true
+stdout '^No documentation for true$'
+stderr workdir=$WORK/dir1
+stderr module=$WORK/dir1/tasks.pkl
+
+#
+exec tpkl -w dir1 run true
+empty stdout
+empty stderr
+
+#
+exec tpkl -w dir1 true
+empty stdout
+empty stderr
+
+#
+exec tpkl -w dir1 -vv true
+empty stdout
+stderr workdir=$WORK/dir1
+stderr module=$WORK/dir1/tasks.pkl

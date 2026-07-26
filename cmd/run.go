@@ -20,14 +20,15 @@ func validArgsRun(cmd *cobra.Command, args []string, _ string) ([]string, cobra.
 	module, _ := cmd.Flags().GetString("module")
 	env, _ := cmd.Flags().GetStringArray("env-var")
 	properties, _ := cmd.Flags().GetStringArray("property")
+	workingDir, _ := cmd.Flags().GetString("working-dir")
 	ctx := cmd.Context()
 
-	module, err := tasks.UseModule(ctx, module, "") // XXX support working-dir
+	module, err := tasks.UseModule(ctx, module, workingDir)
 	if err != nil {
 		return nil, cobra.ShellCompDirectiveDefault
 	}
 
-	frame := tasks.NewTopFrame("", module, env, nil)
+	frame := tasks.NewTopFrame("", module, workingDir, env, nil)
 
 	tasks, err := tasks.ModuleTasks(ctx, module,
 		tasks.WithPklEnv(frame.EnvList()),
@@ -106,7 +107,8 @@ func (r *RunRunner) Run(cmd *cobra.Command, args []string) {
 		tasks.WithEnv(r.env),
 		tasks.WithModule(r.module),
 		tasks.WithProperties(r.properties),
-		tasks.WithTimeout(r.timeout))
+		tasks.WithTimeout(r.timeout),
+		tasks.WithWorkingDir(r.workingDir))
 	if err != nil {
 		log.AsFatal(logger, err.Error())
 

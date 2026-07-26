@@ -1,9 +1,11 @@
+// Test workingDir Task property
 import "tpkl:tpkl"
+
 tasks: tpkl.Tasks = new {
   ["workingDirDefaultValue"] {
     cmds {
       new {
-        cmd { "pwd > output1.txt" }
+        cmd { "pwd" }
         embeddedShell = true
       }
     }
@@ -11,7 +13,7 @@ tasks: tpkl.Tasks = new {
   ["subdir"] {
     cmds {
       new {
-        cmd { "pwd > output2.txt" }
+        cmd { "pwd" }
         embeddedShell = true
       }
     }

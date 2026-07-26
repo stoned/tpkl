@@ -1,0 +1,11 @@
+import "tpkl:tpkl"
+tasks: tpkl.Tasks = new {
+  ["true"] {
+    cmds {
+      new {
+        cmd { "true" }
+        embeddedShell = true
+      }
+    }
+  }
+}

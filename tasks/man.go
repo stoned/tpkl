@@ -40,6 +40,10 @@ func (o *propertiesOption) setManOption(opts *manOptions) {
 	opts.properties = o.properties
 }
 
+func (o *workingDirOption) setManOption(opts *manOptions) {
+	opts.workingDir = o.workingDir
+}
+
 // Man show a task's documentation.
 func Man(ctx context.Context, writer io.Writer, taskName string, options ...ManOption) error { //nolint:cyclop,funlen
 	var err error
@@ -52,12 +56,17 @@ func Man(ctx context.Context, writer io.Writer, taskName string, options ...ManO
 	logger := log.FromContext(ctx).With().Str("task", taskName).Logger()
 	ctx = logger.WithContext(ctx)
 
+	opts.workingDir, err = SetWorkingDir(ctx, opts.workingDir)
+	if err != nil {
+		return fmt.Errorf("run task: %w", err)
+	}
+
 	opts.module, err = UseModule(ctx, opts.module, opts.workingDir)
 	if err != nil {
 		return fmt.Errorf("man task: %w", err)
 	}
 
-	frame := NewTopFrame(taskName, opts.module, opts.env, []string{})
+	frame := NewTopFrame(taskName, opts.module, opts.workingDir, opts.env, []string{})
 
 	tasks, err := ModuleTasks(ctx, opts.module, WithPklEnv(frame.EnvList()),
 		WithPklProperties(opts.properties))

@@ -68,6 +68,10 @@ func (o *timeoutOption) setRunOption(opts *runOptions) {
 	opts.timeout = o.timeout
 }
 
+func (o *workingDirOption) setRunOption(opts *runOptions) {
+	opts.workingDir = o.workingDir
+}
+
 // Run executes task from a Pkl module.
 func Run(ctx context.Context, taskName string, options ...RunOption) error {
 	var (
@@ -83,6 +87,11 @@ func Run(ctx context.Context, taskName string, options ...RunOption) error {
 	logger := log.FromContext(ctx).With().Str("task", taskName).Logger()
 	ctx = logger.WithContext(ctx)
 
+	opts.workingDir, err = SetWorkingDir(ctx, opts.workingDir)
+	if err != nil {
+		return fmt.Errorf("run task: %w", err)
+	}
+
 	opts.module, err = UseModule(ctx, opts.module, opts.workingDir)
 	if err != nil {
 		return fmt.Errorf("run task: %w", err)
@@ -93,7 +102,7 @@ func Run(ctx context.Context, taskName string, options ...RunOption) error {
 		defer cancel()
 	}
 
-	frame := NewTopFrame(taskName, opts.module, opts.env, opts.args)
+	frame := NewTopFrame(taskName, opts.module, opts.workingDir, opts.env, opts.args)
 
 	tasks, err := ModuleTasks(ctx, opts.module, WithPklEnv(frame.EnvList()),
 		WithPklProperties(opts.properties))
@@ -136,7 +145,7 @@ func termHandler() (chan any, *sync.WaitGroup) {
 }
 
 // NewTopFrame create a toplevel frame for a task.
-func NewTopFrame(taskName string, module string, env []string, args []string) *Frame {
+func NewTopFrame(taskName string, module string, workingDir string, env []string, args []string) *Frame {
 	frame := NewFrame()
 
 	for _, variable := range env {
@@ -160,6 +169,7 @@ func NewTopFrame(taskName string, module string, env []string, args []string) *F
 		frame.setPrefixedVar("TASK_ARG_"+strconv.Itoa(i), a)
 	}
 
+	frame.setPrefixedVar("PWD", workingDir)
 	frame.setPrefixedVar("MODULE", module)
 	frame.setPrefixedVar("MODULEDIR", moduleDir(module))
 	frame.setPrefixedVar("TASK", taskName)
@@ -249,7 +259,7 @@ func planTask(_ context.Context, start string, tasks Tasks) error {
 	return err
 }
 
-func runTask(ctx context.Context, taskName string,
+func runTask(ctx context.Context, taskName string, //nolint:cyclop,funlen
 	tasks Tasks, enclosingFrame *Frame,
 	termChannel chan any, termWaitGroup *sync.WaitGroup,
 	opts *runOptions,
@@ -279,7 +289,12 @@ func runTask(ctx context.Context, taskName string,
 
 	expandTaskProperties(&task, frame.ExpandMapping())
 
-	logger.Trace().Str("workdir", task.WorkingDir).Send()
+	workdir, err := filepath.Abs(task.WorkingDir)
+	if err != nil {
+		return fmt.Errorf("%w: %w", ErrIO, err)
+	}
+
+	logger.Trace().Str("workdir", workdir).Send()
 
 	for cmdIdx, cmd := range task.Cmds {
 		switch {

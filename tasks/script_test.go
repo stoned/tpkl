@@ -28,7 +28,7 @@ import (
 //go:generate go tool txtar -o testdata/script/taskscycle.txtar -c testdata/script/taskscycle/script -p 3 testdata/script/taskscycle/*.pkl testdata/script/taskscycle/*.txt
 //go:generate go tool txtar -o testdata/script/timeout-eval.txtar -c testdata/script/timeout-eval/script -p 3 testdata/script/timeout-eval/*.pkl
 //go:generate go tool txtar -o testdata/script/timeout.txtar -c testdata/script/timeout/script -p 3 testdata/script/timeout/*.pkl
-//go:generate go tool txtar -o testdata/script/workingdir.txtar -c testdata/script/workingdir/script -p 3 testdata/script/workingdir/*.pkl testdata/script/workingdir/*.txt
+//go:generate go tool txtar -o testdata/script/workingdir.txtar -c testdata/script/workingdir/script -p 3 testdata/script/workingdir/*.pkl
 
 func TestMain(m *testing.M) {
 	testscript.Main(m, map[string]func(){
