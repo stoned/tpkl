@@ -168,51 +168,38 @@ func TestListJSON(t *testing.T) {
 	}
 }
 
-type reCase struct {
-	re   *regexp.Regexp
-	expr string
-}
-
 // TestListSummary test the List() function with the "summary" format.
 func TestListSummary(t *testing.T) {
 	t.Parallel()
 
-	newReCase := func(e string) reCase {
-		return reCase{
-			re:   regexp.MustCompile(e),
-			expr: e,
-		}
-	}
-
 	cases := []struct {
-		reCase
-
+		expr   string
 		module string
 		props  []string
 	}{
 		{
 			module: "testdata/modules/abc.pkl",
-			reCase: newReCase(`(?m)\Aa\nb\nc\n\z`),
+			expr:   `(?m)\Aa\nb\nc\n\z`,
 		},
 		{
 			module: "testdata/modules/notask.pkl",
-			reCase: newReCase(`(?m)\A\z`),
+			expr:   `(?m)\A\z`,
 		},
 		{
 			module: "testdata/modules/tasks.pkl",
 			props:  []string{"cond"},
-			reCase: newReCase(`(?m)\A` +
+			expr: `(?m)\A` +
 				`condTask\s+Conditional task\.\s+\n` +
 				`neon\s+\*this\* \*\*is\*\* \*the\* neon task\s+\n` +
 				`nodoc\s+\n` +
-				`task\s+The \*\*task\*\* task\.\s+\n\z`),
+				`task\s+The \*\*task\*\* task\.\s+\n\z`,
 		},
 		{
 			module: "testdata/modules/tasks.pkl",
-			reCase: newReCase(`(?m)\A` +
+			expr: `(?m)\A` +
 				`neon\s+\*this\* \*\*is\*\* \*the\* neon task\s+\n` +
 				`nodoc\s+\n` +
-				`task\s+The \*\*task\*\* task\.\s+\n\z`),
+				`task\s+The \*\*task\*\* task\.\s+\n\z`,
 		},
 	}
 
@@ -234,7 +221,9 @@ func TestListSummary(t *testing.T) {
 			}
 
 			got := buf.String()
-			if !testCase.re.MatchString(got) {
+
+			re := regexp.MustCompile(testCase.expr)
+			if !re.MatchString(got) {
 				t.Errorf("%q does not match %q", got, testCase.expr)
 			}
 		})
