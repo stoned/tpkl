@@ -70,7 +70,10 @@ func Man(ctx context.Context, writer io.Writer, taskName string, options ...ManO
 	}
 
 	if tasks[taskName].Doc == nil || *tasks[taskName].Doc == "" {
-		fmt.Printf("No documentation for %s\n", taskName)
+		_, err = fmt.Fprintf(writer, "No documentation for %s\n", taskName)
+		if err != nil {
+			return fmt.Errorf("%w: %w", ErrIO, err)
+		}
 
 		return nil
 	}
