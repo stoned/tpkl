@@ -46,6 +46,10 @@ func (o *propertiesOption) setListOption(opts *listOptions) {
 	opts.properties = o.properties
 }
 
+func (o *workingDirOption) setListOption(opts *listOptions) {
+	opts.workingDir = o.workingDir
+}
+
 // List lists tasks defined in a Pkl module.
 func List(ctx context.Context, writer io.Writer, format string, options ...ListOption) error { //nolint:cyclop
 	var err error
@@ -64,12 +68,17 @@ func List(ctx context.Context, writer io.Writer, format string, options ...ListO
 		return fmt.Errorf("list tasks: %w: `%s`", ErrUnknownOption, format)
 	}
 
-	opts.module, err = UseModule(ctx, opts.module, "") // XXX support working-dir
+	opts.workingDir, err = SetWorkingDir(ctx, opts.workingDir)
+	if err != nil {
+		return fmt.Errorf("run task: %w", err)
+	}
+
+	opts.module, err = UseModule(ctx, opts.module, opts.workingDir)
 	if err != nil {
 		return fmt.Errorf("list tasks: %w", err)
 	}
 
-	frame := NewTopFrame("", opts.module, opts.env, nil)
+	frame := NewTopFrame("", opts.module, opts.workingDir, opts.env, nil)
 
 	tasks, err := ModuleTasks(ctx, opts.module, WithPklEnv(frame.EnvList()), WithPklProperties(opts.properties),
 		WithPropertyListCommandRunning())

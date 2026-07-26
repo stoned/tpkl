@@ -81,7 +81,8 @@ func (r *ListRunner) Run(cmd *cobra.Command, _ []string) error {
 	err := tasks.List(ctx, os.Stdout, r.format.String(),
 		tasks.WithModule(r.module),
 		tasks.WithEnv(r.env),
-		tasks.WithProperties(r.properties))
+		tasks.WithProperties(r.properties),
+		tasks.WithWorkingDir(r.workingDir))
 	if err != nil {
 		logger.Fatal().Msg(err.Error())
 	}

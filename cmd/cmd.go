@@ -24,6 +24,7 @@ type EvalRunner struct {
 	env        []string
 	module     string
 	properties []string
+	workingDir string
 }
 
 func (r *EvalRunner) envAddr() *[]string {
@@ -36,6 +37,10 @@ func (r *EvalRunner) moduleAddr() *string {
 
 func (r *EvalRunner) propertiesAddr() *[]string {
 	return &r.properties
+}
+
+func (r *EvalRunner) workingDirAddr() *string {
+	return &r.workingDir
 }
 
 // VerboseRunner is a  context for commands which take a verbose option.
@@ -88,12 +93,24 @@ func addVerboseFlag(cmd *cobra.Command, variable *int) {
 	}
 }
 
+func addWorkingDirFlag(cmd *cobra.Command, variable *string) {
+	cmd.Flags().StringVarP(variable, "working-dir", "w", "", "Change to specified directory before anything else")
+
+	err := cmd.RegisterFlagCompletionFunc("working-dir",
+		cobra.FixedCompletions(nil, cobra.ShellCompDirectiveDefault))
+	if err != nil {
+		logger := log.Builder(cmd.Name(), 0)
+		logger.Fatal().Err(err).Send()
+	}
+}
+
 func addEvalFlags(runner evalRunner) {
 	cmd := runner.commandAddr()
 	addEnvFlag(cmd, runner.envAddr())
 	addModuleFlag(cmd, runner.moduleAddr())
 	addPropertyFlag(cmd, runner.propertiesAddr())
 	addVerboseFlag(cmd, runner.verboseAddr())
+	addWorkingDirFlag(cmd, runner.workingDirAddr())
 }
 
 type evalRunner interface {
@@ -102,4 +119,5 @@ type evalRunner interface {
 	moduleAddr() *string
 	propertiesAddr() *[]string
 	verboseAddr() *int
+	workingDirAddr() *string
 }

@@ -1,8 +1,71 @@
 #
 exec tpkl run workingDirDefaultValue
-cmpenv output1.txt expected1.txt
+stdout ^$WORK$
+
+#
+! exec tpkl run subdir
+stderr '.*/subdir: no such file or directory.*'
 
 #
 mkdir subdir
 exec tpkl run subdir
-cmpenv subdir/output2.txt expected2.txt
+stdout ^$WORK/subdir$
+
+#
+cd subdir
+
+#
+exec tpkl run -w .. workingDirDefaultValue
+stdout ^$WORK$
+
+#
+exec tpkl run -w .. subdir
+stdout ^$WORK/subdir$
+
+#
+exec tpkl run -w .. -m working-dir.pkl in-default-dir
+stdout ^/tmp$
+
+#
+exec tpkl run -w .. -m working-dir.pkl in-current-dir
+stdout ^$WORK$
+
+#
+exec tpkl run -m ../working-dir.pkl in-current-dir
+stdout ^$WORK/subdir$
+
+#
+exec tpkl run -m ../working-dir.pkl in-module-dir
+stdout ^$WORK$
+
+#
+exec tpkl run -w .. -m working-dir.pkl in-module-dir
+stdout ^$WORK$
+
+#
+exec tpkl run -m ../working-dir.pkl in-module-dir-alternate
+stdout ^$WORK$
+
+#
+exec tpkl run -w .. -m working-dir.pkl in-module-dir-alternate
+stdout ^$WORK$
+
+#
+exec tpkl run -w .. -m tpkl-pwd.pkl tpkl-pwd
+stdout ^$WORK$
+empty stderr
+
+#
+exec tpkl run -w .. -m tpkl-pwd.pkl tpkl-pwd-tmp
+stdout ^$WORK$
+stderr ^/tmp$
+
+#
+exec tpkl run -m ../tpkl-pwd.pkl tpkl-pwd
+stdout ^$WORK/subdir$
+empty stderr
+
+#
+exec tpkl run -m ../tpkl-pwd.pkl tpkl-pwd-tmp
+stdout ^$WORK/subdir$
+stderr ^/tmp$

@@ -249,7 +249,10 @@ type timeoutOption struct {
 	timeout time.Duration
 }
 
-// XXX support --working-dir/-w/-C option
+// WithWorkingDir initializes a struct to define a "workingDir option".
+func WithWorkingDir(path string) *workingDirOption {
+	return &workingDirOption{path}
+}
 
 type workingDirOption struct {
 	workingDir string
@@ -318,6 +321,24 @@ func ModuleTasks(ctx context.Context, module string,
 	return out, nil
 }
 
+// SetWorkingDir change the current working directory.
+func SetWorkingDir(ctx context.Context, wd string) (string, error) {
+	workingDir, err := filepath.Abs(wd)
+	if err != nil {
+		return "", fmt.Errorf("%w: %w", ErrIO, err)
+	}
+
+	err = os.Chdir(workingDir)
+	if err != nil {
+		return "", fmt.Errorf("%w: %w", ErrIO, err)
+	}
+
+	logger := log.FromContext(ctx)
+	logger.Debug().Str("workdir", workingDir).Send()
+
+	return workingDir, nil
+}
+
 // UseModule searches for the tasks PKL module to use and advertise it if requested.
 func UseModule(ctx context.Context, module string, workingDir string) (string, error) {
 	var err error
@@ -327,12 +348,21 @@ func UseModule(ctx context.Context, module string, workingDir string) (string, e
 		if err != nil {
 			return "", err
 		}
+	} else {
+		if !filepath.IsAbs(module) {
+			module = filepath.Join(workingDir, module)
+		}
+
+		module, err = filepath.Abs(module)
+		if err != nil {
+			return "", fmt.Errorf("%w: %w", ErrIO, err)
+		}
 	}
 
 	logger := log.FromContext(ctx)
 	logger.Debug().Str("module", module).Send()
 
-	return module, err
+	return module, nil
 }
 
 // findModule returns the tpkl Tasks module path, walking the filesystem
@@ -344,13 +374,9 @@ func findModule(fromDir string) (string, error) {
 		err         error
 	)
 
-	if fromDir == "" {
-		dir, err = os.Getwd()
-		if err != nil {
-			return "", fmt.Errorf("%w: %w", ErrNoModule, err)
-		}
-	} else {
-		dir = fromDir
+	dir, err = filepath.Abs(fromDir)
+	if err != nil {
+		return "", fmt.Errorf("%w: %w", ErrNoModule, err)
 	}
 
 	module, err = spath.FindUp(moduleFilename, dir, os.DirFS("/"))

@@ -20,6 +20,7 @@ import (
 //go:generate go tool txtar -o testdata/script/run-fallback.txtar -c testdata/script/run-fallback/script -p 3 testdata/script/run-fallback/*.pkl
 //go:generate go tool txtar -o testdata/script/run-specific.txtar -c testdata/script/run-specific/script -p 3 testdata/script/run-specific/*.pkl
 //go:generate go tool txtar -o testdata/script/simple-module.txtar -c testdata/script/simple-module/script -p 3 testdata/script/simple-module/*/*.pkl
+//go:generate go tool txtar -o testdata/script/working-dir.txtar -c testdata/script/working-dir/script -p 3 testdata/script/working-dir/*/*.pkl
 
 func TestMain(m *testing.M) {
 	testscript.Main(m, map[string]func(){

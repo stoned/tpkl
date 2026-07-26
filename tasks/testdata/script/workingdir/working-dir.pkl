@@ -1,0 +1,48 @@
+// Test working-dir CLI option and workingDir Task property
+import "pkl:reflect"
+import "tpkl:tpkl"
+
+tasks: tpkl.Tasks = new {
+  default { _ ->
+    workingDir = "/tmp"
+  }
+
+  ["in-default-dir"] {
+    cmds {
+      new {
+        cmd { "pwd" }
+        embeddedShell = false
+      }
+    }
+  }
+
+  ["in-current-dir"] {
+    cmds {
+      new {
+        cmd { "pwd" }
+        embeddedShell = false
+      }
+    }
+    workingDir = "."
+  }
+
+  ["in-module-dir"] {
+    cmds {
+      new {
+        cmd { "pwd" }
+        embeddedShell = false
+      }
+    }
+    workingDir = reflect.Module(module).uri.split("file://")[1].split("/").dropLast(1).join("/")
+  }
+
+  ["in-module-dir-alternate"] {
+    cmds {
+      new {
+        cmd { "pwd" }
+        embeddedShell = false
+      }
+    }
+    workingDir = "$(TPKL_MODULEDIR)"
+  }
+}
