@@ -1,6 +1,6 @@
 module github.com/stoned/tpkl
 
-go 1.26.4
+go 1.26.7
 
 tool (
 	github.com/stoned/tpkl/cmd/pkl
