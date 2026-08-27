@@ -271,9 +271,9 @@ func ModuleTasks(ctx context.Context, module string,
 
 	manager := pkl.NewEvaluatorManager()
 
-	defer (func(mgr pkl.EvaluatorManager) {
+	defer func(mgr pkl.EvaluatorManager) {
 		_ = mgr.Close()
-	})(manager)
+	}(manager)
 
 	withValsResourcesReader, err := extreaders.NewWithValsResourceReader()
 	if err != nil {
