@@ -1,0 +1,30 @@
+import "tpkl:tpkl"
+
+tasks: tpkl.Tasks = new {
+  ["t1"] {
+    cmds {
+      new {
+        cmd { "exit 1" }
+        embeddedShell = true
+      }
+    }
+  }
+
+  ["t2"] {
+    cmds {
+      new {
+        cmd { "exit 2" }
+        embeddedShell = true
+      }
+    }
+  }
+
+  ["t3"] {
+    cmds {
+      new {
+        cmd { "/bin/sh"; "-c"; "exit 3" }
+        embeddedShell = false
+      }
+    }
+  }
+}

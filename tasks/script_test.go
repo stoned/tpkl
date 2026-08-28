@@ -11,6 +11,7 @@ import (
 // Generate testscript test scripts
 //go:generate go tool txtar -o testdata/script/calltask.txtar -c testdata/script/calltask/script -p 3 testdata/script/calltask/*.pkl testdata/script/calltask/*.txt
 //go:generate go tool txtar -o testdata/script/cmd.txtar -c testdata/script/cmd/script -p 3 testdata/script/cmd/*.pkl testdata/script/cmd/*.txt
+//go:generate go tool txtar -o testdata/script/cmd-error.txtar -c testdata/script/cmd-error/script -p 3 testdata/script/cmd-error/*.pkl
 //go:generate go tool txtar -o testdata/script/default-vars.txtar -c testdata/script/default-vars/script -p 3 testdata/script/default-vars/*.pkl testdata/script/default-vars/*.txt
 //go:generate go tool txtar -o testdata/script/env.txtar -c testdata/script/env/script -p 3 testdata/script/env/*.pkl testdata/script/env/*.txt
 //go:generate go tool txtar -o testdata/script/env-var-flag.txtar -c testdata/script/env-var-flag/script -p 3 testdata/script/env-var-flag/*.pkl testdata/script/env-var-flag/*.txt
