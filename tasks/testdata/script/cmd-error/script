@@ -1,0 +1,8 @@
+! exec tpkl run t1
+stderr 'error="exit status 1"'
+#
+! exec tpkl run t2
+stderr 'error="exit status 2"'
+#
+! exec tpkl run t3
+stderr 'error="exit status 3"'
