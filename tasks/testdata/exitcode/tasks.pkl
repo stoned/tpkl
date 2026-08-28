@@ -13,7 +13,7 @@ tasks: tpkl.Tasks = new {
     cmds {
       new {
         embeddedShell = false
-        cmd { "awk"; "BEGIN { exit \(code) }" }
+        cmd { "/bin/sh"; "-c"; "exit \(code)" }
       }
     }
   }
