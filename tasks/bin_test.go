@@ -216,8 +216,9 @@ func TestExitCode(t *testing.T) {
 	tpklExe := buildTpkl(t)
 	tasksPath := setupTasksFile(t, &testExitCodeModule)
 
-	for tcIdx, testCase := range cases {
-		t.Run(fmt.Sprintf("%d:%d", tcIdx, testCase.exitCode), func(t *testing.T) {
+	for _, testCase := range cases {
+		desc := fmt.Sprintf("%s,%d", strings.Join(testCase.args, ","), testCase.exitCode)
+		t.Run(desc, func(t *testing.T) {
 			t.Parallel()
 
 			tpklArgs := make([]string, 0, 3+len(testCase.args))
