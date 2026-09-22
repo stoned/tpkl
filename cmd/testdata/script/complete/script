@@ -22,3 +22,8 @@ cmp stderr expected-stderr-dir-empty.txt
 exec tpkl __complete list ''
 cmp stdout expected-stdout-list-empty.txt
 cmp stderr expected-stderr-list-empty.txt
+#
+# test TPKL property
+exec tpkl __complete -m tpkl-prop.pkl ''
+cmp stdout expected-stdout-tpkl-prop.txt
+cmp stderr expected-stderr-tpkl-prop.txt

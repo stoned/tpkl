@@ -7,3 +7,8 @@ empty stderr
 exec tpkl man t2
 stdout '^No documentation for t2$'
 empty stderr
+
+# test TPKL property
+exec tpkl man -m tpkl-prop.pkl t
+stdout 'task t man'
+empty stderr

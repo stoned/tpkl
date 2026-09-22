@@ -42,3 +42,13 @@ env GOCACHE=$WORK/.cache
 exec go run readjson.go
 empty stderr
 empty stdout
+
+# test TPKL property
+exec tpkl list -m tpkl-prop.pkl
+
+# test hack for task arguments usage & list command
+! exec tpkl list -m list-arg-fail.pkl
+
+exec tpkl list -m list-arg.pkl
+stdout '^val$'
+stdout '^valHOME$'
