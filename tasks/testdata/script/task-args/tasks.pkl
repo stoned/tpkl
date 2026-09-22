@@ -108,7 +108,7 @@ tasks: tpkl.Tasks = new {
     }
   }
 
-  // Task arguments to command from listing property with // prepended
+  // Task arguments to command from listing property with prepended
   // argument
   ["cmd-argv-partial"] {
     cmds {
