@@ -1,0 +1,24 @@
+import "pkl:shell"
+import "tpkl:tpkl"
+
+tasks: tpkl.Tasks = new {
+  ["val"] {
+    local varValue =
+      let (arg0 = tpkl.arg(0))
+        if (read("prop:TPKL") == "run" && arg0 != "")
+          read("env:\(arg0)")
+        else
+          ""
+    cmds {
+      "echo \(shell.escapeWithSingleQuotes(varValue))" |> tpkl.sh
+    }
+  }
+  ["valHOME"] {
+    local home = read("env:HOME")
+    cmds {
+      "echo \(home)" |> tpkl.sh
+    }
+  }
+}
+
+// vim: set syntax=pkl tabstop=2 softtabstop=2 shiftwidth=2 expandtab

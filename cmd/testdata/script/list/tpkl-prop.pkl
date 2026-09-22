@@ -1,0 +1,16 @@
+import "tpkl:tpkl"
+
+prop =
+  let (p = read("prop:TPKL"))
+    if (p != "list")
+      throw("property TPKL has unexpected value: \(p)")
+    else
+      p
+
+tasks: tpkl.Tasks = new {
+  ["t"] {
+    cmds {
+      "echo \(prop)" |> tpkl.sh
+    }
+  }
+}

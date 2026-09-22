@@ -165,16 +165,25 @@ func WithPklProperties(properties []string) func(*pkl.EvaluatorOptions) {
 	}
 }
 
-// WithPropertyListCommandRunning returns a pkl.Evaluator options function to set property "LIST_COMMAND_RUNNING".
-func WithPropertyListCommandRunning() func(*pkl.EvaluatorOptions) {
-	name := identifierPrefix + "LIST_COMMAND_RUNNING"
+// WithPklPropertiesPairs returns a pkl.Evaluator options function to set properties
+// from pairs of arguments.
+func WithPklPropertiesPairs(args ...string) func(*pkl.EvaluatorOptions) {
+	if args == nil {
+		panic("WithPklPropertiesPairs called with no arguments")
+	}
+
+	if len(args)%2 != 0 {
+		panic("WithPklPropertiesPairs called with unpaired arguments")
+	}
 
 	return func(opts *pkl.EvaluatorOptions) {
 		if opts.Properties == nil {
 			opts.Properties = make(map[string]string)
 		}
 
-		opts.Properties[name] = "true"
+		for i := 0; i < len(args); i += 2 {
+			opts.Properties[args[i]] = args[i+1]
+		}
 	}
 }
 

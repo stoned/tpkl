@@ -25,3 +25,8 @@ empty stdout
 empty stderr
 
 cd $WORK
+
+# test TPKL property
+exec tpkl run -m tpkl-prop.pkl t
+stdout '^run$'
+empty stderr
