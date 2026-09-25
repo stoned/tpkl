@@ -1,0 +1,27 @@
+import "tpkl:tpkl"
+
+tasks: tpkl.Tasks = new {
+  ["t1"] {
+    doc =
+      """
+      task 1
+
+      Some task
+      """
+    cmds {
+      new {
+        cmd { "echo t1" }
+        embeddedShell = true
+      }
+    }
+  }
+
+  ["t2"] {
+    cmds {
+      new {
+        cmd { "echo t2" }
+        embeddedShell = true
+      }
+    }
+  }
+}
