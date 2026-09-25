@@ -1,0 +1,9 @@
+#
+exec tpkl man t1
+stdout 'Some task'
+empty stderr
+
+# no documentation is not an error
+exec tpkl man t2
+stdout '^No documentation for t2$'
+empty stderr
