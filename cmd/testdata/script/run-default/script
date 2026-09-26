@@ -30,3 +30,8 @@ cd $WORK
 exec tpkl run -m tpkl-prop.pkl t
 stdout '^run$'
 empty stderr
+
+# test TPKL_TASK property
+exec tpkl run -m tpkl-task-prop.pkl t
+empty stdout
+empty stderr

@@ -1,0 +1,16 @@
+import "tpkl:tpkl"
+
+// the TPKL_TASK should exist
+prop = read("prop:TPKL_TASK")
+
+tasks: tpkl.Tasks = new {
+  ["t"] {
+    cmds {
+      // its value should be the called task name
+      #"test t = "\#(prop)""# |> tpkl.sh
+      // ... and test that it has the same value as the
+      // and the environment variable TPKL_TASK should have the same value
+      #"set -u; test "${TPKL_TASK}" = "\#(prop)""# |> tpkl.sh
+    }
+  }
+}

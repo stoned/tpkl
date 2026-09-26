@@ -1,0 +1,18 @@
+import "tpkl:tpkl"
+
+// the TPKL_TASK should exist
+prop = read("prop:TPKL_TASK")
+
+tasks: tpkl.Tasks = new {
+  ["t"] {
+    doc =
+      let (v = prop == "t")
+        if (v)
+          "task t man"
+        else
+          ""
+    cmds {
+      "true" |> tpkl.sh
+    }
+  }
+}

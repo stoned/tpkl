@@ -12,3 +12,8 @@ empty stderr
 exec tpkl man -m tpkl-prop.pkl t
 stdout 'task t man'
 empty stderr
+
+# test TPKL_TASK property
+exec tpkl man -m tpkl-task-prop.pkl t
+stdout 'task t man'
+empty stderr
