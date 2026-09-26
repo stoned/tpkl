@@ -13,7 +13,7 @@ class Task {
   files: taskFiles
   inheritEnv: Boolean = true
   fixed summary: String =
-    doc.ifNonNull((d) -> d.split("\n").find((l) -> !l.isBlank))
+    doc.ifNonNull((d) -> d.split("\n").findOrNull((l) -> !l.isBlank))
       ?? ""
   workingDir: String = "."
 }
