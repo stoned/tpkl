@@ -69,7 +69,7 @@ func Man(ctx context.Context, writer io.Writer, taskName string, options ...ManO
 	frame := NewTopFrame(taskName, opts.module, opts.workingDir, opts.env, []string{})
 
 	tasks, err := ModuleTasks(ctx, opts.module, WithPklEnv(frame.EnvList()),
-		WithPklProperties(opts.properties), WithPklPropertiesPairs("TPKL", "man"))
+		WithPklProperties(opts.properties), WithPklPropertiesPairs("TPKL", "man", "TPKL_TASK", taskName))
 	if err != nil {
 		return err
 	}
