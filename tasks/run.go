@@ -400,7 +400,7 @@ func runShell(ctx context.Context, taskName string, command []string, dir string
 	err = runner.Run(ctx, parser)
 	if err != nil {
 		var es interp.ExitStatus
-		if errors.As(err, &es) {
+		if errors.As(err, &es) { //nolint:modernize
 			return NewCmdError(int(es), err)
 		}
 
