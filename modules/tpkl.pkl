@@ -99,7 +99,7 @@ function bash(a: String | List | Listing | Dynamic): Command = bash.apply(a)
 
 local function identifier(s: String): String = "TPKL_" + s
 
-local const listCmdRunning: Boolean = read?("prop:TPKL") == "list"
+local const listCmdRunning: Boolean = read?("prop:tpkl") == "list"
 
 fixed argc: Int =
   if (listCmdRunning)

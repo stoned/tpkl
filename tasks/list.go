@@ -81,7 +81,7 @@ func List(ctx context.Context, writer io.Writer, format string, options ...ListO
 	frame := NewTopFrame("", opts.module, opts.workingDir, opts.env, nil)
 
 	tasks, err := ModuleTasks(ctx, opts.module, WithPklEnv(frame.EnvList()), WithPklProperties(opts.properties),
-		WithPklPropertiesPairs("TPKL", "list"))
+		WithPklPropertiesPairs(TpklPropertyName, "list"))
 	if err != nil {
 		return err
 	}

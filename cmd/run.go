@@ -33,7 +33,7 @@ func validArgsRun(cmd *cobra.Command, args []string, _ string) ([]string, cobra.
 	tasks, err := tasks.ModuleTasks(ctx, module,
 		tasks.WithPklEnv(frame.EnvList()),
 		tasks.WithPklProperties(properties),
-		tasks.WithPklPropertiesPairs("TPKL", "__complete"))
+		tasks.WithPklPropertiesPairs(tasks.TpklPropertyName, "__complete"))
 	if err != nil {
 		return nil, cobra.ShellCompDirectiveDefault
 	}

@@ -1,9 +1,9 @@
 import "tpkl:tpkl"
 
 prop =
-  let (p = read("prop:TPKL"))
+  let (p = read("prop:tpkl"))
     if (p != "list")
-      throw("property TPKL has unexpected value: \(p)")
+      throw("property `tpkl` has unexpected value: \(p)")
     else
       p
 
