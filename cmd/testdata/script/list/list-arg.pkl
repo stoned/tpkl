@@ -5,7 +5,7 @@ tasks: tpkl.Tasks = new {
   ["val"] {
     local varValue =
       let (arg0 = tpkl.arg(0))
-        if (read("prop:TPKL") == "run" && arg0 != "")
+        if (read("prop:tpkl") == "run" && arg0 != "")
           read("env:\(arg0)")
         else
           ""

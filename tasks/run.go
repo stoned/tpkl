@@ -105,7 +105,7 @@ func Run(ctx context.Context, taskName string, options ...RunOption) error {
 	frame := NewTopFrame(taskName, opts.module, opts.workingDir, opts.env, opts.args)
 
 	tasks, err := ModuleTasks(ctx, opts.module, WithPklEnv(frame.EnvList()),
-		WithPklProperties(opts.properties), WithPklPropertiesPairs("TPKL", "run", "TPKL_TASK", taskName))
+		WithPklProperties(opts.properties), WithPklPropertiesPairs(TpklPropertyName, "run", tpklTaskPropertyName, taskName))
 	if err != nil {
 		return err
 	}

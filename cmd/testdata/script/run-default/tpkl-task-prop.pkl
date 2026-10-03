@@ -1,7 +1,7 @@
 import "tpkl:tpkl"
 
-// the TPKL_TASK should exist
-prop = read("prop:TPKL_TASK")
+// the property tpkl.tqsk should exist
+prop = read("prop:tpkl.task")
 
 tasks: tpkl.Tasks = new {
   ["t"] {

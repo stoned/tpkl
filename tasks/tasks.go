@@ -33,6 +33,12 @@ const filesCountVarNameSuffix = "FILES_COUNT"
 // are searched for.
 const moduleFilename = "tasks.pkl"
 
+const (
+	// TpklPropertyName is the name of the Pkl property which holds the invoked tpkl command.
+	TpklPropertyName     = "tpkl"
+	tpklTaskPropertyName = "tpkl.task"
+)
+
 var (
 	// ErrEvaluateExpr signals an error while evaluating the Pkl module.
 	ErrEvaluateExpr = errors.New("error evaluating expression in module")
