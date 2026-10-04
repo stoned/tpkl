@@ -4,16 +4,23 @@ tasks: tpkl.Tasks = new {
     cmds {
       """
       set -euo pipefail
-      basename "${TPKL_FILE_afile}"
       cat "${AFILE}"
-      echo "${TPKL_FILES_COUNT}"
+      test "${TPKL_FILES_COUNT}" -eq 2
+      test "${TPKL_FILE_afile##*/}" = "afile"
       test "${TPKL_FILE_afile}" = "${AFILE}"
+      test "${TPKL_FILES_KEY_0}" = "afile"
+      test "${TPKL_FILES_PATH_0}" = "${TPKL_FILE_afile}"
+      test "${TPKL_FILES_KEY_1}" = "anotherfile"
+      test "${TPKL_FILES_PATH_1}" = "${TPKL_FILE_anotherfile}"
       """ |> tpkl.sh
     }
     files {
       ["afile"] {
         content = "Hello world!\n"
         varname = "AFILE"
+      }
+      ["anotherfile"] {
+        content = "Bye world!\n"
       }
     }
   }
